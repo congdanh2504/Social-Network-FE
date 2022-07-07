@@ -3,7 +3,7 @@ import Login from './pages/Login';
 
 function App() {
   return (
-    <div className="Container">
+    <div className="Container w-full h-[100vh]">
       <Login/>
     </div>
   );

@@ -1,9 +1,9 @@
 import React from 'react'
 import { ReactComponent as Logo } from "../assets/images/Logo.svg";
-import IconLogin from "../assets/images/ImageLogin1.png";
+import IconLogin from "../assets/images/ImageLogin.png";
 export default function Login() {
     return (
-        <div className="container flex flex-col h-[100vh]">
+        <div className=" flex flex-col w-full h-full">
             <div className='container__header flex flex-row h-[70px] items-center border-b-[3px]'>
                 <div className='container__header_left flex-1 mx-[30px] flex flex-row items-center gap-x-[30px]  fill-blue-500'>
                     <Logo className="w-[40px] h-[40px]" />
@@ -31,11 +31,6 @@ export default function Login() {
                                     className="block border border-grey-light w-full p-3 rounded mb-4"
                                     name="userName"
                                     placeholder="User Name" />
-                                <input
-                                    type="text"
-                                    className="block border border-grey-light w-full p-3 rounded mb-4"
-                                    name="fullname"
-                                    placeholder="Full Name" />
 
                                 <input
                                     type="text"
