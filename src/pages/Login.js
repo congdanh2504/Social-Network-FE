@@ -1,9 +1,18 @@
 import React from 'react'
+import {useNavigate} from 'react-router-dom'
 import { ReactComponent as Logo } from "../assets/images/Logo.svg";
 import IconLogin from "../assets/images/ImageLogin.png";
 export default function Login() {
+    let navigate = useNavigate();
+
+    const loginHandle = ()=>{
+        navigate('/')
+        console.log('duong that pro')
+    
+    }
+
     return (
-        <div className=" flex flex-col w-full h-full">
+        <div className=" flex flex-col w-full h-[100vh]">
             <div className='container__header flex flex-row h-[70px] items-center border-b-[3px]'>
                 <div className='container__header_left flex-1 mx-[30px] flex flex-row items-center gap-x-[30px]  fill-blue-500'>
                     <Logo className="w-[40px] h-[40px]" />
@@ -12,9 +21,7 @@ export default function Login() {
                 <div className='container__header_right flex-1 flex flex-row mx-[30px] gap-x-[30px]'>
                     <input class="shadow appearance-none border-b rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="text" placeholder="Username" />
                     <input class="shadow appearance-none border-b rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="text" placeholder="Username" />
-                    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                       Login
-                    </button>
+                    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={loginHandle}>Login</button>
                 </div>
             </div>
             <div className='container__content flex flex-row flex-1'>
