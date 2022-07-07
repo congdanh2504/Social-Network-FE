@@ -12,7 +12,7 @@ export default function Login() {
     }
 
     return (
-        <div className=" flex flex-col w-full h-[100vh]">
+        <div className="flex flex-col w-full h-[100vh]">
             <div className='container__header flex flex-row h-[70px] items-center border-b-[3px]'>
                 <div className='container__header_left flex-1 mx-[30px] flex flex-row items-center gap-x-[30px]  fill-blue-500'>
                     <Logo className="w-[40px] h-[40px]" />
@@ -20,18 +20,18 @@ export default function Login() {
                 </div>
                 <div className='container__header_right flex-1 flex flex-row mx-[30px] gap-x-[30px]'>
                     <input class="shadow appearance-none border-b rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="text" placeholder="Username" />
-                    <input class="shadow appearance-none border-b rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="text" placeholder="Username" />
+                    <input class="shadow appearance-none border-b rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="passWord" type="text" placeholder="Passworld" />
                     <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={loginHandle}>Login</button>
                 </div>
             </div>
-            <div className='container__content flex flex-row flex-1'>
+            <div className='container__content flex flex-row flex-1 bg-gray-200'>
                 <div className='container__content__left flex flex-1 items-center justify-center'>
                     <img className='w-[300px] h-[300px]' src={IconLogin}></img>
                 </div>
                 <div className='container__content__right flex-1'>
                     <div className="bg-grey-lighter flex flex-1 h-full flex-col items-center justify-center">
                         <div className="container max-w-[600px] h-full flex-1 flex flex-col items-center justify-center px-2">
-                            <div className="bg-white px-6 py-8  text-black w-full">
+                            <div className="bg-white px-6 py-8  text-black w-full rounded-[15px] drop-shadow-lg">
                                 <h1 className="mb-8 text-3xl text-center font-[700]">Create An Account</h1>
                                 <input
                                     type="text"
