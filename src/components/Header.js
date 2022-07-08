@@ -10,7 +10,7 @@ import { ReactComponent as Down } from "../assets/icons/Down.svg";
 
 export default function Header() {
     return (
-        <div className='fixed header-top-navigation flex flex-row justify-evenly w-full h-[58px] items-center border-b-[3px] bg-white'>
+        <div className='fixed z-50 top-0 header-top-navigation flex flex-row justify-evenly w-full h-[58px] items-center border-b-[3px] bg-white'>
             <div className='header-top-left flex flex-row ml-[16px] gap-[20px]'>
                 <Logo className="w-[40px] h-[40px]" />
                 <div class="flex items-center">
