@@ -7,23 +7,23 @@ import UserCard from '../components/UserCard';
 
 export default function Home() {
     return (
-        <div className='relative Container w-full h-full'>
-            <Header />
-            <div className='Container__content flex-1 flex flex-row pt-[60px]'>
-                <div className='Container__content__left  ml-[80px] w-[300px] h-[100%]'>
-                    <UserCard />
-                    <ListPost title="Latest Post"/>
+        <div className='relative Container w-full bg-[#f0f2f5]'>
+            <Header/>
+            <div className='Container__content flex-1 flex h-[100vh] flex-row mx-[90px] pt-[68px]'>
+                <div className='Container__content__left flex flex-col gap-[15px] w-[300px] overflow-hidden hover:overflow-auto box-border'>
+                    <UserCard/>
+                    <ListPost title="Latest Post" />
                 </div>
-                <div className='Container__content__center flex-1 ml-[80px] mt-[15px]'>
-                    <UpoadCard/>
-                    <PostCard/>
-                    <PostCard/>
-                    <PostCard/>
+                <div className='Container__content__center overflow-y-auto flex-1 mx-[50px]'>
+                    <UpoadCard />
+                    <PostCard />
+                    <PostCard />
+                    <PostCard />
                 </div>
-                <div className='Container__content__right flex flex-col mr-[80px]'>
-                    <div className='Container__content__left ml-[80px] w-[300px] h-[100%]'>
-                        <ListPost title="Maybe you know"/>
-                        <ListPost title="Notifications"/>
+                <div className='Container__content__right overflow-y-auto flex flex-col'>
+                    <div className='Container__content__left flex flex-col gap-[15px] w-[300px] h-[100%] overflow-hidden hover:overflow-y-auto'>
+                        <ListPost title="Maybe you know" />
+                        <ListPost title="Notifications" />
                     </div>
                 </div>
             </div>

@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function UpoadCard() {
     return (
-        <div className="flex flex-col rounded-[20px] border-2 border-gray-200 w-full p-[15px]">
+        <div className="flex flex-col rounded-[15px] border-2 border-gray-200 w-full p-[15px] bg-white">
             <div className='flex flex-row items-center gap-[20px]'>
                 <img class="w-12 h-12 rounded-full" src="https://vieclamthemonline.com/wp-content/uploads/2021/10/tong-hop-nhung-hinh-anh-hot-girl-toc-ngan-de-thuong-dang-yeu-nhat-17.jpg" alt="Rounded avatar"></img>
 

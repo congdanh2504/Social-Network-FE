@@ -19,9 +19,9 @@ export default function Login() {
                     <h1 className='text-[16px] font-[500] text-[#333333]'>It’s helps you to connect and share with the people in your life</h1>
                 </div>
                 <div className='container__header_right flex-1 flex flex-row mx-[30px] gap-x-[30px]'>
-                    <input class="shadow appearance-none border-b rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="text" placeholder="Username" />
-                    <input class="shadow appearance-none border-b rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="passWord" type="text" placeholder="Passworld" />
-                    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={loginHandle}>Login</button>
+                    <input className="shadow appearance-none border-b rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="text" placeholder="Username" />
+                    <input className="shadow appearance-none border-b rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="passWord" type="text" placeholder="Passworld" />
+                    <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={loginHandle}>Login</button>
                 </div>
             </div>
             <div className='container__content flex flex-row flex-1 bg-gray-200'>
@@ -74,7 +74,7 @@ export default function Login() {
                 </div>
             </div>
             <div className='container__footer w-full h-[40px] flex items-center justify-center'>
-                <span class="block text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2022 <a href="https://www.facebook.com/mollun" class="hover:underline">Lê Khánh Dương™ </a>. All Rights Reserved.
+                <span className="block text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2022 <a href="https://www.facebook.com/mollun" className="hover:underline">Lê Khánh Dương™ </a>. All Rights Reserved.
                 </span>
             </div>
         </div>
