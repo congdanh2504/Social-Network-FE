@@ -1,4 +1,6 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom'
 import { ReactComponent as Logo } from "../assets/images/Logo.svg";
 import { ReactComponent as Home } from "../assets/icons/Home.svg";
 import { ReactComponent as Friend } from "../assets/icons/Friend.svg";
@@ -7,8 +9,16 @@ import { ReactComponent as Game } from "../assets/icons/Game.svg";
 import { ReactComponent as Comment } from "../assets/icons/Comment.svg";
 import { ReactComponent as Bell } from "../assets/icons/Bell.svg";
 import { ReactComponent as Down } from "../assets/icons/Down.svg";
+import { authSlice } from '../redux/slice/authSlice';
 
 export default function Header() {
+    const dispatch = useDispatch();
+    let navigate = useNavigate();
+    const handelLogout = ()=>{
+        dispatch(authSlice.actions.refresh_user());
+        navigate('/')
+    }
+
     return (
         <div className='fixed z-50 top-0 header-top-navigation px-[80px] flex flex-row justify-evenly w-full h-[58px] items-center border-b-[1px] bg-white'>
             <div className='header-top-left w-[300px] flex flex-row gap-[20px]'>
@@ -42,7 +52,7 @@ export default function Header() {
                     <img className="w-9 h-9 rounded-full" src="https://vieclamthemonline.com/wp-content/uploads/2021/10/tong-hop-nhung-hinh-anh-hot-girl-toc-ngan-de-thuong-dang-yeu-nhat-17.jpg" alt="Rounded avatar" />
                     <span className='ml-[10px] font-bold'>Duong</span>
                 </div>
-                <div className='w-[40px] h-[40px] rounded-full bg-gray-300 flex items-center justify-center cursor-pointer hover:bg-blue-400 hover:fill-white'>
+                <div onClick={handelLogout} className='w-[40px] h-[40px] rounded-full bg-gray-300 flex items-center justify-center cursor-pointer hover:bg-blue-400 hover:fill-white'>
                     <Comment className="w-[20px] h-[20px]"/>
                 </div>
                {/*  <div className='w-[40px] h-[40px] rounded-full bg-gray-300 flex items-center justify-center'>

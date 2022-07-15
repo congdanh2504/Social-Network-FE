@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { ReactComponent as Close } from "../assets/icons/Close.svg";
 
 export default function UserCard({ title, user }) {
