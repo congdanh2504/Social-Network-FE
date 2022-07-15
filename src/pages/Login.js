@@ -10,26 +10,42 @@ export default function Login() {
     const dispatch = useDispatch();
     const Loading = useSelector((state) => state.userAuth.loading)
     const isLogin = useSelector((state) => state.userAuth.isLogin)
-    const [userAccount, setuserAccount] = useState({
-        username: "duong",
-        password: "123456"
+    const loginError = useSelector((state) => state.userAuth.error)
+    const [loginUser, setLoginUser] = useState({
+        username: "",
+        password: ""
+    })
+    const [registerUser, setRegisterUser] = useState({
+        username: "",
+        email: "",
+        firstName: "",
+        lastName: "",
+        password: "",
+        confirmPassword: ""
     })
 
-    const handleOnchange = (event) => {
-        console.log(event)
+    const handleOnLoginChange = (event) => {
+        setLoginUser({...loginUser, [event.target.name] : event.target.value})
+    }
+
+    const handleOnRegisterChange = (event) => {
+        setRegisterUser({...registerUser, [event.target.name] : event.target.value})
     }
 
     useEffect(() => {
         if(isLogin){
             navigate("/home")
         }
-    }, [isLogin])
-    
+    }, [isLogin])  
 
     const loginHandle = () => {
-        dispatch(getLogin(userAccount))
-
+        dispatch(getLogin(loginUser))
     }
+
+    const registerHandle = () => {
+        console.log(registerUser)
+    }
+
     return (
         <>
             <div className="flex flex-col w-full h-[100vh]">
@@ -39,15 +55,28 @@ export default function Login() {
                         <h1 className='text-[16px] font-[500] text-[#333333]'>It’s helps you to connect and share with the people in your life</h1>
                     </div>
                     <div className='container__header_right flex-1 flex flex-row mx-[30px] gap-x-[30px]'>
-                        <input onChange={handleOnchange} className="shadow appearance-none border-b rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="text" placeholder="Username" />
-                        <input onChange={handleOnchange} className="shadow appearance-none border-b rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="passWord" type="text" placeholder="Passworld" />
+                        <input onChange={handleOnLoginChange} className="shadow appearance-none border-b rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="username" type="text" placeholder="Username" />
+                        <input onChange={handleOnLoginChange} className="shadow appearance-none border-b rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="password" type="password" placeholder="Password" />
                         <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={loginHandle}>Login</button>
                     </div>
                 </div>
                 {
-                    Loading ? <div className='absolute w-full h-full flex justify-center items-center'>
+                    loginError && <div id="toast-danger" class="flex items-center p-4 mb-4 w-full max-w-xs text-gray-500 bg-white rounded-lg shadow dark:text-gray-400 dark:bg-gray-800" role="alert">
+                        <div class="inline-flex flex-shrink-0 justify-center items-center w-8 h-8 text-red-500 bg-red-100 rounded-lg dark:bg-red-800 dark:text-red-200">
+                            <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                            <span class="sr-only">Error icon</span>
+                        </div>
+                        <div class="ml-3 text-sm font-normal">Invalid username or password.</div>
+                        <button type="button" class="ml-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex h-8 w-8 dark:text-gray-500 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700" data-dismiss-target="#toast-danger" aria-label="Close">
+                            <span class="sr-only">Close</span>
+                            <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                        </button>
+                    </div>
+                }
+                {
+                    Loading && <div className='absolute w-full h-full flex justify-center items-center'>
                         <img className='w-[60px] h-[60px]' src={LoadingGi} />
-                    </div> : ""
+                    </div>
                 }
                 <div className='container__content flex flex-row flex-1 bg-gray-200'>
                     <div className='container__content__left flex flex-1 items-center justify-center'>
@@ -59,30 +88,49 @@ export default function Login() {
                                 <div className="bg-white px-6 py-8  text-black w-full rounded-[15px] drop-shadow-lg">
                                     <h1 className="mb-8 text-3xl text-center font-[700]">Create An Account</h1>
                                     <input
+                                        onChange={handleOnRegisterChange}
                                         type="text"
                                         className="block border border-grey-light w-full p-3 rounded mb-4"
-                                        name="userName"
+                                        name="username"
                                         placeholder="User Name" />
 
                                     <input
+                                        onChange={handleOnRegisterChange}
                                         type="text"
                                         className="block border border-grey-light w-full p-3 rounded mb-4"
                                         name="email"
                                         placeholder="Email" />
 
                                     <input
+                                        onChange={handleOnRegisterChange}
+                                        type="text"
+                                        className="block border border-grey-light w-full p-3 rounded mb-4"
+                                        name="firstName"
+                                        placeholder="First Name" />   
+
+                                    <input
+                                        onChange={handleOnRegisterChange}
+                                        type="text"
+                                        className="block border border-grey-light w-full p-3 rounded mb-4"
+                                        name="lastName"
+                                        placeholder="Last Name" />
+
+                                    <input
+                                        onChange={handleOnRegisterChange}
                                         type="password"
                                         className="block border border-grey-light w-full p-3 rounded mb-4"
                                         name="password"
                                         placeholder="Password" />
+
                                     <input
+                                        onChange={handleOnRegisterChange}
                                         type="password"
                                         className="block border border-grey-light w-full p-3 rounded mb-4"
-                                        name="confirm_password"
+                                        name="confirmPassword"
                                         placeholder="Confirm Password" />
 
                                     <div className="text-center text-sm text-grey-dark mt-4">
-                                        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                                        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={registerHandle}>
                                             Sign Up Now !
                                         </button>
                                     </div>

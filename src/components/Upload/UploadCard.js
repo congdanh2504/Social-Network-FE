@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function UpoadCard() {
+export default function UploadCard() {
     return (
         <div className="flex flex-col rounded-[15px] border-2 border-gray-200 w-full p-[15px] bg-white">
             <div className='flex flex-row items-center gap-[20px]'>

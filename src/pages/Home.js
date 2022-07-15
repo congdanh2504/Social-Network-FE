@@ -2,7 +2,7 @@ import React from 'react'
 import Header from '../components/Header';
 import ListPost from '../components/ListPost';
 import PostCard from '../components/PostCard';
-import UpoadCard from '../components/Upload/UpoadCard';
+import UploadCard from '../components/Upload/UploadCard';
 import UserCard from '../components/UserCard';
 
 export default function Home() {
@@ -15,7 +15,7 @@ export default function Home() {
                     <ListPost title="Latest Post" />
                 </div>
                 <div className='Container__content__center overflow-y-auto flex-1 mx-[50px]'>
-                    <UpoadCard />
+                    <UploadCard />
                     <PostCard />
                     <PostCard />
                     <PostCard />
