@@ -1,17 +1,28 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { userLoginApi } from "../../service/Auth";
+import { userLoginApi, userRegisterApi } from "../../service/Auth";
 
 const initialState = {
     loading: false,
     isLogin:false,
     access_token:"",
     refresh_token:"",
-    error:""
+    loginError:"",
+    registerError:"",
+    isRegister:false
 }
 
 export const getLogin = createAsyncThunk('auth/getUser', async (data)=>{
     try{
         const res = await userLoginApi(data);
+        return res;
+    } catch(error){
+        return Promise.reject(error)
+    }
+})
+
+export const register = createAsyncThunk('/auth/register', async (data)=>{
+    try{
+        const res = await userRegisterApi(data);
         return res;
     } catch(error){
         return Promise.reject(error)
@@ -41,7 +52,18 @@ export const authSlice = createSlice({
         })
         builder.addCase(getLogin.rejected, (state, action)=>{
             state.loading = false;
-            state.error = action.error
+            state.loginError = action.error
+        })
+        builder.addCase(register.pending, (state)=>{
+            state.loading = true;
+        })
+        builder.addCase(register.fulfilled, (state, action)=>{
+            state.loading = false;
+            state.isRegister = true
+        })
+        builder.addCase(register.rejected, (state, action)=>{
+            state.loading = false;
+            state.registerError = action.error
         })
     }
 })
