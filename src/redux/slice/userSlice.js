@@ -1,11 +1,19 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { setUser } from "../../service/common";
+import { getProfile } from "../../service/userService/userApi";
 
 const initialState = {
     loading: false,
+    error: ""
 }
 
-const getUser = createAsyncThunk('user/getUser',()=>{
-
+export const getUser = createAsyncThunk('user/getUser', async() => {
+    try{
+        const res = await getProfile();
+        return res;
+    } catch(error){
+        return Promise.reject(error)
+    }
 })
 
 export const userSlide = createSlice({
@@ -13,7 +21,17 @@ export const userSlide = createSlice({
     initialState: initialState,
     reducers:{},
     extraReducers:(builder)=>{
-        builder.addCase()
+        builder.addCase(getUser.pending, (state)=>{
+            state.loading = true;
+        })
+        builder.addCase(getUser.fulfilled, (state, action)=>{
+            state.loading = false;
+            setUser(action.payload);
+        })
+        builder.addCase(getUser.rejected, (state, action)=>{
+            state.loading = false;
+            state.error = action.error;
+        })
     }
 })
 

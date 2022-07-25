@@ -4,8 +4,6 @@ import { userLoginApi, userRegisterApi } from "../../service/Auth";
 const initialState = {
     loading: false,
     isLogin:false,
-    access_token:"",
-    refresh_token:"",
     loginError:"",
     registerError:"",
     isRegister:false
@@ -35,8 +33,6 @@ export const authSlice = createSlice({
     reducers:{
         refresh_user(state){
            state.loading = false;
-           state.access_token = "";
-           state.refresh_token = ""
            state.isLogin = false
         }
     },
@@ -46,8 +42,8 @@ export const authSlice = createSlice({
         })
         builder.addCase(getLogin.fulfilled, (state, action)=>{
             state.loading = false;
-            state.access_token = action.payload.access_token;
-            state.refresh_token = action.payload.refresh_token;
+            localStorage.setItem("access_token", action.payload.access_token)
+            localStorage.setItem("refresh_token", action.payload.refresh_token)
             state.isLogin = true
         })
         builder.addCase(getLogin.rejected, (state, action)=>{

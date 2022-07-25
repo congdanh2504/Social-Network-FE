@@ -5,10 +5,12 @@ import { ReactComponent as Logo } from "../assets/images/Logo.svg";
 import IconLogin from "../assets/images/ImageLogin.png";
 import LoadingGi from "../assets/Loading.gif";
 import { getLogin, register } from '../redux/slice/authSlice';
+import { getUser } from '../redux/slice/userSlice';
 export default function Login() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const Loading = useSelector((state) => state.userAuth.loading)
+    const getProfileLoading = useSelector((state) => state.user.loading)
     const isLogin = useSelector((state) => state.userAuth.isLogin)
     const isRegister = useSelector((state) => state.userAuth.isRegister)
     const registerError = useSelector((state) => state.userAuth.registerError)
@@ -36,9 +38,14 @@ export default function Login() {
 
     useEffect(() => {
         if(isLogin){
-            navigate("/home")
+            dispatch(getUser())
         }
     }, [isLogin])  
+
+    useEffect(() => {
+        if (!getProfileLoading && isLogin)
+            navigate("/home")
+    }, [getProfileLoading])
 
     const loginHandle = () => {
         dispatch(getLogin(loginUser))
