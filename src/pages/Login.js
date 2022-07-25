@@ -37,9 +37,14 @@ export default function Login() {
 
     useEffect(() => {
         if(isLogin){
-            navigate("/home")
+            dispatch(getUser())
         }
     }, [isLogin])  
+
+    useEffect(() => {
+        if (!getProfileLoading && isLogin)
+            navigate("/home")
+    }, [getProfileLoading])
 
     const loginHandle = () => {
         dispatch(getLogin(loginUser))

@@ -13,6 +13,7 @@ import { authSlice } from '../../redux/slice/authSlice';
 
 export default function Header({styles}) {
     const dispatch = useDispatch();
+    const user = getUser();
     let navigate = useNavigate();
     const handelLogout = ()=>{
         dispatch(authSlice.actions.refresh_user());
@@ -50,7 +51,7 @@ export default function Header({styles}) {
             <div className='header-top-right w-[300px] flex flex-row justify-end gap-[15px] items-center'>
                 <div className='flex flex-row items-center px-[10px] py-[5px] hover:bg-blue-400 hover:text-white rounded-[30px] cursor-pointer'>
                     <img className="w-9 h-9 rounded-full" src="https://vieclamthemonline.com/wp-content/uploads/2021/10/tong-hop-nhung-hinh-anh-hot-girl-toc-ngan-de-thuong-dang-yeu-nhat-17.jpg" alt="Rounded avatar" />
-                    <span className='ml-[10px] font-bold'>Duong</span>
+                    <span className='ml-[10px] font-bold'>{user.firstName}</span>
                 </div>
                 <div onClick={handelLogout} className='w-[40px] h-[40px] rounded-full bg-gray-300 flex items-center justify-center cursor-pointer hover:bg-blue-400 hover:fill-white'>
                     <Comment className="w-[20px] h-[20px]"/>
