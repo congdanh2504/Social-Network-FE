@@ -1,17 +1,17 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom'
-import { ReactComponent as Logo } from "../assets/images/Logo.svg";
-import { ReactComponent as Home } from "../assets/icons/Home.svg";
-import { ReactComponent as Friend } from "../assets/icons/Friend.svg";
-import { ReactComponent as Video } from "../assets/icons/Video.svg";
-import { ReactComponent as Game } from "../assets/icons/Game.svg";
-import { ReactComponent as Comment } from "../assets/icons/Comment.svg";
-import { ReactComponent as Bell } from "../assets/icons/Bell.svg";
-import { ReactComponent as Down } from "../assets/icons/Down.svg";
-import { authSlice } from '../redux/slice/authSlice';
+import { ReactComponent as Logo } from "../../assets/images/Logo.svg";
+import { ReactComponent as Home } from "../../assets/icons/Home.svg";
+import { ReactComponent as Friend } from "../../assets/icons/Friend.svg";
+import { ReactComponent as Video } from "../../assets/icons/Video.svg";
+import { ReactComponent as Game } from "../../assets/icons/Game.svg";
+import { ReactComponent as Comment } from "../../assets/icons/Comment.svg";
+import { ReactComponent as Bell } from "../../assets/icons/Bell.svg";
+import { ReactComponent as Down } from "../../assets/icons/Down.svg";
+import { authSlice } from '../../redux/slice/authSlice';
 
-export default function Header() {
+export default function Header({styles}) {
     const dispatch = useDispatch();
     let navigate = useNavigate();
     const handelLogout = ()=>{
@@ -20,7 +20,7 @@ export default function Header() {
     }
 
     return (
-        <div className='fixed z-50 top-0 header-top-navigation px-[80px] flex flex-row justify-evenly w-full h-[58px] items-center border-b-[1px] bg-white'>
+        <div className={`z-50 top-0 header-top-navigation px-[12px] flex flex-row justify-evenly w-full h-[58px] items-center border-b-[1px] bg-white`}>
             <div className='header-top-left w-[300px] flex flex-row gap-[20px]'>
                 <Logo className="w-[40px] h-[40px]" />
                 <div class="flex items-center">
