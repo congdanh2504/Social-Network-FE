@@ -10,6 +10,7 @@ const initialState = {
 export const getUser = createAsyncThunk('user/getUser', async() => {
     try{
         const res = await getProfile();
+        console.log(res);
         return res;
     } catch(error){
         return Promise.reject(error)

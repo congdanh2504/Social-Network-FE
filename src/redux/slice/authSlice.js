@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { userLoginApi, userRegisterApi } from "../../service/Auth";
+import { setTokens } from "../../service/common";
 
 const initialState = {
     loading: false,
@@ -32,8 +33,11 @@ export const authSlice = createSlice({
     initialState: initialState,
     reducers:{
         refresh_user(state){
-           state.loading = false;
-           state.isLogin = false
+            state.loading = false;
+            state.isLogin = false
+        },
+        refresh_register(state) {
+            state.registerError = "";
         }
     },
     extraReducers:(builder)=>{
@@ -42,8 +46,7 @@ export const authSlice = createSlice({
         })
         builder.addCase(getLogin.fulfilled, (state, action)=>{
             state.loading = false;
-            localStorage.setItem("access_token", action.payload.access_token)
-            localStorage.setItem("refresh_token", action.payload.refresh_token)
+            setTokens(action.payload.access_token, action.payload.refresh_token)
             state.isLogin = true
         })
         builder.addCase(getLogin.rejected, (state, action)=>{

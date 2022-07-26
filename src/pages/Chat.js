@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import Header from '../components/commom/Header'
+import Header from '../components/common/Header'
 import Picker from 'emoji-picker-react';
 export default function Chat() {
 

@@ -1,5 +1,5 @@
 import React from 'react'
-import Header from '../components/commom/Header';
+import Header from '../components/common/Header';
 import ListPost from '../components/ListPost';
 import PostCard from '../components/PostCard';
 import UploadCard from '../components/Upload/UploadCard';

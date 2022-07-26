@@ -10,14 +10,18 @@ import { ReactComponent as Comment } from "../../assets/icons/Comment.svg";
 import { ReactComponent as Bell } from "../../assets/icons/Bell.svg";
 import { ReactComponent as Down } from "../../assets/icons/Down.svg";
 import { authSlice } from '../../redux/slice/authSlice';
+import { getUser, logOut } from '../../service/common';
+import defaultAvt from "../../assets/images/defaultAvt.png"
 
 export default function Header({styles}) {
     const dispatch = useDispatch();
     const user = getUser();
     let navigate = useNavigate();
+
     const handelLogout = ()=>{
         dispatch(authSlice.actions.refresh_user());
-        navigate('/')
+        logOut();
+        navigate('/');
     }
 
     return (
@@ -50,16 +54,17 @@ export default function Header({styles}) {
             </div>
             <div className='header-top-right w-[300px] flex flex-row justify-end gap-[15px] items-center'>
                 <div className='flex flex-row items-center px-[10px] py-[5px] hover:bg-blue-400 hover:text-white rounded-[30px] cursor-pointer'>
-                    <img className="w-9 h-9 rounded-full" src="https://vieclamthemonline.com/wp-content/uploads/2021/10/tong-hop-nhung-hinh-anh-hot-girl-toc-ngan-de-thuong-dang-yeu-nhat-17.jpg" alt="Rounded avatar" />
+                    <img className="w-9 h-9 rounded-full" src={user.avt ? user.avt : defaultAvt } alt="Rounded avatar" />
                     <span className='ml-[10px] font-bold'>{user.firstName}</span>
                 </div>
-                <div onClick={handelLogout} className='w-[40px] h-[40px] rounded-full bg-gray-300 flex items-center justify-center cursor-pointer hover:bg-blue-400 hover:fill-white'>
+                <div  className='w-[40px] h-[40px] rounded-full bg-gray-300 flex items-center justify-center cursor-pointer hover:bg-blue-400 hover:fill-white'>
                     <Comment className="w-[20px] h-[20px]"/>
                 </div>
                {/*  <div className='w-[40px] h-[40px] rounded-full bg-gray-300 flex items-center justify-center'>
                     <Bell className="w-[20px] h-[20px] fill-black-300"/>
                 </div> */}
-                <div className='w-[40px] h-[40px] rounded-full bg-gray-300 flex items-center justify-center'>
+                
+                <div onClick={handelLogout} className='w-[40px] h-[40px] rounded-full bg-gray-300 flex items-center justify-center hover:bg-blue-400 hover:fill-white'>
                     <Down className="w-[20px] h-[20px] fill-black-300"/>
                 </div>
             </div>
