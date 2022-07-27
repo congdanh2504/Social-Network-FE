@@ -7,6 +7,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { createPostAction, userSlide } from '../../redux/slice/userSlice';
 import LoadingGi from "../../assets/Loading.gif";
+import { getPostsAction } from '../../redux/slice/postSlice';
 
 export default function UploadCard() {
     const user = getUser();
@@ -19,11 +20,15 @@ export default function UploadCard() {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        if (error) toast.error("Post error")
+        console.log(error)
+        if (error !== "") toast.error("Post error")
     }, [error])
 
     useEffect(() => {
-        if (isPostSuccess) toast.success("Post successfully")
+        if (isPostSuccess) {
+            toast.success("Post successfully")
+            dispatch(getPostsAction())
+        }
     }, [isPostSuccess])
 
 	const handleImageChange = async (e) => {

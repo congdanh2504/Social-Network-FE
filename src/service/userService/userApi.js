@@ -13,6 +13,7 @@ export const getProfile = async () => {
 
 export const createPost = async (post, images) => {
     var formData = new FormData();
+    // if (images.length == 0) formData.append("post_image", null);
     for (let index in images) formData.append("post_image", images[index]);
     formData.append("title", post.title);
     formData.append("description", post.description);

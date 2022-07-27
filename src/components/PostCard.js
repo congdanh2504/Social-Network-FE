@@ -7,28 +7,39 @@ import 'lightgallery/css/lg-thumbnail.css';
 import LightGallery from 'lightgallery/react';
 import lgThumbnail from 'lightgallery/plugins/thumbnail';
 import lgZoom from 'lightgallery/plugins/zoom';
+import defaultAvt from '../assets/images/defaultAvt.png'
+import TimeAgo from 'javascript-time-ago'
+import en from 'javascript-time-ago/locale/en'
+
+TimeAgo.addDefaultLocale(en)
 
 
-export default function PostCard() {
+export default function PostCard({post}) {
+
+    const getTimeAgo = () => {
+        const timeAgo = new TimeAgo('en-US')
+        return timeAgo.format(new Date(post.create_date))
+    }
 
     return (
         <div className="flex flex-col bg-white shadow-lg rounded-lg my-4 ">
             <div className="flex w-full items-start px-4 py-6">
-                <img className="w-12 h-12 rounded-full object-cover mr-4 shadow" src="https://images.unsplash.com/photo-1542156822-6924d1a71ace?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60" alt="avatar" />
+                <img className="w-12 h-12 rounded-full object-cover mr-4 shadow" src={post.user.avt ? post.user.avt : defaultAvt} alt="avatar" />
                 <div className="flex-1">
                     <div className="flex items-center justify-between">
-                        <h2 className="text-lg font-semibold text-gray-900 -mt-1">Brad Adams </h2>
-                        <small className="text-sm text-gray-700">22h ago</small>
+                        <h2 className="text-lg font-semibold text-gray-900 -mt-1">{`${post.user.firstName} ${post.user.lastName}`}</h2>
+                        <small className="text-sm text-gray-700">{getTimeAgo()}</small>
                     </div>
-                    <p className="text-gray-700">Joined 12 SEP 2012. </p>
+                    {/* <p className="text-gray-700">Joined 12 SEP 2012. </p> */}
                     <div>
                         <p className="my-2 text-gray-700 text-sm">
-                            Lorem ipsum, dolor sit amet conse. Saepe optio minus rem dolor sit amet!
+                            {post.title}
                         </p>
                         <LightGallery speed={500} plugins={[lgThumbnail, lgZoom]} mode="lg-lollipop">
-                            <a href="https://scontent.fsgn2-3.fna.fbcdn.net/v/t39.30808-6/295958494_589272609238694_7200601012329706119_n.jpg?_nc_cat=1&ccb=1-7&_nc_sid=8bfeb9&_nc_ohc=q-NoZjKZEgcAX_2F8Qi&_nc_ht=scontent.fsgn2-3.fna&oh=00_AT8ciHk1eZ1yOS8VYd2wcnToYHC_c14ohW9dT3npSq42TQ&oe=62E3AA8A">
-                                <img alt="img1" src="https://scontent.fsgn2-3.fna.fbcdn.net/v/t39.30808-6/295958494_589272609238694_7200601012329706119_n.jpg?_nc_cat=1&ccb=1-7&_nc_sid=8bfeb9&_nc_ohc=q-NoZjKZEgcAX_2F8Qi&_nc_ht=scontent.fsgn2-3.fna&oh=00_AT8ciHk1eZ1yOS8VYd2wcnToYHC_c14ohW9dT3npSq42TQ&oe=62E3AA8A" />
-                            </a>
+                            {post.image_list && post.image_list.map((image) => 
+                                <a href={image.url}>
+                                <img alt="img1" src={image.url} />
+                            </a>) }
                         </LightGallery>
                     </div>
 
