@@ -11,7 +11,7 @@ export default function UserCard({ title, user }) {
                 </button>
             </div>
             <div class=" mt-[70px] z-10 flex flex-col items-center w-full pb-10">
-                <img class="mb-3 w-24 h-24 rounded-full shadow-lg" src="https://www.dungplus.com/wp-content/uploads/2019/12/girl-xinh-1-480x600.jpg" alt="Bonnie image" />
+                <img class="mb-3 w-24 h-24 rounded-full shadow-lg object-cover" src="https://www.dungplus.com/wp-content/uploads/2019/12/girl-xinh-1-480x600.jpg" alt="Bonnie image" />
                 <h5 class="mb-1 text-xl font-medium text-gray-900 dark:text-white">Bonnie Green</h5>
                 <span class="text-sm text-gray-500 ">Visual Designer</span>
                 <div class="flex mt-4 space-x-3 lg:mt-6">

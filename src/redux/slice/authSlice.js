@@ -38,6 +38,7 @@ export const authSlice = createSlice({
         },
         refresh_register(state) {
             state.registerError = "";
+            state.isRegister = false;
         }
     },
     extraReducers:(builder)=>{

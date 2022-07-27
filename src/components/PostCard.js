@@ -26,8 +26,8 @@ export default function PostCard() {
                             Lorem ipsum, dolor sit amet conse. Saepe optio minus rem dolor sit amet!
                         </p>
                         <LightGallery speed={500} plugins={[lgThumbnail, lgZoom]} mode="lg-lollipop">
-                            <a href="https://i.vietgiaitri.com/2020/1/2/dan-gai-xinh-vua-tron-18-tuoi-hot-nhat-hien-nay-nguoi-thi-goi-cam-ke-dang-yeu-het-phan-thien-ha-41f611.jpg">
-                                <img alt="img1" src="https://i.vietgiaitri.com/2020/1/2/dan-gai-xinh-vua-tron-18-tuoi-hot-nhat-hien-nay-nguoi-thi-goi-cam-ke-dang-yeu-het-phan-thien-ha-41f611.jpg" />
+                            <a href="https://scontent.fsgn2-3.fna.fbcdn.net/v/t39.30808-6/295958494_589272609238694_7200601012329706119_n.jpg?_nc_cat=1&ccb=1-7&_nc_sid=8bfeb9&_nc_ohc=q-NoZjKZEgcAX_2F8Qi&_nc_ht=scontent.fsgn2-3.fna&oh=00_AT8ciHk1eZ1yOS8VYd2wcnToYHC_c14ohW9dT3npSq42TQ&oe=62E3AA8A">
+                                <img alt="img1" src="https://scontent.fsgn2-3.fna.fbcdn.net/v/t39.30808-6/295958494_589272609238694_7200601012329706119_n.jpg?_nc_cat=1&ccb=1-7&_nc_sid=8bfeb9&_nc_ohc=q-NoZjKZEgcAX_2F8Qi&_nc_ht=scontent.fsgn2-3.fna&oh=00_AT8ciHk1eZ1yOS8VYd2wcnToYHC_c14ohW9dT3npSq42TQ&oe=62E3AA8A" />
                             </a>
                         </LightGallery>
                     </div>
