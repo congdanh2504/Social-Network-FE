@@ -8,7 +8,9 @@ import Chat from './pages/Chat';
 import PublicRoute from './components/common/PublicRoute';
 import PrivateRoute from './components/common/PrivateRoute';
 import 'antd/dist/antd.css';
+
 function App() {
+
   return (
     <Provider store={store}>
       <BrowserRouter>

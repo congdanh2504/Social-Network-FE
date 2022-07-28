@@ -73,7 +73,7 @@ export default function UploadCard() {
     return (
         <div className="flex flex-col rounded-[15px] border-2 border-gray-200 w-full p-[15px] bg-white">
             <div className='flex flex-row items-center gap-[20px]'>
-                <img class="w-12 h-12 rounded-full" src={user.avt ? user.avt : defaultAvt} alt="Rounded avatar"></img>
+                <img class="w-12 h-12 rounded-full object-cover" src={user.avt ? user.avt : defaultAvt} alt="Rounded avatar"></img>
 
                 <input onChange={(e) => {
                     setPost({title: e.target.value, description: e.target.value})
