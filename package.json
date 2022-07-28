@@ -9,6 +9,7 @@
     "@testing-library/user-event": "^13.5.0",
     "antd": "^4.21.7",
     "axios": "^0.27.2",
+    "bootstrap": "^5.2.0",
     "emoji-picker-react": "^3.5.1",
     "javascript-time-ago": "^2.5.7",
     "lightgallery": "^2.5.0",

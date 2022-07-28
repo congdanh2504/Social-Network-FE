@@ -8,6 +8,7 @@ import Chat from './pages/Chat';
 import PublicRoute from './components/common/PublicRoute';
 import PrivateRoute from './components/common/PrivateRoute';
 import 'antd/dist/antd.css';
+import Profile from './pages/Profile';
 function App() {
   return (
     <Provider store={store}>
@@ -16,6 +17,7 @@ function App() {
           <Route index path='/' element={<PublicRoute><Login /></PublicRoute>} />
           <Route path='/home' element={<PrivateRoute><Home /></PrivateRoute>} />
           <Route path='/chat' element={<PrivateRoute><Chat /></PrivateRoute>} />
+          <Route path='/profile' element={<PrivateRoute><Profile /></PrivateRoute>} />
         </Routes>
       </BrowserRouter>
     </Provider>
