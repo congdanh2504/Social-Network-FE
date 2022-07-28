@@ -1,6 +1,6 @@
 import React, { useMemo, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { Select, Spin } from 'antd';
 import debounce from 'lodash/debounce';
 import { ReactComponent as Logo } from "../../assets/images/Logo.svg";
@@ -25,7 +25,6 @@ export default function Header({ styles }) {
     const handelLogout = () => {
         dispatch(authSlice.actions.refresh_user());
         logOut();
-        navigate('/');
     }
 
     function DebounceSelect({ fetchOptions, debounceTimeout = 800, ...props }) {
@@ -93,7 +92,7 @@ export default function Header({ styles }) {
     return (
         <div className={`z-50 top-0 header-top-navigation px-[12px] flex flex-row justify-evenly w-full h-[58px] items-center border-b-[1px] bg-white`}>
             <div className='header-top-left w-[300px] flex flex-row gap-[20px]'>
-                <Logo className="w-[40px] h-[40px]" />
+                <Link to="/home"><Logo className="w-[40px] h-[40px]" /></Link>
                 <div class="flex items-center">
                     <label for="simple-search" class="sr-only">Search</label>
                     <div class="relative">
@@ -116,9 +115,9 @@ export default function Header({ styles }) {
                 </div>
             </div>
             <div className={`header-top-center flex flex-row flex-1 items-center justify-between mx-[90px]`}>
-                <div className='px-[40px] py-[10px] border-b-[5px] border-blue-500 cursor-pointer'>
+                <Link to="/home" className='px-[40px] py-[10px] border-b-[5px] border-blue-500 cursor-pointer'>
                     <Home className="w-[25px] h-[25px] fill-blue-500" />
-                </div>
+                </Link>
                 <div className='px-[40px] py-[10px]'>
                     <Friend className="w-[25px] h-[25px] fill-gray-300" />
                 </div>

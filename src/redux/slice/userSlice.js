@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { setUser } from "../../service/common";
+import { logOut, setUser } from "../../service/common";
 import { getProfile, createPost } from "../../service/userService/userApi";
 
 const initialState = {
@@ -49,6 +49,7 @@ export const userSlide = createSlice({
         builder.addCase(getUser.rejected, (state, action)=>{
             state.loading = false;
             state.error = action.error;
+            logOut();
         })
         builder.addCase(createPostAction.pending, (state)=>{
             state.loading = true;

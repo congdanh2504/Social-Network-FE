@@ -1,3 +1,5 @@
+export const BASE_URL = "http://localhost:8080/api/v1/";
+
 export const getUser = () => {
     const user = localStorage.getItem("user")
     if (user) {return JSON.parse(user)};
@@ -21,4 +23,5 @@ export const logOut = () => {
     localStorage.removeItem("user");
     localStorage.removeItem("access_token");
     localStorage.removeItem("refresh_token");
+    window.location.replace(window.location.origin)
 }

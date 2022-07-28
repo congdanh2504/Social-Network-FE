@@ -1,9 +1,10 @@
 import axios from "axios";
+import { BASE_URL } from "../common";
 
 export const userLoginApi = async (data) => {
     return await axios({
         method: 'POST',
-        url: 'http://localhost:8080/api/v1/users/login',
+        url: `${BASE_URL}users/login`,
         data: data
     }).then((response) => response.data);
 }
@@ -11,7 +12,7 @@ export const userLoginApi = async (data) => {
 export const userRegisterApi = async (data) => {
     return await axios({
         method: 'POST',
-        url: 'http://localhost:8080/api/v1/users/register',
+        url: `${BASE_URL}users/register`,
         data: data
     }).then((response) => response.data);
 }
