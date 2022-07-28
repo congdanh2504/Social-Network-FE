@@ -8,6 +8,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import { createPostAction, userSlide } from '../../redux/slice/userSlice';
 import LoadingGi from "../../assets/Loading.gif";
 import { getPostsAction } from '../../redux/slice/postSlice';
+import { Input } from 'antd';
+const { TextArea } = Input;
 
 export default function UploadCard() {
     const user = getUser();
@@ -20,8 +22,7 @@ export default function UploadCard() {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        console.log(error)
-        if (error !== "") toast.error("Post error")
+        if (error !== "") toast.error(error)
     }, [error])
 
     useEffect(() => {
@@ -75,9 +76,9 @@ export default function UploadCard() {
             <div className='flex flex-row items-center gap-[20px]'>
                 <img class="w-12 h-12 rounded-full object-cover" src={user.avt ? user.avt : defaultAvt} alt="Rounded avatar"></img>
 
-                <input onChange={(e) => {
+                <TextArea rows={3} onChange={(e) => {
                     setPost({title: e.target.value, description: e.target.value})
-                }} type="search" id="default-search" class="block p-4 pl-10 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 focus:outline-none" placeholder="Say something ..." required />
+                }} type="search" id="default-search" class="block p-4 pl-10 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 focus:outline-none" placeholder={`What's on your mind, ${user.firstName}?`} required />
             </div>
             <ToastContainer/>
             
