@@ -9,14 +9,13 @@ import { ReactComponent as Friend } from "../../assets/icons/Friend.svg";
 import { ReactComponent as Video } from "../../assets/icons/Video.svg";
 import { ReactComponent as Game } from "../../assets/icons/Game.svg";
 import { ReactComponent as Comment } from "../../assets/icons/Comment.svg";
-import { ReactComponent as Bell } from "../../assets/icons/Bell.svg";
 import { ReactComponent as Down } from "../../assets/icons/Down.svg";
 import { authSlice } from '../../redux/slice/authSlice';
 import { getUser, logOut } from '../../service/common';
 import defaultAvt from "../../assets/images/defaultAvt.png"
 import { Option } from 'antd/lib/mentions';
 
-export default function Header({ styles }) {
+export default function HeaderPage({ styles }) {
     const dispatch = useDispatch();
     const user = getUser();
     let navigate = useNavigate();
@@ -136,10 +135,6 @@ export default function Header({ styles }) {
                 <div className='w-[40px] h-[40px] rounded-full bg-gray-300 flex items-center justify-center cursor-pointer hover:bg-blue-400 hover:fill-white'>
                     <Comment className="w-[20px] h-[20px]" />
                 </div>
-                {/*  <div className='w-[40px] h-[40px] rounded-full bg-gray-300 flex items-center justify-center'>
-                    <Bell className="w-[20px] h-[20px] fill-black-300"/>
-                </div> */}
-
                 <div onClick={handelLogout} className='w-[40px] h-[40px] rounded-full bg-gray-300 flex items-center justify-center hover:bg-blue-400 hover:fill-white'>
                     <Down className="w-[20px] h-[20px] fill-black-300" />
                 </div>

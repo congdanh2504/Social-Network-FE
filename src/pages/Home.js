@@ -20,11 +20,10 @@ export default function Home() {
 
     return (
         <div className='relative Container w-full bg-[#f0f2f5]'>
-            <Header />
-            <div className='Container__content flex-1 flex h-[100vh] flex-row mx-[12px] mt-[12px]'>
+            <div className='Container__content flex-1 flex h-[100vh] flex-row mt-[12px]'>
                 <div className='Container__content__left flex flex-col gap-[15px] w-[300px] overflow-hidden hover:overflow-auto box-border'>
-                    <div class="max-w-sm rounded overflow-hidden shadow-lg">
-                        <img class="w-full" src="/img/card-top.jpg" alt="Sunset in the mountains" />
+                    <div class="max-w-sm rounded overflow-hidden shadow-lg h-[300px]">
+                        <img class="w-full" src="https://images.unsplash.com/photo-1568605114967-8130f3a36994?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80" alt="Sunset in the mountains" />
                         <div class="px-6 py-4">
                             <div class="font-bold text-xl mb-2">The Coldest Sunset</div>
                             <p class="text-gray-700 text-base">
@@ -39,7 +38,7 @@ export default function Home() {
                     </div>
                     <ListPost title="Latest Post" />
                 </div>
-                <div className='Container__content__center overflow-y-auto flex-1 mx-[50px]'>
+                <div className='Container__content__center overflow-y-auto flex-1 mx-[10px]'>
                     <UploadCard />
                     {posts && posts.map((post) => <PostCard post={post} />)}
                 </div>
