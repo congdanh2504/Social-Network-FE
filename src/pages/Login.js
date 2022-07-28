@@ -7,6 +7,7 @@ import LoadingGi from "../assets/Loading.gif";
 import { authSlice, getLogin, register } from '../redux/slice/authSlice';
 import { getUser } from '../redux/slice/userSlice';
 import { Button, Form, Input } from 'antd';
+import { socket } from '../App';
 
 export default function Login() {
     const navigate = useNavigate();

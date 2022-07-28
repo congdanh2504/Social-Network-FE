@@ -5,6 +5,7 @@ import { getProfile, createPost } from "../../service/userService/userApi";
 const initialState = {
     loading: false,
     error: "",
+    user: {},
     isPostSuccess: false
 }
 
@@ -42,6 +43,7 @@ export const userSlide = createSlice({
         })
         builder.addCase(getUser.fulfilled, (state, action)=>{
             state.loading = false;
+            state.user = action.payload
             setUser(action.payload);
         })
         builder.addCase(getUser.rejected, (state, action)=>{

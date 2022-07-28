@@ -1,15 +1,45 @@
-import React, { useState } from 'react'
+import React, { useMemo, useRef, useState } from 'react'
 import Header from '../components/common/Header'
 import Picker from 'emoji-picker-react';
-export default function Chat() {
+import { ReactComponent as Video } from "../assets/icons/Video.svg";
+import { Peer } from "peerjs"
+import { Button } from 'antd';
+import { io } from "socket.io-client";
+import { getUser } from '../service/common';
 
+export default function Chat() {
     const [emojiClose, setEmojiClose] = useState(false)
     const [chosenEmoji, setChosenEmoji] = useState(null);
+    const [videoOpen, setVideoOpen] = useState(false)
+    const [peerId, setpeerId] = useState()
+    const user = getUser();
+
+    //const socket= io()
+
+    const peer = new Peer();
+    peer.on('open', id => setpeerId(id))
+
+    const openStream = () => {
+        const config = { audio: false, video: true };
+        return navigator.mediaDevices.getUserMedia(config);
+    }
+
+    const playStream = (idVideoTag, stream) => {
+        const video = document.getElementById(idVideoTag);
+        video.srcObject = stream;
+        video.play();
+    }
+
+    const handleButtonCall = () => {
+        setVideoOpen(!videoOpen)
+        openStream().then(stream => {
+            playStream("localStream", stream)
+        })
+    }
 
     const onEmojiClick = (event, emojiObject) => {
         setChosenEmoji(emojiObject);
     };
-
 
     return (
         <div className="flex flex-col h-[100vh]">
@@ -63,37 +93,44 @@ export default function Chat() {
                     </ul>
                 </div>
                 <div className="flex-1 flex flex-col">
-                    <div className="flex items-center p-3 border-b border-gray-300">
-                        <img className="object-cover w-10 h-10 rounded-full" src="https://cdn.pixabay.com/photo/2018/01/15/07/51/woman-3083383__340.jpg" alt="username" />
-                        <span className="block ml-2 font-bold text-gray-600">Emma</span>
-                        <span className="absolute w-3 h-3 bg-green-600 rounded-full left-10 top-3">
-                        </span>
+                    <div className="flex flex-row items-center justify-between p-3 border-b border-gray-300">
+                        <div className="flex flex-row items-center">
+                            <img className="object-cover w-10 h-10 rounded-full" src="https://cdn.pixabay.com/photo/2018/01/15/07/51/woman-3083383__340.jpg" alt="username" />
+                            <span className="block ml-2 font-bold text-gray-600">Emma</span>
+                        </div>
+                        <Button onClick={handleButtonCall} type='default' shape="round" icon={<Video className="w-[25px] h-[25px] fill-blue-500" />} />
                     </div>
-                    <div className="flex-1 p-6 overflow-y-auto">
-                        <ul className="space-y-2">
-                            <li className="flex justify-start">
-                                <div className="relative max-w-xl px-4 py-2 text-gray-700 rounded shadow">
-                                    <span className="block">Hi</span>
-                                </div>
-                            </li>
-                            <li className="flex justify-end">
-                                <div className="relative max-w-xl px-4 py-2 text-gray-700 bg-gray-100 rounded shadow">
-                                    <span className="block">Hiiii</span>
-                                </div>
-                            </li>
-                            <li className="flex justify-end">
-                                <div className="relative max-w-xl px-4 py-2 text-gray-700 bg-gray-100 rounded shadow">
-                                    <span className="block">how are you?</span>
-                                </div>
-                            </li>
-                            <li className="flex justify-start">
-                                <div className="relative max-w-xl px-4 py-2 text-gray-700 rounded shadow">
-                                    <span className="block">Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                                    </span>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
+                    {
+                        videoOpen ? (<div className="flex-1 overflow-y-auto flex justify-center items-center">
+                            <video id='localStream' className="w-[80%]" />
+                        </div>) : (
+                            <div className="flex-1 p-6 overflow-y-auto">
+                                <ul className="space-y-2">
+                                    <li className="flex justify-start">
+                                        <div className="relative max-w-xl px-4 py-2 text-gray-700 rounded shadow">
+                                            <span className="block">Hi</span>
+                                        </div>
+                                    </li>
+                                    <li className="flex justify-end">
+                                        <div className="relative max-w-xl px-4 py-2 text-gray-700 bg-gray-100 rounded shadow">
+                                            <span className="block">Hiiii</span>
+                                        </div>
+                                    </li>
+                                    <li className="flex justify-end">
+                                        <div className="relative max-w-xl px-4 py-2 text-gray-700 bg-gray-100 rounded shadow">
+                                            <span className="block">how are you?</span>
+                                        </div>
+                                    </li>
+                                    <li className="flex justify-start">
+                                        <div className="relative max-w-xl px-4 py-2 text-gray-700 rounded shadow">
+                                            <span className="block">Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+                                            </span>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        )
+                    }
                     <div className="flex gap-[10px] items-center justify-between w-full p-3 border-t border-gray-300">
                         <button onClick={() => setEmojiClose(!emojiClose)} >
                             <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
