@@ -1,6 +1,8 @@
-import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useMemo, useRef, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom'
+import { Select, Spin } from 'antd';
+import debounce from 'lodash/debounce';
 import { ReactComponent as Logo } from "../../assets/images/Logo.svg";
 import { ReactComponent as Home } from "../../assets/icons/Home.svg";
 import { ReactComponent as Friend } from "../../assets/icons/Friend.svg";
@@ -12,21 +14,70 @@ import { ReactComponent as Down } from "../../assets/icons/Down.svg";
 import { authSlice } from '../../redux/slice/authSlice';
 import { getUser, logOut } from '../../service/common';
 import defaultAvt from "../../assets/images/defaultAvt.png"
-import { DebounceInput } from 'react-debounce-input'
-import { searchUserAction } from '../../redux/slice/userSlice';
+import { Option } from 'antd/lib/mentions';
+import { searchUsers } from '../../service/userService/userApi';
 
-export default function Header({styles}) {
+export default function Header({ styles }) {
     const dispatch = useDispatch();
-    const users = useSelector((state) => state.user.users);
     const user = getUser();
+    const [value, setValue] = useState([]);
 
     const logOutHandle = ()=>{
         dispatch(authSlice.actions.refresh_user());
         logOut();
     }
 
-    const searchHandle = async (e) => {
-        dispatch(searchUserAction(e.target.value))
+    function DebounceSelect({ fetchOptions, debounceTimeout = 800, ...props }) {
+        const [fetching, setFetching] = useState(false);
+        const [options, setOptions] = useState([]);
+        const fetchRef = useRef(0);
+        const debounceFetcher = useMemo(() => {
+            const loadOptions = (value) => {
+                fetchRef.current += 1;
+                const fetchId = fetchRef.current;
+                setOptions([]);
+                setFetching(true);
+                fetchOptions(value).then((newOptions) => {
+                    if (fetchId !== fetchRef.current) {
+                        return;
+                    }
+
+                    setOptions(newOptions);
+                    setFetching(false);
+                });
+            };
+
+            return debounce(loadOptions, debounceTimeout);
+        }, [fetchOptions, debounceTimeout]);
+        return (
+            <Select
+                labelInValue
+                filterOption={false}
+                onSearch={debounceFetcher}
+                notFoundContent={fetching ? <div className='w-[100%] flex items-center'>
+                    <Spin size="default" />
+                </div> : null}
+                {...props}
+            >
+                {options.map((user, index) => {
+                    return (
+                        <Option>
+                            <Link to={`/users/${user.username}`} className='flex flex-row h-[70px] items-center '>
+                                <img class="w-[50px] h-[50px] rounded-full object-cover" src={user.avt ? user.avt : defaultAvt} alt="" />
+                                <div class="flex flex-col justify-center pl-[5px]">
+                                    <span class="text-[15px] font-bold text-gray-900">{`${user.firstName} ${user.lastName}`}</span>
+                                    <p class="font-normal text-gray-700 ">{user.username}</p>
+                                </div>
+                            </Link>
+                        </Option>
+                    )
+                })}
+            </Select>
+        );
+    }
+
+    async function fetchUserList(username)  {
+        return username ? await searchUsers(username) : [];
     }
 
     return (
@@ -39,7 +90,18 @@ export default function Header({styles}) {
                         <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
                             <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path></svg>
                         </div>
-                        <DebounceInput minLength={1} debounceTimeout={500} onChange={searchHandle} type="text" id="simple-search" class="bg-gray-50  border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block pl-10 p-2.5 focus:outline-none" placeholder="Search" required />
+                        <DebounceSelect
+                            mode="multiple"
+                            value={value}
+                            placeholder="Select users"
+                            fetchOptions={fetchUserList}
+                            onChange={(newValue) => {
+                                setValue(newValue);
+                            }}
+                            style={{
+                                width: '300px',
+                            }}
+                        />
                     </div>
                 </div>
             </div>

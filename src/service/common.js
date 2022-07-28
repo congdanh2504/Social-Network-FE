@@ -2,10 +2,7 @@ export const BASE_URL = "http://localhost:8080/api/v1/";
 
 export const getUser = () => {
     const user = localStorage.getItem("user")
-    if (user) {
-        
-        return JSON.parse(user)
-    };
+    if (user) {return JSON.parse(user)};
     return null;
 }
 
