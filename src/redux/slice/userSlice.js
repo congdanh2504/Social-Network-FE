@@ -1,19 +1,19 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { logOut, setUser } from "../../service/common";
-import { getProfile, createPost } from "../../service/userService/userApi";
+import { getProfile, createPost, searchUsers } from "../../service/userService/userApi";
 
 const initialState = {
     loading: false,
     error: "",
-    user: {},
+    users: [],
     isPostSuccess: false
 }
 
-export const getUser = createAsyncThunk('user/getUser', async() => {
-    try{
+export const getUser = createAsyncThunk('user/getUser', async () => {
+    try {
         const res = await getProfile();
         return res;
-    } catch(error){
+    } catch (error) {
         return Promise.reject(error)
     }
 })
@@ -23,8 +23,17 @@ export const createPostAction = createAsyncThunk('user/post', async({post, selec
         const res = await createPost(post, selectedFiles);
         return res;
     } catch(error){
-        return Promise.reject(error)
+        return Promise.reject(error);
     }
+})
+
+export const searchUserAction = createAsyncThunk('user/searchUser', async (username) => {
+    try {
+        const res = await searchUsers(username);
+        return res;
+    } catch (error) {
+        return Promise.reject(error);
+    } 
 })
 
 export const userSlide = createSlice({
@@ -43,7 +52,6 @@ export const userSlide = createSlice({
         })
         builder.addCase(getUser.fulfilled, (state, action)=>{
             state.loading = false;
-            state.user = action.payload
             setUser(action.payload);
         })
         builder.addCase(getUser.rejected, (state, action)=>{
@@ -61,6 +69,17 @@ export const userSlide = createSlice({
         builder.addCase(createPostAction.rejected, (state, action)=>{
             state.loading = false;
             state.isPostSuccess = false;
+            state.error = action.error;
+        })
+        builder.addCase(searchUserAction.pending, (state)=>{
+            state.loading = true;
+        })
+        builder.addCase(searchUserAction.fulfilled, (state, action)=>{
+            state.loading = false;
+            state.users = action.payload
+        })
+        builder.addCase(searchUserAction.rejected, (state, action)=>{
+            state.loading = false;
             state.error = action.error;
         })
     }
