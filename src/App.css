@@ -18,3 +18,11 @@
     padding: 0.75rem;
     
   }
+
+button:disabled {
+  background-color: #272c34;
+}
+
+button[disabled]:hover {
+  background-color: #272c34;
+}

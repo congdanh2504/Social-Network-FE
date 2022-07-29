@@ -119,14 +119,14 @@ export default function HeaderPage({ styles }) {
                 </div>
             </div>
             <div className='header-top-right w-[300px] flex flex-row justify-end gap-[15px] items-center'>
-                <div className='flex flex-row items-center px-[10px] py-[5px] hover:bg-blue-400 hover:text-white rounded-[30px] cursor-pointer'>
+                <Link to="/home" className='flex flex-row items-center px-[10px] py-[5px] hover:bg-blue-400 hover:text-white rounded-[30px] cursor-pointer'>
                     <img className="w-9 h-9 rounded-full object-cover" src={user.avt ? user.avt : defaultAvt} alt="Rounded avatar" />
                     <span className='ml-[10px] font-bold'>{user.firstName}</span>
-                </div>
+                </Link>
                 <div className='w-[40px] h-[40px] rounded-full bg-gray-300 flex items-center justify-center cursor-pointer hover:bg-blue-400 hover:fill-white'>
                     <Comment className="w-[20px] h-[20px]" />
                 </div>
-                <div onClick={handelLogout} className='w-[40px] h-[40px] rounded-full bg-gray-300 flex items-center justify-center hover:bg-blue-400 hover:fill-white'>
+                <div onClick={logOutHandle} className='w-[40px] h-[40px] rounded-full bg-gray-300 flex items-center justify-center hover:bg-blue-400 hover:fill-white'>
                     <Down className="w-[20px] h-[20px] fill-black-300" />
                 </div>
             </div>

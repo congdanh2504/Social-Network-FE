@@ -1,6 +1,13 @@
 import React from 'react'
+import TimeAgo from 'javascript-time-ago'
+import en from 'javascript-time-ago/locale/en'
+import defaultAvt from '../assets/images/defaultAvt.png'
+
+TimeAgo.addDefaultLocale(en)
 
 export default function ListPost({title, data}) {
+
+
     return (
         <div class="w-[300px] p-4 max-w-md bg-white rounded-lg border shadow-md sm:p-8">
             <div class="flex justify-between items-center mb-4">
@@ -14,11 +21,11 @@ export default function ListPost({title, data}) {
                     <li class="py-3 sm:py-4">
                         <div class="flex items-center space-x-4">
                             <div class="flex-shrink-0">
-                                <img class="w-8 h-8 rounded-full" src="https://i.pinimg.com/736x/68/7f/f5/687ff58b82cf34da0cd1369598f22104.jpg" alt="Neil image" />
+                                <img class="w-8 h-8 rounded-full" src="https://i.pinimg.com/736x/68/7f/f5/687ff58b82cf34da0cd1369598f22104.jpg" alt="Bonnie image" />
                             </div>
                             <div class="flex-1 min-w-0">
                                 <p class="text-sm font-medium text-gray-900 truncate dark:text-white">
-                                    Neil Sims
+                                    Bonnie Green
                                 </p>
                                 <p class="text-sm text-gray-500 truncate dark:text-gray-400">
                                     email@windster.com

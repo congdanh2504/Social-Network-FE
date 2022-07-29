@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react'
-import Header from '../components/common/Header';
 import ListPost from '../components/ListPost';
 import PostCard from '../components/PostCard';
 import UploadCard from '../components/Upload/UploadCard';
-import UserCard from '../components/UserCard';
 import { useDispatch, useSelector } from 'react-redux'
-import { getPostsAction } from '../redux/slice/postSlice';
+import { getLatestPostsAction, getPostsAction } from '../redux/slice/postSlice';
+import SliderAndNav from '../components/common/SliderAndNav';
+import LatestPosts from '../components/LatestPosts';
 
 export default function Home() {
 
@@ -13,12 +13,14 @@ export default function Home() {
     const loading = useSelector((state) => state.post.loading)
     const error = useSelector((state) => state.post.error)
     const posts = useSelector((state) => state.post.posts)
+    const latestPosts = useSelector((state) => state.post.latestPosts)
 
     useEffect(() => {
+        dispatch(getLatestPostsAction())
         dispatch(getPostsAction())
     }, [])
 
-    return (
+    const content = () => (
         <div className='relative Container w-full bg-[#f0f2f5]'>
             <div className='Container__content flex-1 flex h-[100vh] flex-row mt-[12px]'>
                 <div className='Container__content__left flex flex-col gap-[15px] w-[300px] overflow-hidden hover:overflow-auto box-border'>
@@ -36,11 +38,14 @@ export default function Home() {
                             <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#winter</span>
                         </div>
                     </div>
-                    <ListPost title="Latest Post" />
+                    <LatestPosts latestPosts={latestPosts}/>
                 </div>
                 <div className='Container__content__center overflow-y-auto flex-1 mx-[10px]'>
                     <UploadCard />
                     {posts && posts.map((post) => <PostCard post={post} />)}
+                    <a href="#" class="text-sm font-medium text-blue-600 hover:underline dark:text-blue-500">
+                        View more
+                    </a>
                 </div>
                 <div className='Container__content__right overflow-y-auto flex flex-col'>
                     <div className='Container__content__left flex flex-col gap-[15px] w-[300px] h-[100%] overflow-hidden hover:overflow-y-auto'>
@@ -50,5 +55,9 @@ export default function Home() {
                 </div>
             </div>
         </div>
+    )
+
+    return (
+        <SliderAndNav content={content}/>
     )
 }

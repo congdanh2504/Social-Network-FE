@@ -7,7 +7,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { createPostAction, userSlide } from '../../redux/slice/userSlice';
 import LoadingGi from "../../assets/Loading.gif";
-import { getPostsAction } from '../../redux/slice/postSlice';
+import { getLatestPostsAction, getPostsAction } from '../../redux/slice/postSlice';
 import { Input } from 'antd';
 const { TextArea } = Input;
 
@@ -29,6 +29,7 @@ export default function UploadCard() {
         if (isPostSuccess) {
             toast.success("Post successfully")
             dispatch(getPostsAction())
+            dispatch(getLatestPostsAction())
         }
     }, [isPostSuccess])
 
@@ -67,6 +68,7 @@ export default function UploadCard() {
 	};
 
     const onSubmit = () => {
+        setPost({title: "", description: ""})
         dispatch(userSlide.actions.refresh_state())
         dispatch(createPostAction({post, selectedFiles}))
     }
@@ -76,7 +78,7 @@ export default function UploadCard() {
             <div className='flex flex-row items-center gap-[20px]'>
                 <img class="w-12 h-12 rounded-full object-cover" src={user.avt ? user.avt : defaultAvt} alt="Rounded avatar"></img>
 
-                <TextArea rows={3} onChange={(e) => {
+                <TextArea value={post.title} rows={3} onChange={(e) => {
                     setPost({title: e.target.value, description: e.target.value})
                 }} type="search" id="default-search" class="block p-4 pl-10 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 focus:outline-none" placeholder={`What's on your mind, ${user.firstName}?`} required />
             </div>
@@ -84,19 +86,14 @@ export default function UploadCard() {
             
             <div className="result">{renderPhotos(selectedFilesPre)}</div>
             <div className='flex flex-row gap-[10px] mt-[20px] justify-end'>
-                {
-                    loading && <div className='items-center'>
-                        <img className='w-[30px] h-[30px]' src={LoadingGi} />
-                    </div>
-                }
                 <label class="flex flex-row items-center rounded-full shadow-lg cursor-pointer hover:bg-green-500 hover:text-white text-center">
                     <span class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full">
                         Images
                     </span>
                     <input type='file' class="hidden" multiple onChange={handleImageChange}  />
                 </label>
-                <button onClick={onSubmit} class="bg-blue-500 hover:bg-blue-700 text-white font-bold  shadow-lg py-2 px-4 rounded-full">
-                    Share
+                <button disabled={loading} onClick={onSubmit} class="bg-blue-500 hover:bg-blue-700 text-white font-bold  shadow-lg py-2 px-4 rounded-full">
+                    {loading && <span className="fa fa-refresh fa-spin"></span>}{" "}Share
                 </button>
             </div>
         </div>
