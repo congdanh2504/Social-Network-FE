@@ -8,7 +8,6 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  height: 100vh;
 }
 
 
@@ -40,4 +39,7 @@ code {
 
 .site-layout .site-layout-background {
   background: #fff;
+}
+.ant-upload.ant-upload-select{
+  width: 100%;
 }

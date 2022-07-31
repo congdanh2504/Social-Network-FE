@@ -77,7 +77,8 @@ export default function SearchItem() {
                 setValue(newValue);
             }}
             style={{
-                width: '300px',
+                width: '310px',
+                marginLeft: '15px'
             }}
         />
     )

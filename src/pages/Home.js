@@ -19,7 +19,7 @@ export default function Home() {
     }, [])
 
     return (
-        <div className='relative Container w-full bg-[#f0f2f5]'>
+        <div className='relative Container w-full bg-[#f0f2f5] px-[10px]'>
             <div className='Container__content flex-1 flex h-[100vh] flex-row mt-[12px]'>
                 <div className='Container__content__left flex flex-col gap-[15px] w-[300px] overflow-hidden hover:overflow-auto box-border'>
                     <div class="max-w-sm rounded overflow-hidden shadow-lg h-[300px]">

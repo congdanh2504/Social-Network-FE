@@ -33,18 +33,18 @@ export default function Login() {
     })
 
     const handleOnLoginChange = (event) => {
-        setLoginUser({...loginUser, [event.target.name] : event.target.value})
+        setLoginUser({ ...loginUser, [event.target.name]: event.target.value })
     }
 
     const handleOnRegisterChange = (event) => {
-        setRegisterUser({...registerUser, [event.target.name] : event.target.value})
+        setRegisterUser({ ...registerUser, [event.target.name]: event.target.value })
     }
 
     useEffect(() => {
-        if(isLogin){
+        if (isLogin) {
             dispatch(getUser())
         }
-    }, [isLogin])  
+    }, [isLogin])
 
     useEffect(() => {
         if (!getProfileLoading && isLogin)
@@ -56,13 +56,13 @@ export default function Login() {
         setOpen(true)
     }
 
-    const registerHandle = () => {   
+    const registerHandle = () => {
         dispatch(authSlice.actions.refresh_register())
         dispatch(register(registerUser))
         setOpen(true)
     }
 
-    const handelClose = () =>{
+    const handelClose = () => {
         setOpen(false)
     }
 
@@ -88,11 +88,11 @@ export default function Login() {
                             ]}
                         >
                             <div className="text-center text-sm text-grey-dark mt-4">
-                                <Input 
-                                    onChange={handleOnLoginChange} 
-                                    className='shadow appearance-none border-b rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' 
+                                <Input
+                                    onChange={handleOnLoginChange}
+                                    className='shadow appearance-none border-b rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
                                     name="username"
-                                    placeholder="User Name"/>
+                                    placeholder="User Name" />
                             </div>
 
                         </Form.Item>
@@ -107,12 +107,12 @@ export default function Login() {
                             ]}
                         >
                             <div className="text-center text-sm text-grey-dark mt-4">
-                                <Input 
+                                <Input
                                     type="password"
-                                    onChange={handleOnLoginChange} 
-                                    className='block border border-grey-light w-full p-3 rounded mb-4 ' 
+                                    onChange={handleOnLoginChange}
+                                    className='block border border-grey-light w-full p-3 rounded mb-4 '
                                     name="password"
-                                    placeholder="Password"/>
+                                    placeholder="Password" />
                             </div>
 
                         </Form.Item>
@@ -126,10 +126,10 @@ export default function Login() {
                         </Form.Item>
 
                     </Form>
-                  
+
                 </div>
                 {
-                     (loginError && open) && <div id="toast-danger " class="flex fixed bottom-[40px] left-[20px] items-center p-4 mb-4 w-full max-w-xs text-gray-500 bg-white rounded-lg shadow dark:text-gray-400 dark:bg-gray-800" role="alert">
+                    (loginError && open) && <div id="toast-danger " class="flex fixed bottom-[40px] left-[20px] items-center p-4 mb-4 w-full max-w-xs text-gray-500 bg-white rounded-lg shadow dark:text-gray-400 dark:bg-gray-800" role="alert">
                         <div class="inline-flex flex-shrink-0 justify-center items-center w-8 h-8 text-red-500 bg-red-100 rounded-lg dark:bg-red-800 dark:text-red-200">
                             <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
                             <span class="sr-only">Error icon</span>
@@ -142,7 +142,7 @@ export default function Login() {
                     </div>
                 }
                 {
-                     (registerError && open) && <div id="toast-danger" class="flex fixed bottom-[40px] left-[20px] items-center p-4 mb-4 w-full max-w-xs text-gray-500 bg-white rounded-lg shadow dark:text-gray-400 dark:bg-gray-800" role="alert">
+                    (registerError && open) && <div id="toast-danger" class="flex fixed bottom-[40px] left-[20px] items-center p-4 mb-4 w-full max-w-xs text-gray-500 bg-white rounded-lg shadow dark:text-gray-400 dark:bg-gray-800" role="alert">
                         <div class="inline-flex flex-shrink-0 justify-center items-center w-8 h-8 text-red-500 bg-red-100 rounded-lg dark:bg-red-800 dark:text-red-200">
                             <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
                             <span class="sr-only">Error icon</span>
@@ -181,135 +181,135 @@ export default function Login() {
                             <div className="container max-w-[600px] h-full flex-1 flex flex-col items-center justify-center px-2">
                                 <div className="bg-white px-6 py-8  text-black w-full rounded-[15px] drop-shadow-lg">
                                     <h1 className="mb-8 text-3xl text-center font-[700]">Create An Account</h1>
-                                        <Form
-                                            onFinish={registerHandle}
-                                            autoComplete="off">
-                                            <Form.Item
+                                    <Form
+                                        onFinish={registerHandle}
+                                        autoComplete="off">
+                                        <Form.Item
+                                            name="username"
+                                            rules={[
+                                                {
+                                                    required: true,
+                                                    message: 'Please input your username!',
+                                                },
+                                            ]}
+                                        >
+                                            <Input
+                                                onChange={handleOnRegisterChange}
+                                                className='block border border-grey-light w-full p-3 rounded mb-4 '
                                                 name="username"
-                                                rules={[
-                                                    {
-                                                        required: true,
-                                                        message: 'Please input your username!',
-                                                    },
-                                                ]}
-                                            >
-                                                <Input 
-                                                    onChange={handleOnRegisterChange} 
-                                                    className='block border border-grey-light w-full p-3 rounded mb-4 ' 
-                                                    name="username"
-                                                    placeholder="User Name"/>
+                                                placeholder="User Name" />
 
-                                            </Form.Item>
+                                        </Form.Item>
 
-                                            <Form.Item
+                                        <Form.Item
+                                            name="email"
+                                            rules={[
+                                                {
+                                                    required: true,
+                                                    type: 'email',
+                                                    message: 'Must be email address!',
+                                                }
+                                            ]}
+                                        >
+                                            <Input
+                                                type="email"
+                                                onChange={handleOnRegisterChange}
+                                                className='block border border-grey-light w-full p-3 rounded mb-4 '
                                                 name="email"
-                                                rules={[
-                                                    {
-                                                        required: true,
-                                                        type: 'email',
-                                                        message: 'Must be email address!',
-                                                    }
-                                                ]}
-                                            >
-                                                <Input 
-                                                    type="email"
-                                                    onChange={handleOnRegisterChange} 
-                                                    className='block border border-grey-light w-full p-3 rounded mb-4 ' 
-                                                    name="email"
-                                                    placeholder="Email"/>
+                                                placeholder="Email" />
 
-                                            </Form.Item>
+                                        </Form.Item>
 
-                                            <Form.Item
+                                        <Form.Item
+                                            name="firstName"
+                                            rules={[
+                                                {
+                                                    required: true,
+                                                    message: 'Please input your first name!',
+                                                }
+                                            ]}
+                                        >
+                                            <Input
+                                                onChange={handleOnRegisterChange}
+                                                className='block border border-grey-light w-full p-3 rounded mb-4 '
                                                 name="firstName"
-                                                rules={[
-                                                    {
-                                                        required: true,
-                                                        message: 'Please input your first name!',
-                                                    }
-                                                ]}
-                                            >
-                                                <Input 
-                                                    onChange={handleOnRegisterChange} 
-                                                    className='block border border-grey-light w-full p-3 rounded mb-4 ' 
-                                                    name="firstName"
-                                                    placeholder="First name"/>
+                                                placeholder="First name" />
 
-                                            </Form.Item>
+                                        </Form.Item>
 
-                                            <Form.Item
+                                        <Form.Item
+                                            name="lastName"
+                                            rules={[
+                                                {
+                                                    required: true,
+                                                    message: 'Please input your last name!',
+                                                }
+                                            ]}
+                                        >
+                                            <Input
+                                                onChange={handleOnRegisterChange}
+                                                className='block border border-grey-light w-full p-3 rounded mb-4 '
                                                 name="lastName"
-                                                rules={[
-                                                    {
-                                                        required: true,
-                                                        message: 'Please input your last name!',
-                                                    }
-                                                ]}
-                                            >
-                                                <Input 
-                                                    onChange={handleOnRegisterChange} 
-                                                    className='block border border-grey-light w-full p-3 rounded mb-4 ' 
-                                                    name="lastName"
-                                                    placeholder="Last name"/>
+                                                placeholder="Last name" />
 
-                                            </Form.Item>
+                                        </Form.Item>
 
-                                            <Form.Item
+                                        <Form.Item
+                                            name="password"
+                                            rules={[
+                                                {
+                                                    required: true,
+                                                    min: 8,
+                                                    message: 'Password must be at least 8 characters',
+                                                }
+                                            ]}
+                                        >
+                                            <Input
+                                                type="password"
+                                                onChange={handleOnRegisterChange}
+                                                className='block border border-grey-light w-full p-3 rounded mb-4 '
                                                 name="password"
-                                                rules={[
-                                                    {
-                                                        required: true,
-                                                        min: 8,
-                                                        message: 'Password must be at least 8 characters',
-                                                    }
-                                                ]}
-                                            >
-                                                <Input 
-                                                    type="password"
-                                                    onChange={handleOnRegisterChange} 
-                                                    className='block border border-grey-light w-full p-3 rounded mb-4 ' 
-                                                    name="password"
-                                                    placeholder="Password"/>
+                                                placeholder="Password" />
 
-                                            </Form.Item>
+                                        </Form.Item>
 
 
-                                            <Form.Item
-                                                name="confirmPassword"
-                                                dependencies={['password']}
-                                                rules={[
-                                                    {
-                                                        required: true,
-                                                        message: 'Please input your confirm password!',
-                                                    },
-                                                    ({ getFieldValue }) => ({
-                                                        validator(_, value) {
-                                                          if (!value || getFieldValue('password') === value) {
+                                        <Form.Item
+                                            name="confirmPassword"
+                                            dependencies={['password']}
+                                            rules={[
+                                                {
+                                                    required: true,
+                                                    message: 'Please input your confirm password!',
+                                                },
+                                                ({ getFieldValue }) => ({
+                                                    validator(_, value) {
+                                                        if (!value || getFieldValue('password') === value) {
                                                             return Promise.resolve();
-                                                          }
-                                            
-                                                          return Promise.reject(new Error('The two passwords that you entered do not match!'));
-                                                        },
-                                                    }),
-                                                ]}
-                                            >
-                                                <Input 
-                                                    type="password"
-                                                    onChange={handleOnRegisterChange} 
-                                                    className='block border border-grey-light w-full p-3 rounded mb-4 ' 
-                                                    name="confirmPassword"
-                                                    placeholder="Confirm password"/>
+                                                        }
 
-                                            </Form.Item>
+                                                        return Promise.reject(new Error('The two passwords that you entered do not match!'));
+                                                    },
+                                                }),
+                                            ]}
+                                        >
+                                            <Input
+                                                type="password"
+                                                onChange={handleOnRegisterChange}
+                                                className='block border border-grey-light w-full p-3 rounded mb-4 '
+                                                name="confirmPassword"
+                                                placeholder="Confirm password" />
 
-                                            <Form.Item>
-                                                <div className="text-center text-sm text-grey-dark mt-4">
-                                                    <Button type="primary" className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' htmlType="submit">
-                                                        Sign Up Now !
-                                                    </Button>
-                                                </div>
-                                            </Form.Item>
-                                        </Form>
+                                        </Form.Item>
+
+                                        <Form.Item>
+                                            <div className="text-center text-sm text-grey-dark mt-4">
+                                                <Button type="primary" className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' htmlType="submit">
+                                                    Sign Up Now !
+                                                </Button>
+                                            </div>
+                                        </Form.Item>
+                                    </Form>
 
                                     <div className="text-center text-sm text-grey-dark mt-4">
                                         By signing up, you agree to the
