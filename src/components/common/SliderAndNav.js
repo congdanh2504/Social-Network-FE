@@ -10,6 +10,7 @@ import {
     UserOutlined,
   } from '@ant-design/icons';
 import { Breadcrumb, Layout, Menu } from 'antd';
+import { Link } from 'react-router-dom';
 const { Header, Content, Sider } = Layout;
 
 function getItem(label, key, icon, children) {
@@ -22,7 +23,7 @@ function getItem(label, key, icon, children) {
 }
 
 const items = [
-  getItem('Home', '1', <HomeFilled />),
+  getItem('Home', '1', <Link to={"/home"}> <HomeFilled /></Link>),
   getItem('Friend', '2', <UserOutlined />),
   getItem('Video', '3', <DesktopOutlined />),
   getItem('Team', '4', <TeamOutlined />, [getItem('Team 1', '6'), getItem('Team 2', '8')]),

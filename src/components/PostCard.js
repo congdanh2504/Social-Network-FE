@@ -10,6 +10,7 @@ import lgZoom from 'lightgallery/plugins/zoom';
 import defaultAvt from '../assets/images/defaultAvt.png'
 import TimeAgo from 'javascript-time-ago'
 import en from 'javascript-time-ago/locale/en'
+import { Link } from 'react-router-dom';
 
 TimeAgo.addDefaultLocale(en)
 
@@ -23,10 +24,10 @@ export default function PostCard({post}) {
     return (
         <div className="flex flex-col bg-white shadow-lg rounded-lg my-4 ">
             <div className="flex w-full items-start px-4 py-6">
-                <img className="w-12 h-12 rounded-full object-cover mr-4 shadow" src={post.user.avt ? post.user.avt : defaultAvt} alt="avatar" />
+                <Link to={`/user/${post.user.username}`} ><img className="w-12 h-12 rounded-full object-cover mr-4 shadow" src={post.user.avt ? post.user.avt : defaultAvt} alt="avatar" /></Link>
                 <div className="flex-1">
                     <div className="flex items-center justify-between">
-                        <h2 className="text-lg font-semibold text-gray-900 -mt-1">{`${post.user.firstName} ${post.user.lastName}`}</h2>
+                       <Link to={`/user/${post.user.username}`} ><h2 className="text-lg font-semibold text-gray-900 -mt-1">{`${post.user.firstName} ${post.user.lastName}`}</h2></Link>
                         <small className="text-sm text-gray-700">{getTimeAgo()}</small>
                     </div>
                     {/* <p className="text-gray-700">Joined 12 SEP 2012. </p> */}
