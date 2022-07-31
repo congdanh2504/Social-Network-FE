@@ -7,10 +7,15 @@ import { resizeFile, urlToFile } from '../../service/image';
 import { ToastContainer, toast } from 'react-toastify';
 import { createPostAction, userSlide } from '../../redux/slice/userSlice';
 import LoadingGi from "../../assets/Loading.gif";
+<<<<<<< HEAD
 import { getPostsAction } from '../../redux/slice/postSlice';
 import { Button, Divider, Input } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { Modal, Upload } from 'antd';
+=======
+import { getLatestPostsAction, getPostsAction } from '../../redux/slice/postSlice';
+import { Input } from 'antd';
+>>>>>>> 7d01e7a4ee0f123f510c5bc841b10ec116325311
 const { TextArea } = Input;
 
 export default function UploadCard() {
@@ -32,6 +37,7 @@ export default function UploadCard() {
         if (isPostSuccess) {
             toast.success("Post successfully")
             dispatch(getPostsAction())
+            dispatch(getLatestPostsAction())
         }
     }, [isPostSuccess])
 
@@ -70,6 +76,7 @@ export default function UploadCard() {
     };
 
     const onSubmit = () => {
+        setPost({title: "", description: ""})
         dispatch(userSlide.actions.refresh_state())
         dispatch(createPostAction({ post, selectedFiles }))
     } */
@@ -136,27 +143,28 @@ export default function UploadCard() {
         <div className="flex flex-col rounded-[10px] w-full p-[15px] bg-white gap-2">
             {/* <div className='flex flex-row items-center gap-[20px]'>
                 <img class="w-12 h-12 rounded-full object-cover" src={user.avt ? user.avt : defaultAvt} alt="Rounded avatar"></img>
+<<<<<<< HEAD
                 <TextArea rows={3} onChange={(e) => {
                     setPost({ title: e.target.value, description: e.target.value })
+=======
+
+                <TextArea value={post.title} rows={3} onChange={(e) => {
+                    setPost({title: e.target.value, description: e.target.value})
+>>>>>>> 7d01e7a4ee0f123f510c5bc841b10ec116325311
                 }} type="search" id="default-search" class="block p-4 pl-10 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 focus:outline-none" placeholder={`What's on your mind, ${user.firstName}?`} required />
             </div>
             <ToastContainer />
             <div className="result">{renderPhotos(selectedFilesPre)}</div>
 
             <div className='flex flex-row gap-[10px] mt-[20px] justify-end'>
-                {
-                    loading && <div className='items-center'>
-                        <img className='w-[30px] h-[30px]' src={LoadingGi} />
-                    </div>
-                }
                 <label class="flex flex-row items-center rounded-full shadow-lg cursor-pointer hover:bg-green-500 hover:text-white text-center">
                     <span class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full">
                         Images
                     </span>
                     <input type='file' class="hidden" multiple onChange={handleImageChange} />
                 </label>
-                <button onClick={onSubmit} class="bg-blue-500 hover:bg-blue-700 text-white font-bold  shadow-lg py-2 px-4 rounded-full">
-                    Share
+                <button disabled={loading} onClick={onSubmit} class="bg-blue-500 hover:bg-blue-700 text-white font-bold  shadow-lg py-2 px-4 rounded-full">
+                    {loading && <span className="fa fa-refresh fa-spin"></span>}{" "}Share
                 </button>
             </div> */}
             <>

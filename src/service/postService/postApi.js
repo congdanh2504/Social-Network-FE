@@ -6,3 +6,9 @@ export const getPosts = async () => {
         return res.data
     });
 }
+
+export const getLatestPosts = async () => {
+    return await axios.get(`${BASE_URL}post/five-latest-posts`).then(res => {
+        return res.data
+    });
+}

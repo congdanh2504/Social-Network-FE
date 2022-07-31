@@ -2,7 +2,9 @@ import React, { useMemo, useRef, useState } from 'react';
 import { Select, Spin } from 'antd';
 import debounce from 'lodash/debounce';
 import { Option } from 'antd/lib/mentions';
-
+import { Link } from 'react-router-dom';
+import { searchUsers } from '../../service/userService/userApi';
+import defaultAvt from '../../assets/images/defaultAvt.png'
 
 export default function SearchItem() {
     const [value, setValue] = useState([]);
@@ -18,7 +20,6 @@ export default function SearchItem() {
                 setFetching(true);
                 fetchOptions(value).then((newOptions) => {
                     if (fetchId !== fetchRef.current) {
-                        // for fetch callback order
                         return;
                     }
 
@@ -39,16 +40,16 @@ export default function SearchItem() {
                 </div> : null}
                 {...props}
             >
-                {options.map((_, item) => {
+                {options.map((user, index) => {
                     return (
                         <Option>
-                            <div className='flex flex-row h-[70px] items-center '>
-                                <img class="w-[50px] h-[50px] rounded-full" src="https://i.pinimg.com/1200x/a2/3b/d5/a23bd5e01bd54a1c185395d9cb2de790.jpg" alt="" />
+                            <Link to={`/users/${user.username}`} className='flex flex-row h-[70px] items-center '>
+                                <img class="w-[50px] h-[50px] rounded-full object-cover" src={user.avt ? user.avt : defaultAvt} alt="" />
                                 <div class="flex flex-col justify-center pl-[5px]">
-                                    <span class="text-[15px] font-bold text-gray-900">Lê Khánh Dương</span>
-                                    <p class="font-normal text-gray-700 ">lkduong.20@gmail.com</p>
+                                    <span class="text-[15px] font-bold text-gray-900">{`${user.firstName} ${user.lastName}`}</span>
+                                    <p class="font-normal text-gray-700 ">{user.username}</p>
                                 </div>
-                            </div>
+                            </Link>
                         </Option>
                     )
                 })}
@@ -56,15 +57,7 @@ export default function SearchItem() {
         );
     }
     async function fetchUserList(username) {
-        console.log('fetching user', username);
-        return fetch('https://randomuser.me/api/?results=5')
-            .then((response) => response.json())
-            .then((body) =>
-                body.results.map((user) => ({
-                    label: `${user.name.first} ${user.name.last}`,
-                    value: user.login.username,
-                })),
-            );
+        return username ? await searchUsers(username) : [];
     }
 
     return (
