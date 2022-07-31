@@ -30,3 +30,9 @@ export const searchUsers = async (username) => {
         return res.data;
     });
 }
+
+export const getDetailUser = async (username) => {
+    return await axios.get(`${BASE_URL}users/detail-user/${username}`).then(res => {
+        return res.data;
+    });
+}   
