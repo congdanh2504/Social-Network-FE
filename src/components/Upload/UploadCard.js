@@ -7,15 +7,9 @@ import { resizeFile, urlToFile } from '../../service/image';
 import { ToastContainer, toast } from 'react-toastify';
 import { createPostAction, userSlide } from '../../redux/slice/userSlice';
 import LoadingGi from "../../assets/Loading.gif";
-<<<<<<< HEAD
-import { getPostsAction } from '../../redux/slice/postSlice';
-import { Button, Divider, Input } from 'antd';
-import { PlusOutlined } from '@ant-design/icons';
-import { Modal, Upload } from 'antd';
-=======
 import { getLatestPostsAction, getPostsAction } from '../../redux/slice/postSlice';
-import { Input } from 'antd';
->>>>>>> 7d01e7a4ee0f123f510c5bc841b10ec116325311
+import { Input, Button, Divider, Modal, Upload } from 'antd';
+import { PlusOutlined } from '@ant-design/icons';
 const { TextArea } = Input;
 
 export default function UploadCard() {
@@ -143,14 +137,9 @@ export default function UploadCard() {
         <div className="flex flex-col rounded-[10px] w-full p-[15px] bg-white gap-2">
             {/* <div className='flex flex-row items-center gap-[20px]'>
                 <img class="w-12 h-12 rounded-full object-cover" src={user.avt ? user.avt : defaultAvt} alt="Rounded avatar"></img>
-<<<<<<< HEAD
-                <TextArea rows={3} onChange={(e) => {
-                    setPost({ title: e.target.value, description: e.target.value })
-=======
 
                 <TextArea value={post.title} rows={3} onChange={(e) => {
                     setPost({title: e.target.value, description: e.target.value})
->>>>>>> 7d01e7a4ee0f123f510c5bc841b10ec116325311
                 }} type="search" id="default-search" class="block p-4 pl-10 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 focus:outline-none" placeholder={`What's on your mind, ${user.firstName}?`} required />
             </div>
             <ToastContainer />
@@ -174,7 +163,7 @@ export default function UploadCard() {
                 </div>
                 <Divider style={{ margin: '2px' }}></Divider>
                 <Upload
-                    action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                    action=""
                     listType="picture"
                     fileList={fileList}
                     onPreview={handlePreview}

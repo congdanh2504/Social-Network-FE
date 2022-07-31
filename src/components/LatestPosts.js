@@ -28,7 +28,7 @@ export default function LatestPosts({latestPosts}) {
                         latestPosts && latestPosts.map((post)=> 
                             <li class="py-3 sm:py-4">
                                 <div class="max-w-sm rounded overflow-hidden shadow-lg">
-                                {post.image_list.length > 0 && <img class="w-full" src={post.image_list[0].url} alt="Sunset in the mountains"/>}
+                                {post.images.length > 0 && <img class="w-full" src={post.images[0].url} alt="Sunset in the mountains"/>}
                                 
                                 <div class="px-6 py-4">
                                     <div class="flex items-center">
