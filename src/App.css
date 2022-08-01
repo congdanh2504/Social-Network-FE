@@ -23,13 +23,4 @@
     height: 100vh;
     justify-content: center;
     align-items: center;
-    
-  }
-
-button:disabled {
-  background-color: #272c34;
-}
-
-button[disabled]:hover {
-  background-color: #272c34;
 }
