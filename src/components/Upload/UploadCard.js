@@ -3,30 +3,24 @@ import React, { useEffect, useState } from 'react'
 import { getUser } from '../../service/common'
 import defaultAvt from '../../assets/images/defaultAvt.png'
 import { useDispatch, useSelector } from 'react-redux'
-import { resizeFile, urlToFile } from '../../service/image';
 import { ToastContainer, toast } from 'react-toastify';
 import { createPostAction, userSlide } from '../../redux/slice/userSlice';
-import LoadingGi from "../../assets/Loading.gif";
-import { getPostsAction } from '../../redux/slice/postSlice';
+import { getLatestPostsAction, getPostsAction } from '../../redux/slice/postSlice';
 import { Button, Divider, Input } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { Modal, Upload } from 'antd';
-const { TextArea } = Input;
 
 export default function UploadCard() {
     const user = getUser();
-    /*
-    const [selectedFilesPre, setSelectedFilesPre] = useState([]);
-    const loading = useSelector((state) => state.user.loading)
-    const error = useSelector((state) => state.user.error)
-    const isPostSuccess = useSelector((state) => state.user.isPostSuccess)
-    const [selectedFiles, setSelectedFiles] = useState([]);
-    const [post, setPost] = useState({ title: "", description: "" });
     const dispatch = useDispatch();
-
-    useEffect(() => {
-        if (error !== "") toast.error(error)
-    }, [error])
+    const [post, setPost] = useState({ title: "", description: "" , images: []});
+    const [previewVisible, setPreviewVisible] = useState(false);
+    const [previewImage, setPreviewImage] = useState('');
+    const [previewTitle, setPreviewTitle] = useState('');
+    const handleCancel = () => setPreviewVisible(false);
+    const [buttonUpload, setButtonUpload] = useState(false)
+    const [fileList, setFileList] = useState([]);
+    const isPostSuccess = useSelector((state) => state.user.isPostSuccess)
 
     useEffect(() => {
         if (isPostSuccess) {
@@ -35,59 +29,6 @@ export default function UploadCard() {
             dispatch(getLatestPostsAction())
         }
     }, [isPostSuccess])
-
-    const handleImageChange = async (e) => {
-        if (e.target.files) {
-            let file = await resizeFile(e.target.files[0])
-
-            let resizedFile = await urlToFile(file, e.target.files[0].name);
-            setSelectedFiles((prevImages) => prevImages.concat(resizedFile));
-
-            const filesArray = Array.from(e.target.files).map((file) => URL.createObjectURL(file));
-
-            setSelectedFilesPre((prevImages) => prevImages.concat(filesArray));
-            Array.from(e.target.files).map(
-                (file) => URL.revokeObjectURL(file)
-            );
-        }
-        e.target.value = null;
-    }; */
-
-    /* const renderPhotos = (source) => {
-        return source.map((photo, index) => {
-            return <img className='preview' src={photo} alt="" key={photo} id={index} onClick={(e) => {
-                let index = parseInt(e.target.id);
-                setSelectedFilesPre([
-                    ...selectedFilesPre.slice(0, index),
-                    ...selectedFilesPre.slice(index + 1, selectedFilesPre.length)
-                ]);
-                setSelectedFiles([
-                    ...selectedFiles.slice(0, index),
-                    ...selectedFiles.slice(index + 1, selectedFiles.length)
-                ]);
-
-            }} />;
-        });
-    };
-
-    const onSubmit = () => {
-        setPost({title: "", description: ""})
-        dispatch(userSlide.actions.refresh_state())
-        dispatch(createPostAction({ post, selectedFiles }))
-    } */
-
-    const [previewVisible, setPreviewVisible] = useState(false);
-    const [previewImage, setPreviewImage] = useState('');
-    const [previewTitle, setPreviewTitle] = useState('');
-    const handleCancel = () => setPreviewVisible(false);
-    const [buttonUpload, setButtonUpload] = useState(false)
-    const [fileList, setFileList] = useState([
-        {
-          uid: '-1',
-          name: 'image.png',
-          status: 'done',
-          url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-        }]);
 
     const getBase64 = (file) =>
         new Promise((resolve, reject) => {
@@ -107,65 +48,52 @@ export default function UploadCard() {
         setPreviewTitle(file.name || file.url.substring(file.url.lastIndexOf('/') + 1));
     };
 
-    const handleChange = ({ fileList: newFileList }) => setFileList(newFileList);
-
-    const uploadButton = (
-        <div style={{ display: 'flex' }}>
-            <PlusOutlined />
-            <div
-                style={{
-                    marginTop: 8,
-                }}
-            >
-                Upload
-            </div>
-        </div>
-    );
-
-    const renderButtonUpload = () => {
-        if (fileList.length > 0 || buttonUpload)
-            return 
+    const handleChange = ({ fileList: newFileList }) => {
+        setFileList(newFileList);
     }
 
+    const onSubmit = () => {
+        dispatch(userSlide.actions.refresh_state())
+        dispatch(createPostAction(post))
+    }
+
+    useEffect(() => {
+        const images = [];
+        fileList.forEach(image => {
+            if (image.status == "done") {
+                images.push(image.response)
+            }
+        })
+        setPost({
+            ...post,
+            images: images
+        })
+    }, [fileList])
+
     const inputOnchange = (e) => {
+        setPost({...post, title: e.target.value, description: e.target.value })
         e.target.value.length > 0 ? setButtonUpload(true) : setButtonUpload(false)
     }
 
     return (
         <div className="flex flex-col rounded-[10px] w-full p-[15px] bg-white gap-2">
-            {/* <div className='flex flex-row items-center gap-[20px]'>
-                <img class="w-12 h-12 rounded-full object-cover" src={user.avt ? user.avt : defaultAvt} alt="Rounded avatar"></img>
-                <TextArea rows={3} onChange={(e) => {
-                    setPost({ title: e.target.value, description: e.target.value })
-                }} type="search" id="default-search" class="block p-4 pl-10 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 focus:outline-none" placeholder={`What's on your mind, ${user.firstName}?`} required />
-            </div>
-            <ToastContainer />
-            <div className="result">{renderPhotos(selectedFilesPre)}</div>
-
-            <div className='flex flex-row gap-[10px] mt-[20px] justify-end'>
-                <label class="flex flex-row items-center rounded-full shadow-lg cursor-pointer hover:bg-green-500 hover:text-white text-center">
-                    <span class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full">
-                        Images
-                    </span>
-                    <input type='file' class="hidden" multiple onChange={handleImageChange} />
-                </label>
-                <button disabled={loading} onClick={onSubmit} class="bg-blue-500 hover:bg-blue-700 text-white font-bold  shadow-lg py-2 px-4 rounded-full">
-                    {loading && <span className="fa fa-refresh fa-spin"></span>}{" "}Share
-                </button>
-            </div> */}
             <>
                 <div className='flex gap-[10px]'>
                     <img class="w-12 h-12 rounded-full object-cover" src={user.avt ? user.avt : defaultAvt} alt="Rounded avatar"></img>
-                    <Input onChange={inputOnchange} className='rounded-[50px]' style={{ borderRadius: '50px' }} placeholder={"Write something"}></Input>
+                    <Input value={post.title} onChange={inputOnchange} className='rounded-[50px]' style={{ borderRadius: '50px' }} placeholder={"Write something"}></Input>
                 </div>
+                <ToastContainer />
                 <Divider style={{ margin: '2px' }}></Divider>
                 <Upload
-                    action=""
+                    action="http://localhost:8080/api/v1/image/upload"
+                    accept='image/png, image/jpeg'
                     listType="picture-card"
                     fileList={fileList}
                     onPreview={handlePreview}
                     onChange={handleChange}
-
+                    onRemove={(file) => {
+                        console.log(file)
+                    }}
                 >
                     <div>
                         <PlusOutlined />
@@ -178,16 +106,14 @@ export default function UploadCard() {
                         </div>
                     </div>
                 </Upload>
-                <Button
+                 {buttonUpload && <Button
                     style={{
                         backgroundColor: '#1890ff',
                         borderRadius: '50px',
                         color: 'white'
                     }}
-                    onClick={(e) => {
-                        console.log(fileList)
-                    }}
-                >Upload</Button>
+                    onClick={onSubmit}
+                >Upload</Button>}
                 <Modal visible={previewVisible} title={previewTitle} footer={null} onCancel={handleCancel}>
                     <img
                         alt="example"
