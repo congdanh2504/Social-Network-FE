@@ -23,14 +23,13 @@ export default function PostCard({post}) {
 
     return (
         <div className="flex flex-col bg-white shadow-lg rounded-lg my-4 ">
-            <div className="flex w-full items-start px-4 py-6">
+         {/*    <div className="flex w-full items-start px-4 py-6">
                 <Link to={`/user/${post.user.username}`} ><img className="w-12 h-12 rounded-full object-cover mr-4 shadow" src={post.user.avt ? post.user.avt : defaultAvt} alt="avatar" /></Link>
                 <div className="flex-1">
                     <div className="flex items-center justify-between">
                        <Link to={`/user/${post.user.username}`} ><h2 className="text-lg font-semibold text-gray-900 -mt-1">{`${post.user.firstName} ${post.user.lastName}`}</h2></Link>
                         <small className="text-sm text-gray-700">{getTimeAgo()}</small>
                     </div>
-                    {/* <p className="text-gray-700">Joined 12 SEP 2012. </p> */}
                     <div>
                         <p className="my-2 text-gray-700 text-sm">
                             {post.title}
@@ -58,7 +57,7 @@ export default function PostCard({post}) {
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z" />
                 </svg>
                 <span>{post.comments.length}</span>
-            </div>
+            </div> */}
         </div>
     )
 }

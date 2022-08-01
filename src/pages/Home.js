@@ -38,7 +38,7 @@ export default function Home() {
                             <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#winter</span>
                         </div>
                     </div>
-                    <LatestPosts latestPosts={latestPosts}/>
+                    <LatestPosts latestPosts={latestPosts} />
                 </div>
                 <div className='Container__content__center overflow-y-auto flex-1 mx-[10px]'>
                     <UploadCard />
@@ -56,8 +56,8 @@ export default function Home() {
             </div>
         </div>
     )
-/* 
-    return (
-        <SliderAndNav content={content}/>
-    ) */
+    /* 
+        return (
+            <SliderAndNav content={content}/>
+        ) */
 }

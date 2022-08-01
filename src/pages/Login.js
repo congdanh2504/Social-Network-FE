@@ -7,7 +7,11 @@ import LoadingGi from "../assets/Loading.gif";
 import { authSlice, getLogin, register } from '../redux/slice/authSlice';
 import { getUser } from '../redux/slice/userSlice';
 import { Button, Form, Input } from 'antd';
-import { socket } from '../App';
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth";
+import { auth, db } from '../firebase/firebase'
+import { getProfile } from '../service/userService/userApi';
+import { async } from '@firebase/util';
+import { doc, setDoc, Timestamp, updateDoc } from 'firebase/firestore';
 
 export default function Login() {
     const navigate = useNavigate();
@@ -51,14 +55,38 @@ export default function Login() {
             navigate("/home")
     }, [getProfileLoading])
 
-    const loginHandle = () => {
-        dispatch(getLogin(loginUser))
+    const loginHandle = async () => {
+        dispatch(getLogin(loginUser));
+        try {
+            const result = await signInWithEmailAndPassword(auth, loginUser.username + "@gmail.com", loginUser.password);
+            await updateDoc(doc(db, "users", result.user.uid), {
+                isOnline: true,
+            });
+        } catch (err) {
+            console.log(err);
+        }
         setOpen(true)
     }
 
-    const registerHandle = () => {
+    const registerHandle = async () => {
         dispatch(authSlice.actions.refresh_register())
         dispatch(register(registerUser))
+        try {
+            const result = await createUserWithEmailAndPassword(
+                auth,
+                registerUser.username + "@gmail.com",
+                registerUser.password
+            );
+            await setDoc(doc(db, "users", result.user.uid), {
+                uid: result.user.uid,
+                username: registerUser.username,
+                email: registerUser.email,
+                createdAt: Timestamp.fromDate(new Date()),
+                isOnline: true,
+            });
+        } catch (err) {
+            console.log(err)
+        }
         setOpen(true)
     }
 
