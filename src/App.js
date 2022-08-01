@@ -13,7 +13,7 @@ import { Provider } from 'react-redux'
 import { store } from './redux/store';
 import Home from './pages/Home';
 import Login from './pages/Login';
-import Chat from './pages/Chat';
+import Chat from './pages/Chat/Chat';
 import PublicRoute from './components/common/PublicRoute';
 import PrivateRoute from './components/common/PrivateRoute';
 import SearchItem from './components/common/SearchItem';
