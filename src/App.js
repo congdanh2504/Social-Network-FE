@@ -45,40 +45,12 @@ function App() {
     <Provider store={store}>
       <AuthProvider>
         <BrowserRouter>
-          <Layout
-            style={{
-              minHeight: '100vh',
-            }}
-          >
-            <Sider collapsible /* collapsed={collapsed} */ /* onCollapse={(value) => setCollapsed(value)} */>
-              <div className='w-full h-[60px] flex justify-center items-center p-0 m-0'><img className='w-[40px] h-[40px]' src={IconLogin} /></div>
-              <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline" items={items} />
-            </Sider>
-            <Layout className="site-layout">
-              <Header
-                className="site-layout-background flex items-center justify-between"
-                style={{
-                  padding: 0,
-                }}
-              >
-                <div className='ml-[15  px]'>
-                  <SearchItem />
-                </div>
-                <UserAccount />
-              </Header>
-              <Content
-                style={{
-                  margin: '0 0',
-                }}
-              > <Routes>
-                  <Route path='/home' element={<PrivateRoute><Home /></PrivateRoute>} />
-                  <Route path='/chat' element={<PrivateRoute><Chat /></PrivateRoute>} />
-                  <Route path='/profile' element={<PrivateRoute><Profile /></PrivateRoute>} />
-                  <Route index path='/' element={<PublicRoute><Login /></PublicRoute>} />
-                </Routes>
-              </Content>
-            </Layout>
-          </Layout>
+          <Routes>
+            <Route path='/home' element={<PrivateRoute><Home /></PrivateRoute>} />
+            <Route path='/chat' element={<PrivateRoute><Chat /></PrivateRoute>} />
+            <Route path='/users/:username' element={<PrivateRoute><Profile /></PrivateRoute>} />
+            <Route index path='/' element={<PublicRoute><Login /></PublicRoute>} />
+          </Routes>
         </BrowserRouter>
       </AuthProvider>
     </Provider>

@@ -1,3 +1,5 @@
+import { async } from "@firebase/util";
+import { data } from "autoprefixer";
 import axios from "axios";
 import { BASE_URL, getAccessToken } from "../common";
 
@@ -11,18 +13,15 @@ export const getProfile = async () => {
     }).then((response) => response.data);
 }
 
-export const createPost = async (post, images) => {
-    var formData = new FormData();
-    for (let index in images) formData.append("post_image", images[index]);
-    formData.append("title", post.title);
-    formData.append("description", post.description);
-    let createdPost = await axios.post(`${BASE_URL}users/post`, formData, {
+export const createPost = async (post) => {
+    return await axios({
+        url: `${BASE_URL}users/post`,
+        method: "POST",
+        data: post,
         headers: {
-            'Content-Type': 'multipart/form-data',
             "Authorization": `Bearer ${getAccessToken()}`
         }
-    });
-    return createdPost.data;
+    }).then(res => res.data)
 }
 
 export const searchUsers = async (username) => {
@@ -36,3 +35,23 @@ export const getDetailUser = async (username) => {
         return res.data;
     });
 }   
+
+export const likePost = async (postId) => {
+    return await axios({
+        url: `${BASE_URL}users/like-post/${postId}`,
+        method: "POST",
+        headers: {
+            "Authorization": `Bearer ${getAccessToken()}`
+        }
+    })
+}
+
+export const unlikePost = async (postId) => {
+    return await axios({
+        url: `${BASE_URL}users/unlike-post/${postId}`,
+        method: "DELETE",
+        headers: {
+            "Authorization": `Bearer ${getAccessToken()}`
+        }
+    })
+}

@@ -19,9 +19,9 @@ export const getUser = createAsyncThunk('user/getUser', async () => {
     }
 })
 
-export const createPostAction = createAsyncThunk('user/post', async({post, selectedFiles}) => {
+export const createPostAction = createAsyncThunk('user/post', async(post) => {
     try{
-        const res = await createPost(post, selectedFiles);
+        const res = await createPost(post);
         return res;
     } catch(error){
         return Promise.reject(error);
