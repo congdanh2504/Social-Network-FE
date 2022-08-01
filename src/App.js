@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import {
   DesktopOutlined,
   FileOutlined,
@@ -8,8 +7,6 @@ import {
   MessageOutlined
 } from '@ant-design/icons';
 import { Layout, Menu } from 'antd';
-=======
->>>>>>> 7d01e7a4ee0f123f510c5bc841b10ec116325311
 import React, { useState } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Provider } from 'react-redux'
@@ -19,7 +16,6 @@ import Login from './pages/Login';
 import Chat from './pages/Chat';
 import PublicRoute from './components/common/PublicRoute';
 import PrivateRoute from './components/common/PrivateRoute';
-<<<<<<< HEAD
 import SearchItem from './components/common/SearchItem';
 import IconLogin from "./assets/images/ImageLogin.png";
 import UserAccount from './components/common/userAccount';
@@ -44,22 +40,17 @@ const items = [
   getItem('Team', '5', <TeamOutlined />, [getItem('Team 1', '8'), getItem('Team 2', '9')]),
   getItem('Files', '6', <FileOutlined />),
 ];
-=======
-import 'antd/dist/antd.css';
-
->>>>>>> 7d01e7a4ee0f123f510c5bc841b10ec116325311
 function App() {
   
   return (
     <Provider store={store}>
-<<<<<<< HEAD
           <BrowserRouter>
             <Layout
               style={{
                 minHeight: '100vh',
               }}
             >
-              <Sider collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)}>
+              <Sider collapsible /* collapsed={collapsed} */ /* onCollapse={(value) => setCollapsed(value)} */>
                 <div className='w-full h-[60px] flex justify-center items-center p-0 m-0'><img className='w-[40px] h-[40px]' src={IconLogin} /></div>
                 <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline" items={items} />
               </Sider>
@@ -89,15 +80,6 @@ function App() {
               </Layout>
             </Layout>
           </BrowserRouter>
-=======
-      <BrowserRouter>
-        <Routes>
-          <Route index path='/' element={<PublicRoute><Login /></PublicRoute>} />
-          <Route path='/home' element={<PrivateRoute><Home /></PrivateRoute>} />
-          <Route path='/chat' element={<PrivateRoute><Chat /></PrivateRoute>} />
-        </Routes>
-      </BrowserRouter>
->>>>>>> 7d01e7a4ee0f123f510c5bc841b10ec116325311
     </Provider>
   );
 }

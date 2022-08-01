@@ -20,13 +20,8 @@ export default function Home() {
         dispatch(getPostsAction())
     }, [])
 
-<<<<<<< HEAD
     return (
         <div className='relative Container w-full bg-[#f0f2f5] px-[10px]'>
-=======
-    const content = () => (
-        <div className='relative Container w-full bg-[#f0f2f5]'>
->>>>>>> 7d01e7a4ee0f123f510c5bc841b10ec116325311
             <div className='Container__content flex-1 flex h-[100vh] flex-row mt-[12px]'>
                 <div className='Container__content__left flex flex-col gap-[15px] w-[300px] overflow-hidden hover:overflow-auto box-border'>
                     <div class="max-w-sm rounded overflow-hidden shadow-lg h-[300px]">
@@ -61,8 +56,8 @@ export default function Home() {
             </div>
         </div>
     )
-
+/* 
     return (
         <SliderAndNav content={content}/>
-    )
+    ) */
 }

@@ -16,7 +16,6 @@
     height: 180px;
     object-fit: cover;
     padding: 0.75rem;
-<<<<<<< HEAD
 }
 .ant-image-preview-img-wrapper{
     position: relative;
@@ -24,15 +23,4 @@
     height: 100vh;
     justify-content: center;
     align-items: center;
-=======
-    
-  }
-
-button:disabled {
-  background-color: #272c34;
-}
-
-button[disabled]:hover {
-  background-color: #272c34;
->>>>>>> 7d01e7a4ee0f123f510c5bc841b10ec116325311
 }
