@@ -1,3 +1,4 @@
+import { async } from "@firebase/util";
 import { data } from "autoprefixer";
 import axios from "axios";
 import { BASE_URL, getAccessToken } from "../common";
@@ -34,3 +35,23 @@ export const getDetailUser = async (username) => {
         return res.data;
     });
 }   
+
+export const likePost = async (postId) => {
+    return await axios({
+        url: `${BASE_URL}users/like-post/${postId}`,
+        method: "POST",
+        headers: {
+            "Authorization": `Bearer ${getAccessToken()}`
+        }
+    })
+}
+
+export const unlikePost = async (postId) => {
+    return await axios({
+        url: `${BASE_URL}users/unlike-post/${postId}`,
+        method: "DELETE",
+        headers: {
+            "Authorization": `Bearer ${getAccessToken()}`
+        }
+    })
+}

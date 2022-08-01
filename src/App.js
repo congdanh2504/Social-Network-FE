@@ -48,7 +48,7 @@ function App() {
           <Routes>
             <Route path='/home' element={<PrivateRoute><Home /></PrivateRoute>} />
             <Route path='/chat' element={<PrivateRoute><Chat /></PrivateRoute>} />
-            <Route path='/user/:username' element={<PrivateRoute><Profile /></PrivateRoute>} />
+            <Route path='/users/:username' element={<PrivateRoute><Profile /></PrivateRoute>} />
             <Route index path='/' element={<PublicRoute><Login /></PublicRoute>} />
           </Routes>
         </BrowserRouter>
