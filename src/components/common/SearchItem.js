@@ -43,7 +43,7 @@ export default function SearchItem() {
                 {options.map((user, index) => {
                     return (
                         <Option>
-                            <Link to={`/users/${user.username}`} className='flex flex-row h-[70px] items-center '>
+                            <Link to={`/user/${user.username}`} className='flex flex-row h-[70px] items-center '>
                                 <img class="w-[50px] h-[50px] rounded-full object-cover" src={user.avt ? user.avt : defaultAvt} alt="" />
                                 <div class="flex flex-col justify-center pl-[5px]">
                                     <span class="text-[15px] font-bold text-gray-900">{`${user.firstName} ${user.lastName}`}</span>

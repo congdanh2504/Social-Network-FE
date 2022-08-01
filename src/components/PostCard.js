@@ -60,7 +60,7 @@ export default function PostCard({post}) {
                 <Link to={`/user/${post.user.username}`} ><img className="w-12 h-12 rounded-full object-cover mr-4 shadow" src={post.user.avt ? post.user.avt : defaultAvt} alt="avatar" /></Link>
                 <div className="flex-1">
                     <div className="flex items-center justify-between">
-                       <Link to={`/user/${post.user.username}`} ><h2 className="text-lg font-semibold text-gray-900 -mt-1">{`${post.user.firstName} ${post.user.lastName}`}</h2></Link>
+                       <Link to={`/user/${post.user.username}`} ><h2 className="text-lg font-semibold text-gray-900 -mt-1 hover:underline">{`${post.user.firstName} ${post.user.lastName}`}</h2></Link>
                         <small className="text-sm text-gray-700">{getTimeAgo()}</small>
                     </div>
                     <div>

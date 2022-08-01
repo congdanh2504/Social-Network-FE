@@ -27,6 +27,10 @@ export default function Profile() {
         dispatch(getDetailUserAction(param.username))
     }, [param])
 
+    useEffect(() => {
+        console.log(detailUser)
+    }, [detailUser])
+
     const content = () => {
         return <>
         {
@@ -49,7 +53,7 @@ export default function Profile() {
                             <div className='absolute bg-white pl-[270px] w-full h-[80px] flex flex-row justify-between items-center'>
                                 <div>
                                     <h1 className='m-0' style={{ fontSize: '25px', fontWeight: 'bold' }}>{detailUser.firstName + " " + detailUser.lastName}</h1>
-                                    <h5 className='mb-2'>{detailUser.friends.length} Friend</h5>
+                                    <h5 className='mb-2'>{detailUser.friends.length} Friends</h5>
                                 </div>
                                 <div className='mr-[10px]'>
                                     <SearchItem />
@@ -60,38 +64,14 @@ export default function Profile() {
                     <div className='content flex flex-row w-[90%] mt-[50px] gap-3   '>
                         <div className='content rounded-xl w-[360px] bg-white flex flex-col items-center justify-center'>
                             <div className='w-full h-[40px] flex items-center'>
-                                <h1 style={{ fontSize: '20px' }}><span style={{ marginLeft: '15px' }}>Friend</span></h1>
+                                <h1 style={{ fontSize: '20px' }}><span style={{ marginLeft: '15px' }}>Images</span></h1>
                             </div>
                             <Divider></Divider>
                             <Row gutter={[9, 9]} style={{ margin: '5px 0' }}>
                                 <Image.PreviewGroup>
-                                    <Col span={8} style={{ display: 'flex', justifyContent: 'center', alignItems: 'centerS' }}>
-                                        <Image width={110} height={110} src="https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg" />
-                                    </Col>
-                                    <Col span={8} style={{ display: 'flex', justifyContent: 'center', alignItems: 'centerS' }}>
-                                        <Image width={110} height={110} src="https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg" />
-                                    </Col>
-                                    <Col span={8} style={{ display: 'flex', justifyContent: 'center', alignItems: 'centerS' }}>
-                                        <Image width={110} height={110} src="https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg" />
-                                    </Col>
-                                    <Col span={8} style={{ display: 'flex', justifyContent: 'center', alignItems: 'centerS' }}>
-                                        <Image width={110} height={110} src="https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg" />
-                                    </Col>
-                                    <Col span={8} style={{ display: 'flex', justifyContent: 'center', alignItems: 'centerS' }}>
-                                        <Image width={110} height={110} src="https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg" />
-                                    </Col>
-                                    <Col span={8} style={{ display: 'flex', justifyContent: 'center', alignItems: 'centerS' }}>
-                                        <Image width={110} height={110} src="https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg" />
-                                    </Col>
-                                    <Col span={8} style={{ display: 'flex', justifyContent: 'center', alignItems: 'centerS' }}>
-                                        <Image width={110} height={110} src="https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg" />
-                                    </Col>
-                                    <Col span={8} style={{ display: 'flex', justifyContent: 'center', alignItems: 'centerS' }}>
-                                        <Image width={110} height={110} src="https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg" />
-                                    </Col>
-                                    <Col span={8} style={{ display: 'flex', justifyContent: 'center', alignItems: 'centerS' }}>
-                                        <Image width={110} height={110} src="https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg" />
-                                    </Col>
+                                    {detailUser.images.length > 0 && detailUser.images.map((url) => <Col span={8} style={{ display: 'flex', justifyContent: 'center', alignItems: 'centerS' }}>
+                                        <Image className='object-cover' width={110} height={110} src={url} />
+                                    </Col>)}
                                 </Image.PreviewGroup>
                             </Row>
                             <div>
