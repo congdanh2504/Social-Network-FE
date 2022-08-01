@@ -55,3 +55,23 @@ export const unlikePost = async (postId) => {
         }
     })
 }
+
+export const follow = async (userId) => {
+    await axios({
+        url: `${BASE_URL}follow?id_user_followed=${userId}`,
+        method: "POST",
+        headers: {
+            "Authorization": `Bearer ${getAccessToken()}`
+        }
+    })
+}
+
+export const unFollow = async (userId) => {
+    await axios({
+        url: `${BASE_URL}follow?id_user_followed=${userId}`,
+        method: "DELETE",
+        headers: {
+            "Authorization": `Bearer ${getAccessToken()}`
+        }
+    })
+}

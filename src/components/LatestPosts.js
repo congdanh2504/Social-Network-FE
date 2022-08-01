@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { getLatestPostsAction, postSlide } from '../redux/slice/postSlice'
 import TimeAgo from 'javascript-time-ago'
+import { Link } from 'react-router-dom';
 import en from 'javascript-time-ago/locale/en'
 import defaultAvt from '../assets/images/defaultAvt.png'
 
@@ -32,9 +33,13 @@ export default function LatestPosts({latestPosts}) {
                                 
                                 <div class="px-6 py-4">
                                     <div class="flex items-center">
-                                        <img class="w-10 h-10 rounded-full mr-4 object-cover" src={post.user.avt ? post.user.avt : defaultAvt} alt="Avatar of Jonathan Reinink"/>
+                                        <Link to={`/user/${post.user.username}`}>
+                                            <img class="w-10 h-10 rounded-full mr-4 object-cover" src={post.user.avt ? post.user.avt : defaultAvt} alt="Avatar of Jonathan Reinink"/>
+                                        </Link>
                                         <div class="text-sm">
-                                            <h2 class="text-gray-900 leading-none">{`${post.user.firstName} ${post.user.lastName}`}</h2>
+                                            <Link to={`/user/${post.user.username}`}>
+                                                <h2 class="text-gray-900 leading-none hover:underline">{`${post.user.firstName} ${post.user.lastName}`}</h2>
+                                            </Link>
                                             <p class="text-gray-600">{getTimeAgo(post.create_date)}</p>
                                         </div>
                                     </div>

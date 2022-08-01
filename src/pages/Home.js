@@ -24,7 +24,7 @@ export default function Home() {
         <div className='relative Container w-full bg-[#f0f2f5]'>
             <div className='Container__content flex-1 flex h-[100vh] flex-row mt-[12px]'>
                 <div className='Container__content__left flex flex-col gap-[15px] w-[300px] overflow-hidden hover:overflow-auto box-border'>
-                    <div class="max-w-sm rounded overflow-hidden shadow-lg h-[300px]">
+                    {/* <div class="max-w-sm rounded overflow-hidden shadow-lg h-[300px]">
                         <img class="w-full" src="https://images.unsplash.com/photo-1568605114967-8130f3a36994?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80" alt="Sunset in the mountains" />
                         <div class="px-6 py-4">
                             <div class="font-bold text-xl mb-2">The Coldest Sunset</div>
@@ -37,7 +37,7 @@ export default function Home() {
                             <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#travel</span>
                             <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#winter</span>
                         </div>
-                    </div>
+                    </div> */}
                     <LatestPosts latestPosts={latestPosts}/>
                 </div>
                 <div className='Container__content__center overflow-y-auto flex-1 mx-[10px]'>
