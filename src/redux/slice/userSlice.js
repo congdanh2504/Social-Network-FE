@@ -1,12 +1,13 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { logOut, setUser } from "../../service/common";
-import { getProfile, createPost, searchUsers } from "../../service/userService/userApi";
+import { getProfile, createPost, searchUsers, getDetailUser } from "../../service/userService/userApi";
 
 const initialState = {
     loading: false,
     error: "",
     users: [],
-    isPostSuccess: false
+    isPostSuccess: false,
+    detailUser: null
 }
 
 export const getUser = createAsyncThunk('user/getUser', async () => {
@@ -36,6 +37,15 @@ export const searchUserAction = createAsyncThunk('user/searchUser', async (usern
     } 
 })
 
+export const getDetailUserAction = createAsyncThunk('user/getDetailUser', async (username) => {
+    try {
+        const res = await getDetailUser(username);
+        return res;
+    } catch (error) {
+        return Promise.reject(error);
+    } 
+})
+
 export const userSlide = createSlice({
     name: 'user',
     initialState: initialState,
@@ -59,6 +69,7 @@ export const userSlide = createSlice({
             state.error = action.error;
             logOut();
         })
+
         builder.addCase(createPostAction.pending, (state)=>{
             state.loading = true;
         })
@@ -71,6 +82,7 @@ export const userSlide = createSlice({
             state.isPostSuccess = false;
             state.error = action.error;
         })
+
         builder.addCase(searchUserAction.pending, (state)=>{
             state.loading = true;
         })
@@ -79,6 +91,18 @@ export const userSlide = createSlice({
             state.users = action.payload
         })
         builder.addCase(searchUserAction.rejected, (state, action)=>{
+            state.loading = false;
+            state.error = action.error;
+        })
+
+        builder.addCase(getDetailUserAction.pending, (state)=>{
+            state.loading = true;
+        })
+        builder.addCase(getDetailUserAction.fulfilled, (state, action)=>{
+            state.loading = false;
+            state.detailUser = action.payload;
+        })
+        builder.addCase(getDetailUserAction.rejected, (state, action)=>{
             state.loading = false;
             state.error = action.error;
         })

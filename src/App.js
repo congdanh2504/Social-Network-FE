@@ -20,8 +20,6 @@ import SearchItem from './components/common/SearchItem';
 import IconLogin from "./assets/images/ImageLogin.png";
 import UserAccount from './components/common/userAccount';
 import Profile from './pages/Profile';
-import 'antd/dist/antd.css';
-import './App.css'
 
 const { Header, Content, Footer, Sider } = Layout;
 function getItem(label, key, icon, children) {
