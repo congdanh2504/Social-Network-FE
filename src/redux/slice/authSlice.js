@@ -24,7 +24,7 @@ export const register = createAsyncThunk('/auth/register', async (data)=>{
         const res = await userRegisterApi(data);
         return res;
     } catch(error){
-        return Promise.reject(error)
+        return Promise.reject(error.response.data)
     }
 })
 
@@ -63,7 +63,7 @@ export const authSlice = createSlice({
         })
         builder.addCase(register.rejected, (state, action)=>{
             state.loading = false;
-            state.registerError = action.error
+            state.registerError = action.error.message
         })
     }
 })

@@ -80,9 +80,13 @@ export default function UploadCard() {
     const [previewTitle, setPreviewTitle] = useState('');
     const handleCancel = () => setPreviewVisible(false);
     const [buttonUpload, setButtonUpload] = useState(false)
-    const [fileList, setFileList] = useState([]);
-
-
+    const [fileList, setFileList] = useState([
+        {
+          uid: '-1',
+          name: 'image.png',
+          status: 'done',
+          url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+        }]);
 
     const getBase64 = (file) =>
         new Promise((resolve, reject) => {
@@ -119,14 +123,7 @@ export default function UploadCard() {
 
     const renderButtonUpload = () => {
         if (fileList.length > 0 || buttonUpload)
-            return <Button
-                style={{
-                    backgroundColor: '#1890ff',
-                    borderRadius: '50px',
-                    color: 'white'
-                }}
-
-            >Upload</Button>
+            return 
     }
 
     const inputOnchange = (e) => {
@@ -164,24 +161,33 @@ export default function UploadCard() {
                 <Divider style={{ margin: '2px' }}></Divider>
                 <Upload
                     action=""
-                    listType="picture"
+                    listType="picture-card"
                     fileList={fileList}
                     onPreview={handlePreview}
                     onChange={handleChange}
 
                 >
-                    {
-                        fileList.length == 0 && <Button
+                    <div>
+                        <PlusOutlined />
+                        <div
                             style={{
-                                backgroundColor: '#1890ff',
-                                borderRadius: '50px',
-                                color: 'white',
-                                width: '100%'
+                            marginTop: 8,
                             }}
-                        >Upload images</Button>
-                    }
+                        >
+                            Upload
+                        </div>
+                    </div>
                 </Upload>
-                {renderButtonUpload()}
+                <Button
+                    style={{
+                        backgroundColor: '#1890ff',
+                        borderRadius: '50px',
+                        color: 'white'
+                    }}
+                    onClick={(e) => {
+                        console.log(fileList)
+                    }}
+                >Upload</Button>
                 <Modal visible={previewVisible} title={previewTitle} footer={null} onCancel={handleCancel}>
                     <img
                         alt="example"
