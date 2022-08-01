@@ -18,6 +18,7 @@ import User from "../../components/Chat/User";
 import MessageForm from "../../components/Chat/MessageForm";
 import Message from "../../components/Chat/Message";
 import './index.css'
+import SliderAndNav from "../../components/common/SliderAndNav";
 
 /* const socket = io('http://localhost:5000', { transports: ['websocket', 'polling', 'flashsocket'] }) */
 export default function Chat() {
@@ -113,7 +114,7 @@ export default function Chat() {
         setText("");
         setImg("");
     };
-    return (
+    const content = () => (
         <div class="container mx-auto">
             <div class="min-w-full border rounded lg:grid lg:grid-cols-3">
                 <div class="border-r border-gray-300 lg:col-span-1">
@@ -221,4 +222,5 @@ export default function Chat() {
              </div>
          </div> */
     );
+    return <SliderAndNav content={content} />
 }

@@ -14,10 +14,12 @@ import { Link } from 'react-router-dom';
 import { getUser } from '../service/common';
 import { likePost, unlikePost } from '../service/userService/userApi';
 import { getPostById } from '../service/postService/postApi';
+import CommentBox from './common/CommentBox';
+import { Dropdown, Image, Menu } from 'antd';
 
 TimeAgo.addDefaultLocale(en)
 
-export default function PostCard({post}) {
+export default function PostCard({ post }) {
 
     const user = getUser();
     const [like, setLike] = useState(false);
@@ -32,7 +34,7 @@ export default function PostCard({post}) {
             setLike(false)
         }
         getPost()
-    }, []) 
+    }, [])
 
     const getPost = async () => {
         const res = await getPostById(post.id);
@@ -54,25 +56,51 @@ export default function PostCard({post}) {
         setLike(!like)
     }
 
+    const onMenuClick = (e) => {
+        console.log('click', e);
+    };
+
+    const menu = (
+        <Menu
+            onClick={onMenuClick}
+            items={[
+                {
+                    key: '1',
+                    label: '1st item',
+                },
+                {
+                    key: '2',
+                    label: '2nd item',
+                },
+                {
+                    key: '3',
+                    label: '3rd item',
+                },
+            ]}
+        />
+    );
+
     return (
         <div className="flex flex-col bg-white shadow-lg rounded-lg my-4 ">
-            <div className="flex w-full items-start px-4 py-6">
-                <Link to={`/user/${post.user.username}`} ><img className="w-12 h-12 rounded-full object-cover mr-4 shadow" src={post.user.avt ? post.user.avt : defaultAvt} alt="avatar" /></Link>
-                <div className="flex-1">
-                    <div className="flex items-center justify-between">
-                       <Link to={`/user/${post.user.username}`} ><h2 className="text-lg font-semibold text-gray-900 -mt-1">{`${post.user.firstName} ${post.user.lastName}`}</h2></Link>
-                        <small className="text-sm text-gray-700">{getTimeAgo()}</small>
+            <div className="flex w-full items-start">
+                <div className="flex-1 flex flex-col">
+                    <div className="flex justify-between items-center p-3">
+                        <div className='flex'>
+                            <Link to={`/user/${post.user.username}`} ><img className="w-12 h-12 rounded-full object-cover mr-4 shadow" src={post.user.avt ? post.user.avt : defaultAvt} alt="avatar" /></Link>
+                            <div>
+                                <Link to={`/user/${post.user.username}`} ><h2 className="text-lg font-semibold text-gray-900 m-0">{`${post.user.firstName} ${post.user.lastName}`}</h2></Link>
+                                <small className="text-sm text-gray-700">{getTimeAgo()}</small>
+                            </div>
+                        </div>
+                        <Dropdown.Button size='middle' style={{border:'none'}} overlay={menu}></Dropdown.Button>
                     </div>
-                    <div>
-                        <p className="my-2 text-gray-700 text-sm">
-                            {post.title}
-                        </p>
-                        <LightGallery speed={500} plugins={[lgThumbnail, lgZoom]} mode="lg-lollipop">
-                            {post.images && post.images.map((image) => 
-                                <a href={image.url}>
-                                <img alt="img1" src={image.url} />
-                            </a>) }
-                        </LightGallery>
+                    <p className=" text-gray-700 text-sm px-3">
+                        {post.title}
+                    </p>
+                    <div >
+                        {post.images && post.images.map((image) =>
+                            <Image src={image.url} />
+                        )}
                     </div>
 
                 </div>
@@ -81,11 +109,11 @@ export default function PostCard({post}) {
                 <div className="flex items-center">
                     <div className="flex mr-2 text-gray-700 text-sm" />
                     {
-                        like ? <svg onClick={likeHandle} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 4.248c-3.148-5.402-12-3.825-12 2.944 0 4.661 5.571 9.427 12 15.808 6.43-6.381 12-11.147 12-15.808 0-6.792-8.875-8.306-12-2.944z"/>
+                        like ? <svg onClick={likeHandle} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 4.248c-3.148-5.402-12-3.825-12 2.944 0 4.661 5.571 9.427 12 15.808 6.43-6.381 12-11.147 12-15.808 0-6.792-8.875-8.306-12-2.944z" />
                         </svg> : <svg onClick={likeHandle} fill="none" viewBox="0 0 24 24" className="w-4 h-4 mr-1" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                        </svg> 
-                        
+                        </svg>
+
                     }
                     <span>{dynamicPost && dynamicPost.likeUsers.length}</span>
                 </div>
@@ -95,6 +123,7 @@ export default function PostCard({post}) {
                 </svg>
                 <span>{dynamicPost && dynamicPost.comments.length}</span>
             </div>
+            <CommentBox></CommentBox>
         </div>
     )
 }

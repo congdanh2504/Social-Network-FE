@@ -20,8 +20,9 @@ import SearchItem from './components/common/SearchItem';
 import IconLogin from "./assets/images/ImageLogin.png";
 import UserAccount from './components/common/userAccount';
 import Profile from './pages/Profile';
-import 'antd/dist/antd.css';
 import AuthProvider from './context/auth';
+import 'antd/dist/antd.css';
+import './App.css'
 const { Header, Content, Footer, Sider } = Layout;
 function getItem(label, key, icon, children) {
   return {
@@ -48,7 +49,7 @@ function App() {
           <Routes>
             <Route path='/home' element={<PrivateRoute><Home /></PrivateRoute>} />
             <Route path='/chat' element={<PrivateRoute><Chat /></PrivateRoute>} />
-            <Route path='/users/:username' element={<PrivateRoute><Profile /></PrivateRoute>} />
+            <Route path='/user/:username' element={<PrivateRoute><Profile /></PrivateRoute>} />
             <Route index path='/' element={<PublicRoute><Login /></PublicRoute>} />
           </Routes>
         </BrowserRouter>
