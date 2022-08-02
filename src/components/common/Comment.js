@@ -2,8 +2,9 @@ import React, { useState } from 'react'
 import TimeAgo from 'javascript-time-ago'
 import defaultAvt from '../../assets/images/defaultAvt.png'
 import { replyComment } from '../../service/userService/userApi'
+import { Link } from 'react-router-dom'
 
-function Comment({comment, getPost}) {
+function Comment({comment, getPost, odd}) {
     
     const getTimeAgo = (create_date) => {
         const timeAgo = new TimeAgo('en-US')
@@ -41,11 +42,11 @@ function Comment({comment, getPost}) {
         <div class="space-y-4">
             <div class="flex">
                 <div class="flex-shrink-0 mr-3">
-                    <img class="mt-2 rounded-full w-8 h-8 sm:w-10 sm:h-10 object-cover" src={comment.user.avt ? comment.user.avt : defaultAvt} alt="" />
+                    <Link to={`/user/${comment.user.username}`}><img class="mt-2 rounded-full w-8 h-8 sm:w-10 sm:h-10 object-cover" src={comment.user.avt ? comment.user.avt : defaultAvt} alt="" /></Link>
                 </div>
                 <div class="flex-1 rounded-lg px-4 py-2 sm:px-3 sm:py-4 leading-relaxed">
-                    <div class="border flex-1 rounded-lg px-4 py-2 sm:px-6 sm:py-4 leading-relaxed">
-                        <strong>{comment.user.firstName + " " + comment.user.lastName}</strong> <span class="text-xs text-gray-400">{getTimeAgo(comment.create_date)}</span>
+                    <div class={`${odd ? "border bg-white" : "bg-gray-100"} flex-1 rounded-lg px-4 py-2 sm:px-6 sm:py-4 leading-relaxed`}>
+                        <Link to={`/user/${comment.user.username}`}> <strong>{comment.user.firstName + " " + comment.user.lastName}</strong></Link> <span class="text-xs text-gray-400">{getTimeAgo(comment.create_date)}</span>
                         <p class="text-sm">
                             {comment.text}
                         </p>
@@ -67,6 +68,9 @@ function Comment({comment, getPost}) {
                         }
                         <h4 onClick={() => setShowInputComment(!showInputComment)} class="my-5 uppercase tracking-wide text-gray-400 font-bold text-xs hover:underline hover:cursor-pointer">Reply</h4>
                         {
+                            showChildComment &&  comment.children.length > 0 && comment.children.map((child) => <Comment key={comment.id} comment={child} getPost={getPost} odd={!odd}/>)
+                        }
+                        {
                             showInputComment && <form className='flex relative items-center justify-center mt-[12px]'>
                                 <input
                                     value={commentText}
@@ -86,9 +90,7 @@ function Comment({comment, getPost}) {
                         }
                         
                     </div>
-                    {
-                        showChildComment &&  comment.children.length > 0 && comment.children.map((child) => <Comment key={comment.id} comment={child} getPost={getPost}/>)
-                    }
+                    
                 </div>
             </div>
         </div>
