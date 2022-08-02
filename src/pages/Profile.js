@@ -115,7 +115,7 @@ export default function Profile() {
                             </div>
                         </div>
                         <div className='flex-1 justify-start'>
-                            <UploadCard />
+                            {user.username == param.username && <UploadCard />}
                             {detailUser.posts && detailUser.posts.map((post) => <PostCard post={post} />)}
                         </div>
                     </div>
