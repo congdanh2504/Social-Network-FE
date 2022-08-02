@@ -15,7 +15,7 @@ import { getUser } from '../service/common';
 import { likePost, unlikePost } from '../service/userService/userApi';
 import { getPostById } from '../service/postService/postApi';
 import CommentBox from './common/CommentBox';
-import { Dropdown, Image, Menu } from 'antd';
+import { Divider, Dropdown, Image, Menu } from 'antd';
 
 TimeAgo.addDefaultLocale(en)
 
@@ -92,7 +92,7 @@ export default function PostCard({ post }) {
                                 <small className="text-sm text-gray-700">{getTimeAgo()}</small>
                             </div>
                         </div>
-                        <Dropdown.Button size='middle' style={{border:'none'}} overlay={menu}></Dropdown.Button>
+                        <Dropdown.Button size='large' className='outline-none' overlay={menu}></Dropdown.Button>
                     </div>
                     <p className=" text-gray-700 text-sm px-3">
                         {post.title}
@@ -105,25 +105,36 @@ export default function PostCard({ post }) {
 
                 </div>
             </div>
-            <div className='flex flex-row items-center mb-2'>
-                <div className="flex items-center">
-                    <div className="flex mr-2 text-gray-700 text-sm" />
-                    {
-                        like ? <svg onClick={likeHandle} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 4.248c-3.148-5.402-12-3.825-12 2.944 0 4.661 5.571 9.427 12 15.808 6.43-6.381 12-11.147 12-15.808 0-6.792-8.875-8.306-12-2.944z" />
-                        </svg> : <svg onClick={likeHandle} fill="none" viewBox="0 0 24 24" className="w-4 h-4 mr-1" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+            <span className='px-[12px]'>{dynamicPost && dynamicPost.likeUsers.length} People like this</span>
+            <Divider style={{ margin: 4 }} />
+            <div className='flex px-[12px] flex-row items-center'>
+                <div className='flex justify-evenly w-full'>
+                    <div className="flex items-center cursor-pointer">
+                        <div className="flex gap-[10px] mr-2 text-gray-700 text-sm">
+                            {
+                                like ? <svg onClick={likeHandle} xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#1890ff" viewBox="0 0 24 24"><path d="M12 4.248c-3.148-5.402-12-3.825-12 2.944 0 4.661 5.571 9.427 12 15.808 6.43-6.381 12-11.147 12-15.808 0-6.792-8.875-8.306-12-2.944z" />
+                                </svg> : <svg onClick={likeHandle} xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="gray" viewBox="0 0 24 24"><path d="M12 4.248c-3.148-5.402-12-3.825-12 2.944 0 4.661 5.571 9.427 12 15.808 6.43-6.381 12-11.147 12-15.808 0-6.792-8.875-8.306-12-2.944z" />
+                                </svg>
+                            }
+                            <span className={`${like ? "text-[#1890ff]" : " "} text-[16px] font-[400]`}>Like</span>
+                        </div>
+                    </div>
+                    <div className='flex gap-[10px] cursor-pointer items-center '>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-chat" viewBox="0 0 16 16">
+                            <path d="M2.678 11.894a1 1 0 0 1 .287.801 10.97 10.97 0 0 1-.398 2c1.395-.323 2.247-.697 2.634-.893a1 1 0 0 1 .71-.074A8.06 8.06 0 0 0 8 14c3.996 0 7-2.807 7-6 0-3.192-3.004-6-7-6S1 4.808 1 8c0 1.468.617 2.83 1.678 3.894zm-.493 3.905a21.682 21.682 0 0 1-.713.129c-.2.032-.352-.176-.273-.362a9.68 9.68 0 0 0 .244-.637l.003-.01c.248-.72.45-1.548.524-2.319C.743 11.37 0 9.76 0 8c0-3.866 3.582-7 8-7s8 3.134 8 7-3.582 7-8 7a9.06 9.06 0 0 1-2.347-.306c-.52.263-1.639.742-3.468 1.105z" />
                         </svg>
-
-                    }
-                    <span>{dynamicPost && dynamicPost.likeUsers.length}</span>
+                        <span className='text-[16px] font-[400]'>{/* {dynamicPost && dynamicPost.comments.length} */}Comment</span>
+                    </div>
+                    <div className='flex gap-[10px] cursor-pointer items-center'>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-share" viewBox="0 0 16 16">
+                            <path d="M13.5 1a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zM11 2.5a2.5 2.5 0 1 1 .603 1.628l-6.718 3.12a2.499 2.499 0 0 1 0 1.504l6.718 3.12a2.5 2.5 0 1 1-.488.876l-6.718-3.12a2.5 2.5 0 1 1 0-3.256l6.718-3.12A2.5 2.5 0 0 1 11 2.5zm-8.5 4a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm11 5.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3z" />
+                        </svg>
+                        <span className='text-[16px] font-[400]'>{/* {dynamicPost && dynamicPost.comments.length} */}Share</span>
+                    </div>
                 </div>
-                <div className="flex mr-2 text-gray-700 text-sm" />
-                <svg fill="none" viewBox="0 0 24 24" className="w-4 h-4 mr-1" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z" />
-                </svg>
-                <span>{dynamicPost && dynamicPost.comments.length}</span>
-            </div>
+            </div >
+            <Divider style={{ margin: 4 }} />
             <CommentBox></CommentBox>
-        </div>
+        </div >
     )
 }
