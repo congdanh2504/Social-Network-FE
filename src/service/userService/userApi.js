@@ -103,3 +103,13 @@ export const replyComment = async (id_father_comment, text) => {
         }
     })
 }
+
+export const getUnFollowUsers = async () => {
+    return await axios({
+        url: `${BASE_URL}users/unfollow-users`,
+        method: "GET",
+        headers: {
+            "Authorization": `Bearer ${getAccessToken()}`
+        }
+    }).then(res => res.data)
+}

@@ -15,6 +15,7 @@ export default function UploadCard() {
     const dispatch = useDispatch();
     const [post, setPost] = useState({ title: "", description: "" , images: []});
     const [previewVisible, setPreviewVisible] = useState(false);
+    const loading = useSelector((state) => state.post.loading)
     const [previewImage, setPreviewImage] = useState('');
     const [previewTitle, setPreviewTitle] = useState('');
     const handleCancel = () => setPreviewVisible(false);
@@ -107,13 +108,14 @@ export default function UploadCard() {
                     </div>
                 </Upload>
                  {buttonUpload && <Button
+                    disabled={loading}
                     style={{
                         backgroundColor: '#1890ff',
                         borderRadius: '50px',
                         color: 'white'
                     }}
                     onClick={onSubmit}
-                >Upload</Button>}
+                >{loading && <span className="fa fa-refresh fa-spin"></span>}{"  "}  Upload</Button>}
                 <Modal visible={previewVisible} title={previewTitle} footer={null} onCancel={handleCancel}>
                     <img
                         alt="example"
