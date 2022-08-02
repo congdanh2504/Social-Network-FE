@@ -1,10 +1,10 @@
-import { Avatar, Image, Tabs, Divider, Tooltip, Row, Col, Button } from 'antd'
+import { Avatar, Image, Tabs, Divider, Tooltip, Row, Col, Button, Modal } from 'antd'
 import React, { useEffect, useState } from 'react'
 import SearchItem from '../components/common/SearchItem';
 import UploadCard from '../components/Upload/UploadCard';
 import PostCard from '../components/PostCard';
 import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import defaultAvt from '../assets/images/defaultAvt.png'
 import defaultCover from '../assets/images/defaultCover.jpg'
 import { getDetailUserAction } from '../redux/slice/userSlice';
@@ -19,6 +19,9 @@ export default function Profile() {
     const param = useParams();
     const detailUser = useSelector((state) => state.user.detailUser);
     const navigate = useNavigate();
+    const [isModalVisible, setIsModalVisible] = useState(false);
+    const [titleModal, setTitleModal] = useState("Friends")
+    const [userShow, setUserShow] = useState([]);
 
     useEffect(() => {
         if (user.username == param.username) navigate("/me");
@@ -70,9 +73,19 @@ export default function Profile() {
                             <div className='absolute bg-white pl-[270px] w-full h-[120px] flex flex-row justify-between items-center'>
                                 <div>
                                     <h1 className='m-0' style={{ fontSize: '25px', fontWeight: 'bold' }}>{detailUser.firstName + " " + detailUser.lastName}</h1>
-                                    <h5 className='mb-2'>{detailUser.friends.length} friends</h5>
-                                    <h5 className='mb-2'>{detailUser.followers.length} followers</h5>
-                                    <h5 className='mb-2'>{detailUser.followings.length} followings</h5>
+                                    <h5 onClick={() => {setUserShow(detailUser.friends); setTitleModal("Friends"); setIsModalVisible(true)}} className='mb-2 hover:underline hover:cursor-pointer'>{detailUser.friends.length} friends</h5>
+                                    <h5 onClick={() => {setUserShow(detailUser.followers); setTitleModal("Followers"); setIsModalVisible(true)}} className='mb-2 hover:underline hover:cursor-pointer'>{detailUser.followers.length} followers</h5>
+                                    <h5 onClick={() => {setUserShow(detailUser.followings); setTitleModal("Followings"); setIsModalVisible(true)}} className='mb-2 hover:underline hover:cursor-pointer'>{detailUser.followings.length} followings</h5>
+                                    <Modal title={titleModal} visible={isModalVisible && userShow.length > 0} footer={null} onCancel={() => setIsModalVisible(false)} closable centered>
+                                        {userShow.map((_user) => 
+                                            <Link to={`/user/${_user.username}`} className='flex flex-row h-[70px] items-center '>
+                                            <img class="w-[50px] h-[50px] rounded-full object-cover" src={_user.avt ? _user.avt : defaultAvt} alt="" />
+                                            <div class="flex flex-col justify-center pl-[5px]">
+                                                <span class="text-[15px] font-bold text-gray-900 hover:underline hover:cursor-pointer">{`${_user.firstName} ${_user.lastName}`}</span>
+                                                <p class="font-normal text-gray-700 ">{_user.username}</p>
+                                            </div>
+                                        </Link>)}
+                                    </Modal>
                                     { checkIsFriend() && <Button disabled type="primary" size={100}>
                                             Friend
                                         </Button>
