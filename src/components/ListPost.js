@@ -10,11 +10,11 @@ export default function ListPost({title, data}) {
 
     return (
         <div class="w-[300px] p-4 max-w-md bg-white rounded-lg border shadow-md sm:p-8">
-            <div class="flex justify-between items-center mb-4">
+            <div class="flex justify-center items-center mb-4">
                 <h5 class="text-[20px] font-[500] leading-none text-gray-900 pb-[5px] border-blue-500">{title}</h5>
-                <a href="#" class="text-sm font-medium text-blue-600 hover:underline dark:text-blue-500">
+                {/* <a href="#" class="text-sm font-medium text-blue-600 hover:underline dark:text-blue-500">
                     View all
-                </a>
+                </a> */}
             </div>
             <div class="flow-root">
                 <ul role="list" class="divide-y divide-gray-200 dark:divide-gray-700">
@@ -24,7 +24,7 @@ export default function ListPost({title, data}) {
                                 <img class="w-8 h-8 rounded-full" src="https://i.pinimg.com/736x/68/7f/f5/687ff58b82cf34da0cd1369598f22104.jpg" alt="Bonnie image" />
                             </div>
                             <div class="flex-1 min-w-0">
-                                <p class="text-sm font-medium text-gray-900 truncate dark:text-white">
+                                <p class="text-sm font-medium text-gray-900 truncate dark:text-black">
                                     Bonnie Green
                                 </p>
                                 <p class="text-sm text-gray-500 truncate dark:text-gray-400">
@@ -40,7 +40,7 @@ export default function ListPost({title, data}) {
                                 <img class="w-8 h-8 rounded-full" src="https://i.pinimg.com/736x/68/7f/f5/687ff58b82cf34da0cd1369598f22104.jpg" alt="Bonnie image" />
                             </div>
                             <div class="flex-1 min-w-0">
-                                <p class="text-sm font-medium text-gray-900 truncate dark:text-white">
+                                <p class="text-sm font-medium text-gray-900 truncate dark:text-black">
                                     Bonnie Green
                                 </p>
                                 <p class="text-sm text-gray-500 truncate dark:text-gray-400">
@@ -56,7 +56,7 @@ export default function ListPost({title, data}) {
                                 <img class="w-8 h-8 rounded-full" src="https://i.pinimg.com/736x/68/7f/f5/687ff58b82cf34da0cd1369598f22104.jpg" alt="Michael image" />
                             </div>
                             <div class="flex-1 min-w-0">
-                                <p class="text-sm font-medium text-gray-900 truncate dark:text-white">
+                                <p class="text-sm font-medium text-gray-900 truncate dark:text-black">
                                     Michael Gough
                                 </p>
                                 <p class="text-sm text-gray-500 truncate dark:text-gray-400">
@@ -72,7 +72,7 @@ export default function ListPost({title, data}) {
                                 <img class="w-8 h-8 rounded-full" src="https://i.pinimg.com/736x/68/7f/f5/687ff58b82cf34da0cd1369598f22104.jpg" alt="Lana image" />
                             </div>
                             <div class="flex-1 min-w-0">
-                                <p class="text-sm font-medium text-gray-900 truncate dark:text-white">
+                                <p class="text-sm font-medium text-gray-900 truncate dark:text-black">
                                     Lana Byrd
                                 </p>
                                 <p class="text-sm text-gray-500 truncate dark:text-gray-400">
@@ -88,7 +88,7 @@ export default function ListPost({title, data}) {
                                 <img class="w-8 h-8 rounded-full" src="https://i.pinimg.com/736x/68/7f/f5/687ff58b82cf34da0cd1369598f22104.jpg" alt="Thomas image" />
                             </div>
                             <div class="flex-1 min-w-0">
-                                <p class="text-sm font-medium text-gray-900 truncate dark:text-white">
+                                <p class="text-sm font-medium text-gray-900 truncate dark:text-black">
                                     Thomes Lean
                                 </p>
                                 <p class="text-sm text-gray-500 truncate dark:text-gray-400">

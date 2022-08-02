@@ -17,11 +17,11 @@ export default function LatestPosts({latestPosts}) {
 
     return (
         <div class="w-[300px] p-4 max-w-md bg-white rounded-lg border shadow-md sm:p-8">
-            <div class="flex justify-between items-center mb-4">
+            <div class="flex justify-center items-center mb-4 ">
                 <h5 class="text-[20px] font-[500] leading-none text-gray-900 pb-[5px] border-blue-500">Latest posts</h5>
-                <a href="#" class="text-sm font-medium text-blue-600 hover:underline dark:text-blue-500">
+                {/* <a href="#" class="text-sm font-medium text-blue-600 hover:underline dark:text-blue-500">
                     View all
-                </a>
+                </a> */}
             </div>
             <div class="flow-root">
                 <ul role="list" class="divide-y divide-gray-200">
