@@ -1,51 +1,32 @@
-import { Avatar, Image, Tabs, Divider, Tooltip, Row, Col, Button } from 'antd'
+import { Image, Divider, Row, Col } from 'antd'
 import React, { useEffect, useState } from 'react'
 import SearchItem from '../components/common/SearchItem';
 import UploadCard from '../components/Upload/UploadCard';
 import PostCard from '../components/PostCard';
-import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate, useParams } from 'react-router-dom';
+import { Menu, Popconfirm } from 'antd';
 import defaultAvt from '../assets/images/defaultAvt.png'
 import defaultCover from '../assets/images/defaultCover.jpg'
-import { getDetailUserAction } from '../redux/slice/userSlice';
 import { getPostsAction } from '../redux/slice/postSlice';
 import SliderAndNav from '../components/common/SliderAndNav';
 import { getUser } from '../service/common';
-import { follow, unFollow } from '../service/userService/userApi';
+import { getDetailUser } from '../service/userService/userApi';
+import { useDispatch, useSelector } from 'react-redux';
+import { deletePost } from '../service/postService/postApi';
+import { getDetailUserAction } from '../redux/slice/userSlice';
 
-export default function Profile() {
+export default function MyProfile() {
     const user = getUser()
-    const dispatch = useDispatch();
-    const param = useParams();
     const detailUser = useSelector((state) => state.user.detailUser);
-    const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     useEffect(() => {
-        if (user.username == param.username) navigate("/me");
-    })
+        dispatch(getDetailUserAction(user.username))
+    }, [])
 
-    useEffect(() => {
-        dispatch(getDetailUserAction(param.username))
-    }, [param])
-
-    const checkIsFriend = () => {
-        return detailUser.friends.filter((friend) => friend.username == user.username).length > 0;
+    const confirmDelete = async (post) => {
+        await deletePost(post.id);
+        dispatch(getDetailUserAction(user.username))
     }
-
-    const checkFollowing = () => {
-        return detailUser.followers.filter((follower) => follower.username == user.username).length > 0;
-    }
-
-    const followUser = async () => {
-        await follow(detailUser.id);
-        dispatch(getDetailUserAction(param.username))
-    }
-
-    const unFollowUser = async () => {
-        await unFollow(detailUser.id);
-        dispatch(getDetailUserAction(param.username))
-    }
-
 
     const content = () => {
         return <>
@@ -73,18 +54,6 @@ export default function Profile() {
                                     <h5 className='mb-2'>{detailUser.friends.length} friends</h5>
                                     <h5 className='mb-2'>{detailUser.followers.length} followers</h5>
                                     <h5 className='mb-2'>{detailUser.followings.length} followings</h5>
-                                    { checkIsFriend() && <Button disabled type="primary" size={100}>
-                                            Friend
-                                        </Button>
-                                    }
-                                    {
-                                        checkFollowing() ? <Button onClick={unFollowUser} type="primary" size={100}>
-                                            Unfollow
-                                        </Button> : <Button onClick={followUser} type="primary" size={100}>
-                                            Follow
-                                        </Button>
-                                        
-                                    }
                                 </div>
                                 
                                 <div className='mr-[10px]'>
@@ -110,6 +79,7 @@ export default function Profile() {
                             </div>
                         </div>
                         <div className='flex-1 justify-start'>
+                            <UploadCard />
                             {detailUser.posts && detailUser.posts.map((post) => <PostCard key={post.id} post={post} />)}
                         </div>
                     </div>

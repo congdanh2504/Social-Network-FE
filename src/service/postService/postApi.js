@@ -19,3 +19,7 @@ export const getLatestPosts = async () => {
 export const getPostById = async (postId) => {
     return await axios.get(`${BASE_URL}post/${postId}`).then(res => res.data);
 }
+
+export const deletePost = async (postId) => {
+    return await axios.delete(`${BASE_URL}post/${postId}`).then(res => res.data);
+}

@@ -4,10 +4,13 @@ import TimeAgo from 'javascript-time-ago'
 import { Link } from 'react-router-dom';
 import { getUser } from '../service/common';
 import { comment, likePost, unlikePost } from '../service/userService/userApi';
-import { getPostById } from '../service/postService/postApi';
-import { Divider, Dropdown, Image, Menu } from 'antd';
+import { deletePost, getPostById } from '../service/postService/postApi';
+import { Divider, Dropdown, Image, Menu, Popconfirm } from 'antd';
 import Comment from './common/Comment';
 import CommentBox from './common/CommentBox';
+import { useDispatch } from 'react-redux';
+import { getPostsAction } from '../redux/slice/postSlice';
+import { getDetailUserAction } from '../redux/slice/userSlice';
 
 export default function PostCard({ post }) {
 
@@ -17,6 +20,7 @@ export default function PostCard({ post }) {
     const [commentText, setCommentText] = useState("")
     const [colorSendButton, setColorSendButton] = useState(false)
     const [showComment, setShowComment] = useState(false)
+    const dispatch = useDispatch()
 
     useEffect(() => {
         if (post.likeUsers.filter(e => e.username == user.username).length > 0) {
@@ -47,10 +51,6 @@ export default function PostCard({ post }) {
         setLike(!like)
     }
 
-    const onMenuClick = (e) => {
-        console.log('click', e);
-    };
-
     const commentCount = (comments) => {
         let count = 0;
         comments.forEach((comment) => {
@@ -73,21 +73,25 @@ export default function PostCard({ post }) {
         setColorSendButton(false);
     }
 
+    const confirmDelete = async () => {
+        await deletePost(post.id);
+        dispatch(getPostsAction())
+        dispatch(getDetailUserAction(user.username))
+    }
+
     const menu = (
-        <Menu
-            onClick={onMenuClick}
-            items={[
-                {
-                    key: '1',
-                    label: 'Edit post',
-                },
-                {
-                    key: '2',
-                    label: 'Delete post',
-                }
-            ]}
-        />
-    );
+        <Menu>
+          <Menu.Item key="1">Edit post</Menu.Item>
+          <Menu.Item key="2"><Popconfirm
+                title="Are you sure to delete this post?"
+                onConfirm={confirmDelete}
+                okText="Yes"
+                cancelText="No"
+            >
+                <a href="#">Delete post</a>
+            </Popconfirm></Menu.Item>
+        </Menu>
+      );
 
     return (
         <div className="flex flex-col bg-white shadow-lg rounded-lg my-4 ">

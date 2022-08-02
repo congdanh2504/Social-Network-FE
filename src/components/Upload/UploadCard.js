@@ -4,7 +4,7 @@ import { getUser } from '../../service/common'
 import defaultAvt from '../../assets/images/defaultAvt.png'
 import { useDispatch, useSelector } from 'react-redux'
 import { ToastContainer, toast } from 'react-toastify';
-import { createPostAction, userSlide } from '../../redux/slice/userSlice';
+import { createPostAction, getDetailUserAction, userSlide } from '../../redux/slice/userSlice';
 import { getLatestPostsAction, getPostsAction } from '../../redux/slice/postSlice';
 import { Button, Divider, Input } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
@@ -56,6 +56,9 @@ export default function UploadCard() {
     const onSubmit = () => {
         dispatch(userSlide.actions.refresh_state())
         dispatch(createPostAction(post))
+        dispatch(getDetailUserAction(user.username))
+        setPost({ title: "", description: "" , images: []})
+        setFileList([])
     }
 
     useEffect(() => {

@@ -46,7 +46,7 @@ export default function Home() {
                 </div>
                 <div className='Container__content__center overflow-y-auto flex-1 mx-[10px]'>
                     <UploadCard />
-                    {posts && posts.map((post) => <PostCard post={post} />)}
+                    {posts && posts.map((post) => <PostCard key={post.id} post={post} />)}
                     <a href="#" class="text-sm font-medium text-blue-600 hover:underline dark:text-blue-500">
                         View more
                     </a>
