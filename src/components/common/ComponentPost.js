@@ -16,7 +16,7 @@ export default function ComponentPost({ detailUser }) {
                     <div className='flex p-[2px] justify-center items-center'>
                         <div className='flex gap-[5px] flex-wrap '>
                             <Image.PreviewGroup>
-                                {detailUser.images.length > 0 && detailUser.images.map((url) => <div
+                                {detailUser.images.length > 0 && detailUser.images.slice(0, 9).map((url) => <div
                                     style={{ display: 'flex', alignItems: 'centerS' }}>
                                     <Image className='object-cover' width={110} height={110} src={url} />
                                 </div>)}
@@ -32,7 +32,7 @@ export default function ComponentPost({ detailUser }) {
                     <div className='flex p-[2px] justify-center items-center'>
                         <div className='flex gap-[5px] flex-wrap'>
                             <Image.PreviewGroup>
-                                {detailUser.images.length > 0 && detailUser.images.map((url) => <div
+                                {detailUser.images.length > 0 && detailUser.images.slice(0, 9).map((url) => <div
                                     style={{ display: 'flex', alignItems: 'centerS' }}>
                                     <Image className='object-cover' width={110} height={110} src={url} />
                                 </div>)}

@@ -1,5 +1,5 @@
-import { Image, Modal, Upload, Avatar, Tooltip, Tabs } from 'antd'
-import React, { useEffect, useRef, useState } from 'react'
+import { Image, Upload, Avatar, Tooltip, Tabs } from 'antd'
+import React, { useEffect, useState } from 'react'
 import SearchItem from '../components/common/SearchItem';
 import defaultAvt from '../assets/images/defaultAvt.png'
 import defaultCover from '../assets/images/defaultCover.jpg'
@@ -7,38 +7,17 @@ import SliderAndNav from '../components/common/SliderAndNav';
 import { getUser } from '../service/common';
 import { useDispatch, useSelector } from 'react-redux';
 import { getDetailUserAction } from '../redux/slice/userSlice';
-import { Link } from 'react-router-dom';
-import { AntDesignOutlined, UserOutlined } from '@ant-design/icons';
 import ImgCrop from 'antd-img-crop';
 import ComponentPost from '../components/common/ComponentPost';
+import { changeAvt } from '../service/userService/userApi';
 export default function MyProfile() {
     const user = getUser()
     const detailUser = useSelector((state) => state.user.detailUser);
     const dispatch = useDispatch();
-    const [isModalVisible, setIsModalVisible] = useState(false);
-    const [titleModal, setTitleModal] = useState("Friends")
-    const [userShow, setUserShow] = useState([]);
-    const [fileList, setFileList] = useState(
-        {
-            src: detailUser ? detailUser.avt : "https://hinhgaixinh.com/wp-content/uploads/2022/03/anh-gai-xinh-hoc-sinh-tuyet-dep.jpg",
-        }
-    );
-    const [Avarta, setAvarta] = useState("https://hinhgaixinh.com/wp-content/uploads/2022/03/anh-gai-xinh-hoc-sinh-tuyet-dep.jpg")
 
     useEffect(() => {
         dispatch(getDetailUserAction(user.username))
     }, [])
-
-
-    const onChange = (file) => {
-        console.log(file)
-        setFileList({
-            src: fileList
-        });
-    };
-
-
-
 
     const content = () => {
         return <>
@@ -58,11 +37,15 @@ export default function MyProfile() {
                         <div className='flex flex-row items-end w-full'>
                             <div className='absolute z-10 bottom-[-50px] ml-[50px]'>
                                 <div className='relative rounded-full w-[200px] h-[200px]'>
-                                    <Image width={200} height={200} className='object-cover rounded-full p-[5px] bg-white' src={Avarta} />
+                                    <Image width={200} height={200} className='object-cover rounded-full p-[5px] bg-white' src={detailUser.avt ? detailUser.avt : defaultAvt} />
                                     <ImgCrop rotate>
                                         <Upload
+                                            accept="image/*"
+                                            action={async (file) => {
+                                                await changeAvt(file);
+                                                dispatch(getDetailUserAction(user.username));
+                                            }}
                                             showUploadList={false}
-                                            onChange={onChange}
                                             className="absolute bottom-0 right-5">
                                             <button className='z-1000 w-[35px] h-[35px] rounded-full flex justify-center items-center bg-white'>
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#1890ff" class="bi bi-pencil" viewBox="0 0 16 16">
@@ -82,25 +65,11 @@ export default function MyProfile() {
                                         size="default"
                                         maxStyle={{ color: '#f56a00', backgroundColor: '#fde3cf', cursor: 'pointer' }}
                                     >
-                                        {detailUser.followings.map((_, item) => {
-                                            console.log(item)
-                                        })}
-                                        <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
-                                        <Tooltip title="Ant User" placement="top">
-                                            <Avatar style={{ backgroundColor: '#87d068', display: 'flex', justifyContent: 'center', alignItems: 'center' }} icon={<UserOutlined />} />
-                                        </Tooltip>
-                                        <Avatar style={{ backgroundColor: '#1890ff', display: 'flex', justifyContent: 'center', alignItems: 'center' }} icon={<AntDesignOutlined />} />
+                                        {detailUser.friends.map((_user) => 
+                                            <Avatar src={_user.avt ? _user.avt : defaultAvt} />)
+                                        } 
+        
                                     </Avatar.Group>
-                                    <Modal title={titleModal} visible={isModalVisible && userShow.length > 0} footer={null} onCancel={() => setIsModalVisible(false)} closable centered>
-                                        {userShow.map((_user) =>
-                                            <Link to={`/user/${_user.username}`} className='flex flex-row h-[70px] items-center '>
-                                                <img class="w-[50px] h-[50px] rounded-full object-cover" src={_user.avt ? _user.avt : defaultAvt} alt="" />
-                                                <div class="flex flex-col justify-center pl-[5px]">
-                                                    <span class="text-[15px] font-bold text-gray-900 hover:underline hover:cursor-pointer">{`${_user.firstName} ${_user.lastName}`}</span>
-                                                    <p class="font-normal text-gray-700 ">{_user.username}</p>
-                                                </div>
-                                            </Link>)}
-                                    </Modal>
                                 </div>
                                 <div className='mr-[10px]'>
                                     <SearchItem />
@@ -109,7 +78,7 @@ export default function MyProfile() {
                         </div>
                     </div>
                     <div className='content w-[90%]'>
-                        <Tabs defaultActiveKey="1" onChange={onChange} style={{ width: '100%' }}>
+                        <Tabs defaultActiveKey="1" style={{ width: '100%' }}>
                             <Tabs.TabPane tab="Home" key="1">
                                 <ComponentPost detailUser={detailUser} />
                             </Tabs.TabPane>

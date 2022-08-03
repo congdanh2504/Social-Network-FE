@@ -1,5 +1,3 @@
-import { async } from "@firebase/util";
-import { data } from "autoprefixer";
 import axios from "axios";
 import { BASE_URL, getAccessToken } from "../common";
 
@@ -112,4 +110,15 @@ export const getUnFollowUsers = async () => {
             "Authorization": `Bearer ${getAccessToken()}`
         }
     }).then(res => res.data)
+}
+
+export const changeAvt = async (avt) => {
+    let formData = new FormData();
+    formData.append("avt", avt);
+    return await axios.put(`${BASE_URL}users/change-avt`, formData, {
+        headers: {
+            'Content-Type': 'multipart/form-data',
+            "Authorization": `Bearer ${getAccessToken()}`
+        }
+    });
 }
