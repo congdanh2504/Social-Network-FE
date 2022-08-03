@@ -96,7 +96,7 @@ export default function PostCard({ post }) {
     return (
         <div className="flex flex-col bg-white shadow-lg rounded-lg my-4 ">
             <div className="flex w-full items-start">
-                <div className="flex-1 flex flex-col">
+                <div className="flex-1 flex flex-col justify-center">
                     <div className="flex justify-between items-center p-3">
                         <div className='flex'>
                             <Link to={`/user/${post.user.username}`} ><img className="w-12 h-12 rounded-full object-cover mr-4 shadow" src={post.user.avt ? post.user.avt : defaultAvt} alt="avatar" /></Link>
@@ -112,7 +112,7 @@ export default function PostCard({ post }) {
                     <p className=" text-gray-700 text-sm px-3">
                         {post.title}
                     </p>
-                    <div >
+                    <div className='flex justify-center items-center'>
                         {post.images && post.images.map((image) =>
                             <Image src={image.url} />
                         )}
