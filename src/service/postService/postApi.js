@@ -20,6 +20,14 @@ export const getPostById = async (postId) => {
     return await axios.get(`${BASE_URL}post/${postId}`).then(res => res.data);
 }
 
+export const editPostById = async (post, postId) => {
+    return await axios({
+        url: `${BASE_URL}post/${postId}`,
+        method: "PUT",
+        data: post
+    }).then(res => res.data);
+}
+
 export const deletePost = async (postId) => {
     return await axios.delete(`${BASE_URL}post/${postId}`).then(res => res.data);
 }
