@@ -1,9 +1,15 @@
 import { Button } from 'antd'
 import React from 'react'
+import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 import defaultAvt from '../assets/images/defaultAvt.png'
+import { getPostsAction } from '../redux/slice/postSlice'
+import { getUnFollowUsersAction } from '../redux/slice/userSlice'
+import { follow } from '../service/userService/userApi'
 
 function UnFollowUsers({ unFollowUsers }) {
+
+    const dispatch = useDispatch();
 
     return (
         <div class="w-[300px] max-w-md bg-white rounded-lg border shadow-md p-[12px]">
@@ -32,11 +38,16 @@ function UnFollowUsers({ unFollowUsers }) {
                                     {user.username}
                                 </p>
                             </div>
-                            <Button type='primary'>Follow</Button>
+                            <Button onClick={async () => {
+                                await follow(user.id);
+                                dispatch(getUnFollowUsersAction());
+                                dispatch(getPostsAction())
+                            }} type='primary'>Follow</Button>
                         </div>
                     </li>)}
                 </ul>
-                    <Button className='w-full' type='primary'>More</Button>
+                {unFollowUsers.length >= 5 && <Button className='w-full' type='primary'>More</Button>}
+                
             </div>
         </div>
     )

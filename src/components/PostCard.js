@@ -8,7 +8,7 @@ import { deletePost, getPostById } from '../service/postService/postApi';
 import { Divider, Dropdown, Image, Menu, Modal, Popconfirm } from 'antd';
 import Comment from './common/Comment';
 import { useDispatch } from 'react-redux';
-import { getPostsAction } from '../redux/slice/postSlice';
+import { getLatestPostsAction, getPostsAction } from '../redux/slice/postSlice';
 import { getDetailUserAction } from '../redux/slice/userSlice';
 import EditPost from './EditPost';
 
@@ -77,6 +77,7 @@ export default function PostCard({ post }) {
         await deletePost(post.id);
         dispatch(getPostsAction())
         dispatch(getDetailUserAction(user.username))
+        dispatch(getLatestPostsAction())
     }
 
     const menu = (
