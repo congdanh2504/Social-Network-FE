@@ -1,4 +1,4 @@
-import { Avatar, Image, Tabs, Divider, Tooltip, Row, Col, Button, Modal } from 'antd'
+import { Avatar, Image, Tabs, Divider, Tooltip, Row, Col, Button, Modal, List, Card } from 'antd'
 import React, { useEffect, useState } from 'react'
 import SearchItem from '../components/common/SearchItem';
 import UploadCard from '../components/Upload/UploadCard';
@@ -13,6 +13,7 @@ import SliderAndNav from '../components/common/SliderAndNav';
 import { getUser } from '../service/common';
 import { follow, unFollow } from '../service/userService/userApi';
 import ComponentPost from '../components/common/ComponentPost';
+import Meta from 'antd/lib/card/Meta';
 
 export default function Profile() {
     const user = getUser()
@@ -111,7 +112,27 @@ export default function Profile() {
                                 </Image.PreviewGroup>
                             </Tabs.TabPane>
                             <Tabs.TabPane tab="Friend" key="3">
-
+                                <List
+                                    grid={{
+                                    gutter: 16,
+                                    column: 4,
+                                    }}
+                                    dataSource={detailUser.friends}
+                                    renderItem={(_user) => (
+                                    <List.Item>
+                                        <Link to={`/user/${_user.username}`}>
+                                        <Card
+                                            hoverable
+                                       
+                                            cover={<img className='object-cover' alt="example" src={_user.avt ? _user.avt : defaultAvt} />}
+                                        >
+                                            <Meta title={_user.firstName + " " + _user.lastName} description={_user.username} />
+                                        </Card>
+                                        </Link>
+                                    </List.Item>
+                                    )}
+                                />
+                                
                             </Tabs.TabPane>
                         </Tabs>
 

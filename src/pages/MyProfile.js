@@ -1,4 +1,4 @@
-import { Image, Upload, Avatar, Tooltip, Tabs, Card, Col, Row } from 'antd'
+import { Image, Upload, Avatar, Tooltip, Tabs, Card, Col, Row, List } from 'antd'
 import React, { useEffect, useState } from 'react'
 import SearchItem from '../components/common/SearchItem';
 import defaultAvt from '../assets/images/defaultAvt.png'
@@ -11,6 +11,7 @@ import ImgCrop from 'antd-img-crop';
 import ComponentPost from '../components/common/ComponentPost';
 import { changeAvt } from '../service/userService/userApi';
 import Meta from 'antd/lib/card/Meta';
+import { Link } from 'react-router-dom';
 export default function MyProfile() {
     const user = getUser()
     const detailUser = useSelector((state) => state.user.detailUser);
@@ -96,6 +97,26 @@ export default function MyProfile() {
                                 </Image.PreviewGroup>
                             </Tabs.TabPane>
                             <Tabs.TabPane tab="Friend" key="3">
+                                <List
+                                    grid={{
+                                    gutter: 16,
+                                    column: 4,
+                                    }}
+                                    dataSource={detailUser.friends}
+                                    renderItem={(_user) => (
+                                    <List.Item>
+                                        <Link to={`/user/${_user.username}`}>
+                                        <Card
+                                            hoverable
+                                       
+                                            cover={<img className='object-cover' alt="example" src={_user.avt ? _user.avt : defaultAvt} />}
+                                        >
+                                            <Meta title={_user.firstName + " " + _user.lastName} description={_user.username} />
+                                        </Card>
+                                        </Link>
+                                    </List.Item>
+                                    )}
+                                />
                                 
 
                             </Tabs.TabPane>
