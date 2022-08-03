@@ -1,4 +1,4 @@
-import { Image, Upload, Avatar, Tooltip, Tabs } from 'antd'
+import { Image, Upload, Avatar, Tooltip, Tabs, Card, Col, Row } from 'antd'
 import React, { useEffect, useState } from 'react'
 import SearchItem from '../components/common/SearchItem';
 import defaultAvt from '../assets/images/defaultAvt.png'
@@ -10,6 +10,7 @@ import { getDetailUserAction } from '../redux/slice/userSlice';
 import ImgCrop from 'antd-img-crop';
 import ComponentPost from '../components/common/ComponentPost';
 import { changeAvt } from '../service/userService/userApi';
+import Meta from 'antd/lib/card/Meta';
 export default function MyProfile() {
     const user = getUser()
     const detailUser = useSelector((state) => state.user.detailUser);
@@ -95,6 +96,7 @@ export default function MyProfile() {
                                 </Image.PreviewGroup>
                             </Tabs.TabPane>
                             <Tabs.TabPane tab="Friend" key="3">
+                                
 
                             </Tabs.TabPane>
                         </Tabs>

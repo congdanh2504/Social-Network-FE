@@ -12,6 +12,7 @@ import { getPostsAction } from '../redux/slice/postSlice';
 import SliderAndNav from '../components/common/SliderAndNav';
 import { getUser } from '../service/common';
 import { follow, unFollow } from '../service/userService/userApi';
+import ComponentPost from '../components/common/ComponentPost';
 
 export default function Profile() {
     const user = getUser()
@@ -73,31 +74,17 @@ export default function Profile() {
                             <div className='absolute bg-white pl-[270px] w-full h-[120px] flex flex-row justify-between items-center'>
                                 <div>
                                     <h1 className='m-0' style={{ fontSize: '25px', fontWeight: 'bold' }}>{detailUser.firstName + " " + detailUser.lastName}</h1>
-                                    <h5 onClick={() => { setUserShow(detailUser.friends); setTitleModal("Friends"); setIsModalVisible(true) }} className='mb-2 hover:underline hover:cursor-pointer'>{detailUser.friends.length} friends</h5>
-                                    <h5 onClick={() => { setUserShow(detailUser.followers); setTitleModal("Followers"); setIsModalVisible(true) }} className='mb-2 hover:underline hover:cursor-pointer'>{detailUser.followers.length} followers</h5>
-                                    <h5 onClick={() => { setUserShow(detailUser.followings); setTitleModal("Followings"); setIsModalVisible(true) }} className='mb-2 hover:underline hover:cursor-pointer'>{detailUser.followings.length} followings</h5>
-                                    <Modal title={titleModal} visible={isModalVisible && userShow.length > 0} footer={null} onCancel={() => setIsModalVisible(false)} closable centered>
-                                        {userShow.map((_user) =>
-                                            <Link to={`/user/${_user.username}`} className='flex flex-row h-[70px] items-center '>
-                                                <img class="w-[50px] h-[50px] rounded-full object-cover" src={_user.avt ? _user.avt : defaultAvt} alt="" />
-                                                <div class="flex flex-col justify-center pl-[5px]">
-                                                    <span class="text-[15px] font-bold text-gray-900 hover:underline hover:cursor-pointer">{`${_user.firstName} ${_user.lastName}`}</span>
-                                                    <p class="font-normal text-gray-700 ">{_user.username}</p>
-                                                </div>
-                                            </Link>)}
-                                    </Modal>
-                                    {checkIsFriend() && <Button disabled type="primary" size={100}>
-                                        Friend
-                                    </Button>
-                                    }
-                                    {
-                                        checkFollowing() ? <Button onClick={unFollowUser} type="primary" size={100}>
-                                            Unfollow
-                                        </Button> : <Button onClick={followUser} type="primary" size={100}>
-                                            Follow
-                                        </Button>
-
-                                    }
+                                    <Avatar.Group
+                                        maxCount={2}
+                                        maxPopoverTrigger="click"
+                                        size="default"
+                                        maxStyle={{ color: '#f56a00', backgroundColor: '#fde3cf', cursor: 'pointer' }}
+                                    >
+                                        {detailUser.friends.map((_user) => 
+                                            <Avatar src={_user.avt ? _user.avt : defaultAvt} />)
+                                        } 
+        
+                                    </Avatar.Group>
                                 </div>
 
                                 <div className='mr-[10px]'>
@@ -106,44 +93,28 @@ export default function Profile() {
                             </div>
                         </div>
                     </div>
-                    <div className='content flex flex-row w-[90%] mt-[50px] gap-3   '>
-                        <div className='content flex flex-col gap-[10px] rounded-xl w-[345px]'>
-                            <div className='bg-white flex flex-col justify-center items-center rounded-lg'>
-                                <div className='w-full h-[40px] flex items-center'>
-                                    <h1 style={{ fontSize: '20px' }} className="m-0"><span style={{ marginLeft: '15px' }}>Images</span></h1>
-                                </div>
-                                <Divider style={{ margin: 2 }}></Divider>
-                                <div className='flex p-[2px] justify-center items-center'>
-                                    <div className='flex gap-[5px] flex-wrap '>
-                                        <Image.PreviewGroup>
-                                            {detailUser.images.length > 0 && detailUser.images.map((url) => <div
+                    <div className='content w-[90%]'>
+                        <Tabs defaultActiveKey="1" style={{ width: '100%' }}>
+                            <Tabs.TabPane tab="Home" key="1">
+                                <ComponentPost detailUser={detailUser} />
+                            </Tabs.TabPane>
+                            <Tabs.TabPane tab="Images" key="2">
+                                <Image.PreviewGroup>
+                                    <div className='gallery_image'>
+                                        {
+                                            detailUser.images.length > 0 && detailUser.images.map((url) => <div
                                                 style={{ display: 'flex', alignItems: 'centerS' }}>
-                                                <Image className='object-cover' width={110} height={110} src={url} />
-                                            </div>)}
-                                        </Image.PreviewGroup>
+                                                <Image className='grid__layout_item ' src={url} />
+                                            </div>)
+                                        }
                                     </div>
-                                </div>
-                            </div>
-                            <div className='bg-white flex flex-col justify-center items-center rounded-lg'>
-                                <div className='w-full h-[40px] flex items-center'>
-                                    <h1 style={{ fontSize: '20px' }} className="m-0"><span style={{ marginLeft: '15px' }}>Friends</span></h1>
-                                </div>
-                                <Divider style={{ margin: 2 }}></Divider>
-                                <div className='flex p-[2px] justify-center items-center'>
-                                    <div className='flex gap-[5px] flex-wrap '>
-                                        <Image.PreviewGroup>
-                                            {detailUser.images.length > 0 && detailUser.images.map((url) => <div
-                                                style={{ display: 'flex', alignItems: 'centerS' }}>
-                                                <Image className='object-cover' width={110} height={110} src={url} />
-                                            </div>)}
-                                        </Image.PreviewGroup>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className='flex-1 justify-start'>
-                            {detailUser.posts && detailUser.posts.map((post) => <PostCard key={post.id} post={post} />)}
-                        </div>
+                                </Image.PreviewGroup>
+                            </Tabs.TabPane>
+                            <Tabs.TabPane tab="Friend" key="3">
+
+                            </Tabs.TabPane>
+                        </Tabs>
+
                     </div>
                 </div >
             }

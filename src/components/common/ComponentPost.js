@@ -24,7 +24,7 @@ export default function ComponentPost({ detailUser }) {
                         </div>
                     </div>
                 </div>
-                <div className='bg-white flex flex-col justify-center items-center rounded-lg'>
+                {/* <div className='bg-white flex flex-col justify-center items-center rounded-lg'>
                     <div className='w-full h-[40px] flex items-center'>
                         <h1 style={{ fontSize: '20px' }} className="m-0"><span style={{ marginLeft: '15px' }}>Friends</span></h1>
                     </div>
@@ -39,7 +39,7 @@ export default function ComponentPost({ detailUser }) {
                             </Image.PreviewGroup>
                         </div>
                     </div>
-                </div>
+                </div> */}
             </div>
             <div className='flex-1 justify-start'>
                 <UploadCard />
