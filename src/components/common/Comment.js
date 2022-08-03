@@ -40,11 +40,11 @@ function Comment({comment, getPost, odd}) {
     
     return (
         <div class="space-y-4">
-            <div class="flex">
+            <div class="flex mt-[5px]">
                 <div class="flex-shrink-0 mr-3">
-                    <Link to={`/user/${comment.user.username}`}><img class="mt-2 rounded-full w-8 h-8 sm:w-10 sm:h-10 object-cover" src={comment.user.avt ? comment.user.avt : defaultAvt} alt="" /></Link>
+                    <Link to={`/user/${comment.user.username}`}><img class="rounded-full w-8 h-8 sm:w-10 sm:h-10 object-cover" src={comment.user.avt ? comment.user.avt : defaultAvt} alt="" /></Link>
                 </div>
-                <div class="flex-1 rounded-lg px-4 py-2 sm:px-3 sm:py-4 leading-relaxed">
+                <div class="flex-1 rounded-lg  leading-relaxed">
                     <div class={`${odd ? "border bg-white" : "bg-gray-100"} flex-1 rounded-lg px-4 py-2 sm:px-6 sm:py-4 leading-relaxed`}>
                         <Link to={`/user/${comment.user.username}`}> <strong>{comment.user.firstName + " " + comment.user.lastName}</strong></Link> <span class="text-xs text-gray-400">{getTimeAgo(comment.create_date)}</span>
                         <p class="text-sm">
@@ -56,7 +56,7 @@ function Comment({comment, getPost, odd}) {
                                     {comment.children.map((child) => 
                                         <img class="rounded-full w-6 h-6 border border-white object-cover" src={child.user.avt ? child.user.avt : defaultAvt} alt="" />)}
                                 </div>
-                                <div onClick={() => setShowChildComment(true)} class="text-sm text-gray-500 font-semibold hover:underline hover:cursor-pointer">
+                                <div onClick={() => setShowChildComment(true)} class="text-sm text-gray-500 font-semibold hover:underline hover:cursor-pointer my-[10px]">
                                     {commentCount(comment.children)} Replies
                                 </div>
                             </div>
