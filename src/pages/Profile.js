@@ -73,28 +73,11 @@ export default function Profile() {
                             <div className='absolute bg-white pl-[270px] w-full h-[120px] flex flex-row justify-between items-center'>
                                 <div className='flex flex-col'>
                                     <h1 className='m-0' style={{ fontSize: '25px', fontWeight: 'bold' }}>{detailUser.firstName + " " + detailUser.lastName}</h1>
-<<<<<<< HEAD
                                     {/*       <h5 className='mb-2'>{detailUser.friend ? detailUser.friends.length : '0'} friends</h5>
                                     <h5 className='mb-2'>{detailUser.followers.length} followers</h5>
                                     <h5 className='mb-2'>{detailUser.followings.length} followings</h5> */}
                                     <div className='flex gap-[12px]'>
                                         {checkIsFriend() && <Button disabled type="primary" size={100}>
-=======
-                                    <h5 onClick={() => {setUserShow(detailUser.friends); setTitleModal("Friends"); setIsModalVisible(true)}} className='mb-2 hover:underline hover:cursor-pointer'>{detailUser.friends.length} friends</h5>
-                                    <h5 onClick={() => {setUserShow(detailUser.followers); setTitleModal("Followers"); setIsModalVisible(true)}} className='mb-2 hover:underline hover:cursor-pointer'>{detailUser.followers.length} followers</h5>
-                                    <h5 onClick={() => {setUserShow(detailUser.followings); setTitleModal("Followings"); setIsModalVisible(true)}} className='mb-2 hover:underline hover:cursor-pointer'>{detailUser.followings.length} followings</h5>
-                                    <Modal title={titleModal} visible={isModalVisible && userShow.length > 0} footer={null} onCancel={() => setIsModalVisible(false)} closable centered>
-                                        {userShow.map((_user) => 
-                                            <Link to={`/user/${_user.username}`} className='flex flex-row h-[70px] items-center '>
-                                            <img class="w-[50px] h-[50px] rounded-full object-cover" src={_user.avt ? _user.avt : defaultAvt} alt="" />
-                                            <div class="flex flex-col justify-center pl-[5px]">
-                                                <span class="text-[15px] font-bold text-gray-900 hover:underline hover:cursor-pointer">{`${_user.firstName} ${_user.lastName}`}</span>
-                                                <p class="font-normal text-gray-700 ">{_user.username}</p>
-                                            </div>
-                                        </Link>)}
-                                    </Modal>
-                                    { checkIsFriend() && <Button disabled type="primary" size={100}>
->>>>>>> 3e580b24c2221175fdbb8466009b9b76069ec1d3
                                             Friend
                                         </Button>
                                         }
