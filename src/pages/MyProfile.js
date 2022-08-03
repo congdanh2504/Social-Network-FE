@@ -1,21 +1,16 @@
-import { Image, Divider, Row, Col, Modal, Button, Upload } from 'antd'
-import React, { useEffect, useState } from 'react'
+import { Image, Modal, Upload, Avatar, Tooltip, Tabs } from 'antd'
+import React, { useEffect, useRef, useState } from 'react'
 import SearchItem from '../components/common/SearchItem';
-import UploadCard from '../components/Upload/UploadCard';
-import PostCard from '../components/PostCard';
-import { Menu, Popconfirm } from 'antd';
 import defaultAvt from '../assets/images/defaultAvt.png'
 import defaultCover from '../assets/images/defaultCover.jpg'
-import { getPostsAction } from '../redux/slice/postSlice';
 import SliderAndNav from '../components/common/SliderAndNav';
 import { getUser } from '../service/common';
-import { getDetailUser } from '../service/userService/userApi';
 import { useDispatch, useSelector } from 'react-redux';
-import { deletePost } from '../service/postService/postApi';
 import { getDetailUserAction } from '../redux/slice/userSlice';
 import { Link } from 'react-router-dom';
+import { AntDesignOutlined, UserOutlined } from '@ant-design/icons';
 import ImgCrop from 'antd-img-crop';
-
+import ComponentPost from '../components/common/ComponentPost';
 export default function MyProfile() {
     const user = getUser()
     const detailUser = useSelector((state) => state.user.detailUser);
@@ -36,11 +31,14 @@ export default function MyProfile() {
 
 
     const onChange = (file) => {
-       console.log(file)
+        console.log(file)
         setFileList({
             src: fileList
         });
     };
+
+
+
 
     const content = () => {
         return <>
@@ -60,7 +58,7 @@ export default function MyProfile() {
                         <div className='flex flex-row items-end w-full'>
                             <div className='absolute z-10 bottom-[-50px] ml-[50px]'>
                                 <div className='relative rounded-full w-[200px] h-[200px]'>
-                                    <Image width={200} height={200} className='object-cover rounded-full' src={Avarta} />
+                                    <Image width={200} height={200} className='object-cover rounded-full p-[5px] bg-white' src={Avarta} />
                                     <ImgCrop rotate>
                                         <Upload
                                             showUploadList={false}
@@ -78,9 +76,21 @@ export default function MyProfile() {
                             <div className='absolute bg-white pl-[270px] w-full h-[120px] flex flex-row justify-between items-center'>
                                 <div>
                                     <h1 className='m-0' style={{ fontSize: '25px', fontWeight: 'bold' }}>{detailUser.firstName + " " + detailUser.lastName}</h1>
-                                    <h5 onClick={() => { setUserShow(detailUser.friends); setTitleModal("Friends"); setIsModalVisible(true) }} className='mb-2 hover:underline hover:cursor-pointer'>{detailUser.friends.length} friends</h5>
-                                    <h5 onClick={() => { setUserShow(detailUser.followers); setTitleModal("Followers"); setIsModalVisible(true) }} className='mb-2 hover:underline hover:cursor-pointer'>{detailUser.followers.length} followers</h5>
-                                    <h5 onClick={() => { setUserShow(detailUser.followings); setTitleModal("Followings"); setIsModalVisible(true) }} className='mb-2 hover:underline hover:cursor-pointer'>{detailUser.followings.length} followings</h5>
+                                    <Avatar.Group
+                                        maxCount={2}
+                                        maxPopoverTrigger="click"
+                                        size="default"
+                                        maxStyle={{ color: '#f56a00', backgroundColor: '#fde3cf', cursor: 'pointer' }}
+                                    >
+                                        {detailUser.followings.map((_, item) => {
+                                            console.log(item)
+                                        })}
+                                        <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
+                                        <Tooltip title="Ant User" placement="top">
+                                            <Avatar style={{ backgroundColor: '#87d068', display: 'flex', justifyContent: 'center', alignItems: 'center' }} icon={<UserOutlined />} />
+                                        </Tooltip>
+                                        <Avatar style={{ backgroundColor: '#1890ff', display: 'flex', justifyContent: 'center', alignItems: 'center' }} icon={<AntDesignOutlined />} />
+                                    </Avatar.Group>
                                     <Modal title={titleModal} visible={isModalVisible && userShow.length > 0} footer={null} onCancel={() => setIsModalVisible(false)} closable centered>
                                         {userShow.map((_user) =>
                                             <Link to={`/user/${_user.username}`} className='flex flex-row h-[70px] items-center '>
@@ -92,34 +102,36 @@ export default function MyProfile() {
                                             </Link>)}
                                     </Modal>
                                 </div>
-
                                 <div className='mr-[10px]'>
                                     <SearchItem />
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div className='content flex flex-row w-[90%] mt-[50px] gap-3   '>
-                        <div className='content rounded-xl w-[360px] bg-white flex flex-col items-center justify-center'>
-                            <div className='w-full h-[40px] flex items-center'>
-                                <h1 style={{ fontSize: '20px' }}><span style={{ marginLeft: '15px' }}>Images</span></h1>
-                            </div>
-                            <Divider></Divider>
-                            <Row gutter={[9, 9]} style={{ margin: '5px 0' }}>
+                    <div className='content w-[90%]'>
+                        <Tabs defaultActiveKey="1" onChange={onChange} style={{ width: '100%' }}>
+                            <Tabs.TabPane tab="Home" key="1">
+                                <ComponentPost detailUser={detailUser} />
+                            </Tabs.TabPane>
+                            <Tabs.TabPane tab="Images" key="2">
                                 <Image.PreviewGroup>
-                                    {detailUser.images.length > 0 && detailUser.images.map((url) => <Col span={8} style={{ display: 'flex', justifyContent: 'center', alignItems: 'centerS' }}>
-                                        <Image className='object-cover' width={110} height={110} src={url} />
-                                    </Col>)}
+                                    <div className='gallery_image'>
+                                        {
+                                            detailUser.images.length > 0 && detailUser.images.map((url) => <div
+                                                style={{ display: 'flex', alignItems: 'centerS' }}>
+                                                <Image className='grid__layout_item ' src={url} />
+                                            </div>)
+                                        }
+                                    </div>
                                 </Image.PreviewGroup>
-                            </Row>
-                            <div>
-                            </div>
-                        </div>
-                        <div className='flex-1 justify-start'>
-                            <UploadCard />
-                            {detailUser.posts && detailUser.posts.map((post) => <PostCard key={post.id} post={post} />)}
-                        </div>
+                            </Tabs.TabPane>
+                            <Tabs.TabPane tab="Friend" key="3">
+
+                            </Tabs.TabPane>
+                        </Tabs>
+
                     </div>
+
                 </div >
             }
         </>
