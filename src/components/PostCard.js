@@ -5,12 +5,12 @@ import { Link } from 'react-router-dom';
 import { getUser } from '../service/common';
 import { comment, likePost, unlikePost } from '../service/userService/userApi';
 import { deletePost, getPostById } from '../service/postService/postApi';
-import { Divider, Dropdown, Image, Menu, Popconfirm } from 'antd';
+import { Divider, Dropdown, Image, Menu, Modal, Popconfirm } from 'antd';
 import Comment from './common/Comment';
-import CommentBox from './common/CommentBox';
 import { useDispatch } from 'react-redux';
 import { getPostsAction } from '../redux/slice/postSlice';
 import { getDetailUserAction } from '../redux/slice/userSlice';
+import EditPost from './EditPost';
 
 export default function PostCard({ post }) {
 
@@ -20,6 +20,7 @@ export default function PostCard({ post }) {
     const [commentText, setCommentText] = useState("")
     const [colorSendButton, setColorSendButton] = useState(false)
     const [showComment, setShowComment] = useState(false)
+    const [isModalVisible, setIsModalVisible] = useState(false);
     const dispatch = useDispatch()
 
     useEffect(() => {
@@ -28,7 +29,6 @@ export default function PostCard({ post }) {
         } else {
             setLike(false)
         }
-        getPost()
     }, [])
 
     const getPost = async () => {
@@ -81,7 +81,9 @@ export default function PostCard({ post }) {
 
     const menu = (
         <Menu>
-          <Menu.Item key="1">Edit post</Menu.Item>
+          <Menu.Item onClick={() => {
+            setIsModalVisible(true)
+          }} key="1">Edit post</Menu.Item>
           <Menu.Item key="2"><Popconfirm
                 title="Are you sure to delete this post?"
                 onConfirm={confirmDelete}
@@ -110,7 +112,7 @@ export default function PostCard({ post }) {
                         } 
                     </div>
                     <p className=" text-gray-700 text-sm px-3">
-                        {post.title}
+                        {dynamicPost ? dynamicPost.title: post.title}
                     </p>
                     <div className='flex justify-center items-center'>
                         {post.images && post.images.map((image) =>
@@ -120,7 +122,7 @@ export default function PostCard({ post }) {
 
                 </div>
             </div>
-            <span className='px-[12px]'>{dynamicPost && dynamicPost.likeUsers.length} peoples like this</span>
+            <span className='px-[12px]'>{dynamicPost ? dynamicPost.likeUsers.length : post.likeUsers.length} peoples like this</span>
             <Divider style={{ margin: 4 }} />
             <div className='flex px-[12px] flex-row items-center'>
                 <div className='flex justify-evenly w-full'>
@@ -137,6 +139,9 @@ export default function PostCard({ post }) {
                             </div>
                         }
                     </div>
+                    <Modal visible={isModalVisible} title="Edit post" footer={null} onCancel={() => setIsModalVisible(false)} closable centered>
+                        <EditPost key={post.id} editPost={post} getPost={getPost} setIsShow={setIsModalVisible}/>
+                    </Modal>
                     <div className='flex gap-[10px] cursor-pointer items-center '>
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-chat" viewBox="0 0 16 16">
                             <path d="M2.678 11.894a1 1 0 0 1 .287.801 10.97 10.97 0 0 1-.398 2c1.395-.323 2.247-.697 2.634-.893a1 1 0 0 1 .71-.074A8.06 8.06 0 0 0 8 14c3.996 0 7-2.807 7-6 0-3.192-3.004-6-7-6S1 4.808 1 8c0 1.468.617 2.83 1.678 3.894zm-.493 3.905a21.682 21.682 0 0 1-.713.129c-.2.032-.352-.176-.273-.362a9.68 9.68 0 0 0 .244-.637l.003-.01c.248-.72.45-1.548.524-2.319C.743 11.37 0 9.76 0 8c0-3.866 3.582-7 8-7s8 3.134 8 7-3.582 7-8 7a9.06 9.06 0 0 1-2.347-.306c-.52.263-1.639.742-3.468 1.105z" />
@@ -154,12 +159,15 @@ export default function PostCard({ post }) {
             <Divider style={{ margin: 4 }} />
             <div class="antialiased mx-auto w-full p-[12px]">
                 {
-                    dynamicPost && dynamicPost.comments.length > 0 && (showComment ? <div onClick={() => setShowComment(false)} class="text-sm text-gray-900 font-semibold hover:underline hover:cursor-pointer"> Hide comments</div>
-                    : <div onClick={() => setShowComment(true)} class="text-sm text-gray-900 font-semibold hover:underline hover:cursor-pointer"> Show comments</div>)
+                    dynamicPost ? (dynamicPost.comments.length > 0 && (showComment ? <div onClick={() => setShowComment(false)} class="text-sm text-gray-900 font-semibold hover:underline hover:cursor-pointer"> Hide comments</div>
+                    : <div onClick={() => setShowComment(true)} class="text-sm text-gray-900 font-semibold hover:underline hover:cursor-pointer"> Show comments</div>)):
+                    (post.comments.length > 0 && (showComment ? <div onClick={() => setShowComment(false)} class="text-sm text-gray-900 font-semibold hover:underline hover:cursor-pointer"> Hide comments</div>
+                    : <div onClick={() => setShowComment(true)} class="text-sm text-gray-900 font-semibold hover:underline hover:cursor-pointer"> Show comments</div>))
                 }
                 {/* <CommentBox/> */}
                 
-                {showComment && dynamicPost && dynamicPost.comments.map((comment) => <Comment key={comment.id} comment={comment} getPost={getPost} odd={true}/>)}
+                {showComment && (dynamicPost ? dynamicPost.comments.map((comment) => <Comment key={comment.id} comment={comment} getPost={getPost} odd={true}/>) : 
+                    post.comments.map((comment) => <Comment key={comment.id} comment={comment} getPost={getPost} odd={true}/>))}
                 <form className='flex relative items-center justify-center mt-[12px]'>
                     <input
                         value={commentText}
