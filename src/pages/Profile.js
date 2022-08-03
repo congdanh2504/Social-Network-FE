@@ -29,10 +29,6 @@ export default function Profile() {
         dispatch(getDetailUserAction(param.username))
     }, [param])
 
-    // useEffect(() => {
-    //     console.log(detailUser)
-    // }, [detailUser])
-
     const checkIsFriend = () => {
         return detailUser.friends.filter((friend) => friend.username == user.username).length > 0;
     }
@@ -40,6 +36,7 @@ export default function Profile() {
     const checkFollowing = () => {
         return detailUser.followers.filter((follower) => follower.username == user.username).length > 0;
     }
+    console.log(checkFollowing())
 
     const followUser = async () => {
         await follow(detailUser.id);
@@ -51,11 +48,10 @@ export default function Profile() {
         dispatch(getDetailUserAction(param.username))
     }
 
-
     const content = () => {
         return <>
-        {
-            detailUser && 
+            {
+                detailUser &&
                 <div className='flex flex-col items-center overflow-scroll'>
                     <div className='relative header w-[90%] m-0 p-0'>
                         <Image
@@ -71,27 +67,29 @@ export default function Profile() {
                             <div className='absolute z-10 bottom-[-50px] ml-[50px]'>
                                 <Image width={200} height={200} className='object-cover top-0 rounded-full' src={detailUser.avt ? detailUser.avt : defaultAvt}></Image>
                             </div>
-                            
+
                             <div className='absolute bg-white pl-[270px] w-full h-[120px] flex flex-row justify-between items-center'>
-                                <div>
+                                <div className='flex flex-col'>
                                     <h1 className='m-0' style={{ fontSize: '25px', fontWeight: 'bold' }}>{detailUser.firstName + " " + detailUser.lastName}</h1>
-                                    <h5 className='mb-2'>{detailUser.friends.length} friends</h5>
+                                    {/*       <h5 className='mb-2'>{detailUser.friend ? detailUser.friends.length : '0'} friends</h5>
                                     <h5 className='mb-2'>{detailUser.followers.length} followers</h5>
-                                    <h5 className='mb-2'>{detailUser.followings.length} followings</h5>
-                                    { checkIsFriend() && <Button disabled type="primary" size={100}>
+                                    <h5 className='mb-2'>{detailUser.followings.length} followings</h5> */}
+                                    <div className='flex gap-[12px]'>
+                                        {checkIsFriend() && <Button disabled type="primary" size={100}>
                                             Friend
                                         </Button>
-                                    }
-                                    {
-                                        checkFollowing() ? <Button onClick={unFollowUser} type="primary" size={100}>
-                                            Unfollow
-                                        </Button> : <Button onClick={followUser} type="primary" size={100}>
-                                            Follow
-                                        </Button>
-                                        
-                                    }
+                                        }
+                                        {
+                                            checkFollowing() ? <Button onClick={unFollowUser} type="primary" size={100}>
+                                                Unfollow
+                                            </Button> : <Button onClick={followUser} type="primary" size={100}>
+                                                Follow
+                                            </Button>
+
+                                        }
+                                    </div>
                                 </div>
-                                
+
                                 <div className='mr-[10px]'>
                                     <SearchItem />
                                 </div>
@@ -99,19 +97,32 @@ export default function Profile() {
                         </div>
                     </div>
                     <div className='content flex flex-row w-[90%] mt-[50px] gap-3   '>
-                        <div className='content rounded-xl w-[360px] bg-white flex flex-col items-center justify-center'>
-                            <div className='w-full h-[40px] flex items-center'>
-                                <h1 style={{ fontSize: '20px' }}><span style={{ marginLeft: '15px' }}>Images</span></h1>
-                            </div>
-                            <Divider></Divider>
-                            <Row gutter={[9, 9]} style={{ margin: '5px 0' }}>
+                        <div>
+                            <div className='content rounded-xl w-[360px] bg-white flex flex-col items-center justify-center'>
+                                <div className='w-full h-[40px] flex items-center'>
+                                    <h1 style={{ fontSize: '20px' }}><span style={{ marginLeft: '15px' }}>Images</span></h1>
+                                </div>
+                                <Divider></Divider>
                                 <Image.PreviewGroup>
                                     {detailUser.images.length > 0 && detailUser.images.map((url) => <Col span={8} style={{ display: 'flex', justifyContent: 'center', alignItems: 'centerS' }}>
                                         <Image className='object-cover' width={110} height={110} src={url} />
                                     </Col>)}
                                 </Image.PreviewGroup>
-                            </Row>
-                            <div>
+                                <div>
+                                </div>
+                            </div>
+                            <div className='content rounded-xl w-[360px] bg-white flex flex-col items-center justify-center'>
+                                <div className='w-full h-[40px] flex items-center'>
+                                    <h1 style={{ fontSize: '20px' }}><span style={{ marginLeft: '15px' }}>Images</span></h1>
+                                </div>
+                                <Divider></Divider>
+                                <Image.PreviewGroup>
+                                    {detailUser.images.length > 0 && detailUser.images.map((url) => <Col span={8} style={{ display: 'flex', justifyContent: 'center', alignItems: 'centerS' }}>
+                                        <Image className='object-cover' width={110} height={110} src={url} />
+                                    </Col>)}
+                                </Image.PreviewGroup>
+                                <div>
+                                </div>
                             </div>
                         </div>
                         <div className='flex-1 justify-start'>
@@ -120,11 +131,11 @@ export default function Profile() {
                         </div>
                     </div>
                 </div >
-        }
+            }
         </>
     }
-    
+
     return (
-        <SliderAndNav content={content}/>
+        <SliderAndNav content={content} />
     )
 }
