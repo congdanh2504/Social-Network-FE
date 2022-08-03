@@ -6,6 +6,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getLatestPostsAction, getPostsAction } from '../redux/slice/postSlice';
 import SliderAndNav from '../components/common/SliderAndNav';
 import LatestPosts from '../components/LatestPosts';
+import { getUnFollowUsersAction } from '../redux/slice/userSlice';
+import UnFollowUsers from '../components/UnFollowUsers';
 
 export default function Home() {
 
@@ -14,10 +16,12 @@ export default function Home() {
     const error = useSelector((state) => state.post.error)
     const posts = useSelector((state) => state.post.posts)
     const latestPosts = useSelector((state) => state.post.latestPosts)
+    const unFollowUsers = useSelector((state) => state.user.unFollowUsers)
 
     useEffect(() => {
         dispatch(getLatestPostsAction())
         dispatch(getPostsAction())
+        dispatch(getUnFollowUsersAction())
     }, [])
 
     const content = () => (
@@ -42,14 +46,14 @@ export default function Home() {
                 </div>
                 <div className='Container__content__center overflow-y-auto flex-1 mx-[10px]'>
                     <UploadCard />
-                    {posts && posts.map((post) => <PostCard post={post} />)}
+                    {posts && posts.map((post) => <PostCard key={post.id} post={post} />)}
                     <a href="#" class="text-sm font-medium text-blue-600 hover:underline dark:text-blue-500">
                         View more
                     </a>
                 </div>
                 <div className='Container__content__right overflow-y-auto flex flex-col'>
                     <div className='Container__content__left flex flex-col gap-[15px] w-[300px] h-[100%] overflow-hidden hover:overflow-y-auto'>
-                        <ListPost title="Maybe you know" />
+                        {unFollowUsers.length > 0 && <UnFollowUsers unFollowUsers={unFollowUsers}/>} 
                         <ListPost title="Notifications" />
                     </div>
                 </div>

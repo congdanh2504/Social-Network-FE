@@ -1,6 +1,4 @@
-import React, { useEffect } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
-import { getLatestPostsAction, postSlide } from '../redux/slice/postSlice'
+import React from 'react'
 import TimeAgo from 'javascript-time-ago'
 import { Link } from 'react-router-dom';
 import en from 'javascript-time-ago/locale/en'
@@ -16,12 +14,12 @@ export default function LatestPosts({ latestPosts }) {
     }
 
     return (
-        <div className="w-[300px] max-w-md bg-white rounded-lg border shadow-md sm:p-2">
-            <div className="flex justify-between items-center p-[12px]">
-                <span className="text-[20px] font-[600] leading-none text-gray-900 border-blue-500 m-0">Latest posts</span>
-                <a href="#" className="text-sm font-medium text-blue-600 hover:underline dark:text-blue-500">
+        <div class="w-[300px] p-4 max-w-md bg-white rounded-lg border shadow-md sm:p-8">
+            <div class="flex justify-center items-center mb-4 ">
+                <h5 class="text-[20px] font-[500] leading-none text-gray-900 pb-[5px] border-blue-500">Latest posts</h5>
+                {/* <a href="#" class="text-sm font-medium text-blue-600 hover:underline dark:text-blue-500">
                     View all
-                </a>
+                </a> */}
             </div>
             <div className="flow-root">
                 <ul role="list" className="divide-y divide-gray-200">

@@ -1,13 +1,14 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { logOut, setUser } from "../../service/common";
-import { getProfile, createPost, searchUsers, getDetailUser } from "../../service/userService/userApi";
+import { getProfile, createPost, searchUsers, getDetailUser, getUnFollowUsers } from "../../service/userService/userApi";
 
 const initialState = {
     loading: false,
     error: "",
     users: [],
     isPostSuccess: false,
-    detailUser: null
+    detailUser: null,
+    unFollowUsers: []
 }
 
 export const getUser = createAsyncThunk('user/getUser', async () => {
@@ -40,6 +41,16 @@ export const searchUserAction = createAsyncThunk('user/searchUser', async (usern
 export const getDetailUserAction = createAsyncThunk('user/getDetailUser', async (username) => {
     try {
         const res = await getDetailUser(username);
+        return res;
+    } catch (error) {
+        return Promise.reject(error);
+    } 
+})
+
+export const getUnFollowUsersAction = createAsyncThunk('user/getUnFollowUsers', async () => {
+    try {
+        const res = await getUnFollowUsers();
+        console.log(res)
         return res;
     } catch (error) {
         return Promise.reject(error);
@@ -103,6 +114,18 @@ export const userSlide = createSlice({
             state.detailUser = action.payload;
         })
         builder.addCase(getDetailUserAction.rejected, (state, action)=>{
+            state.loading = false;
+            state.error = action.error;
+        })
+
+        builder.addCase(getUnFollowUsersAction.pending, (state)=>{
+            state.loading = true;
+        })
+        builder.addCase(getUnFollowUsersAction.fulfilled, (state, action)=>{
+            state.loading = false;
+            state.unFollowUsers = action.payload;
+        })
+        builder.addCase(getUnFollowUsersAction.rejected, (state, action)=>{
             state.loading = false;
             state.error = action.error;
         })

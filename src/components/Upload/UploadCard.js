@@ -4,7 +4,7 @@ import { getUser } from '../../service/common'
 import defaultAvt from '../../assets/images/defaultAvt.png'
 import { useDispatch, useSelector } from 'react-redux'
 import { ToastContainer, toast } from 'react-toastify';
-import { createPostAction, userSlide } from '../../redux/slice/userSlice';
+import { createPostAction, getDetailUserAction, userSlide } from '../../redux/slice/userSlice';
 import { getLatestPostsAction, getPostsAction } from '../../redux/slice/postSlice';
 import { Button, Divider, Input } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
@@ -15,6 +15,7 @@ export default function UploadCard() {
     const dispatch = useDispatch();
     const [post, setPost] = useState({ title: "", description: "" , images: []});
     const [previewVisible, setPreviewVisible] = useState(false);
+    const loading = useSelector((state) => state.post.loading)
     const [previewImage, setPreviewImage] = useState('');
     const [previewTitle, setPreviewTitle] = useState('');
     const handleCancel = () => setPreviewVisible(false);
@@ -55,6 +56,9 @@ export default function UploadCard() {
     const onSubmit = () => {
         dispatch(userSlide.actions.refresh_state())
         dispatch(createPostAction(post))
+        dispatch(getDetailUserAction(user.username))
+        setPost({ title: "", description: "" , images: []})
+        setFileList([])
     }
 
     useEffect(() => {
@@ -107,13 +111,14 @@ export default function UploadCard() {
                     </div>
                 </Upload>
                  {buttonUpload && <Button
+                    disabled={loading}
                     style={{
                         backgroundColor: '#1890ff',
                         borderRadius: '50px',
                         color: 'white'
                     }}
                     onClick={onSubmit}
-                >Upload</Button>}
+                >{loading && <span className="fa fa-refresh fa-spin"></span>}{"  "}  Upload</Button>}
                 <Modal visible={previewVisible} title={previewTitle} footer={null} onCancel={handleCancel}>
                     <img
                         alt="example"

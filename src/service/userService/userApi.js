@@ -75,3 +75,41 @@ export const unFollow = async (userId) => {
         }
     })
 }
+
+export const comment = async (postId, text) => {
+    await axios({
+        url: `${BASE_URL}comment`,
+        method: "POST",
+        data: {
+            id_post: parseInt(postId),
+            text: text
+        },
+        headers: {
+            "Authorization": `Bearer ${getAccessToken()}`
+        }
+    })
+}
+
+export const replyComment = async (id_father_comment, text) => {
+    await axios({
+        url: `${BASE_URL}comment/reply`,
+        method: "POST",
+        data: {
+            id_father_comment: parseInt(id_father_comment),
+            text: text
+        },
+        headers: {
+            "Authorization": `Bearer ${getAccessToken()}`
+        }
+    })
+}
+
+export const getUnFollowUsers = async () => {
+    return await axios({
+        url: `${BASE_URL}users/unfollow-users`,
+        method: "GET",
+        headers: {
+            "Authorization": `Bearer ${getAccessToken()}`
+        }
+    }).then(res => res.data)
+}
