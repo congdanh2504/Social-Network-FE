@@ -21,6 +21,7 @@ export default function PostCard({ post }) {
     const [colorSendButton, setColorSendButton] = useState(false)
     const [showComment, setShowComment] = useState(false)
     const [isModalVisible, setIsModalVisible] = useState(false);
+    const [isLikeUsersVisible, setIsLikeUsersVisible] = useState(false)
     const dispatch = useDispatch()
 
     useEffect(() => {
@@ -29,6 +30,7 @@ export default function PostCard({ post }) {
         } else {
             setLike(false)
         }
+        getPost()
     }, [])
 
     const getPost = async () => {
@@ -123,7 +125,7 @@ export default function PostCard({ post }) {
 
                 </div>
             </div>
-            <span className='px-[12px]'>{dynamicPost ? dynamicPost.likeUsers.length : post.likeUsers.length} peoples like this</span>
+            <span onClick={() => setIsLikeUsersVisible(true)} className='px-[12px] hover:underline hover:cursor-pointer'>{dynamicPost ? dynamicPost.likeUsers.length : post.likeUsers.length} peoples like this</span>
             <Divider style={{ margin: 4 }} />
             <div className='flex px-[12px] flex-row items-center'>
                 <div className='flex justify-evenly w-full'>
@@ -140,6 +142,16 @@ export default function PostCard({ post }) {
                             </div>
                         }
                     </div>
+                    <Modal title="Like users" visible={isLikeUsersVisible && dynamicPost.likeUsers.length > 0} footer={null} onCancel={() => setIsLikeUsersVisible(false)} closable centered>
+                        {dynamicPost && dynamicPost.likeUsers.map((_user) => 
+                            <Link to={`/user/${_user.username}`} className='flex flex-row h-[70px] items-center '>
+                            <img class="w-[50px] h-[50px] rounded-full object-cover" src={_user.avt ? _user.avt : defaultAvt} alt="" />
+                            <div class="flex flex-col justify-center pl-[5px]">
+                                <span class="text-[15px] font-bold text-gray-900 hover:underline hover:cursor-pointer">{`${_user.firstName} ${_user.lastName}`}</span>
+                                <p class="font-normal text-gray-700 ">{_user.username}</p>
+                            </div>
+                        </Link>)}
+                    </Modal>
                     <Modal visible={isModalVisible} title="Edit post" footer={null} onCancel={() => setIsModalVisible(false)} closable centered>
                         <EditPost key={post.id} editPost={post} getPost={getPost} setIsShow={setIsModalVisible}/>
                     </Modal>
