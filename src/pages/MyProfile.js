@@ -37,7 +37,7 @@ export default function MyProfile() {
         });
     };
 
-
+    console.log(detailUser)
 
 
     const content = () => {
@@ -126,7 +126,13 @@ export default function MyProfile() {
                                 </Image.PreviewGroup>
                             </Tabs.TabPane>
                             <Tabs.TabPane tab="Friend" key="3">
-
+                                {
+                                    detailUser.friends.length == 0 ? <img src='https://i.pinimg.com/originals/07/38/32/073832a89e9d37b9fbac636cf0c9ead0.gif'/> : (
+                                        <div>
+                                            Le
+                                        </div>
+                                    )
+                                    }
                             </Tabs.TabPane>
                         </Tabs>
 

@@ -81,19 +81,19 @@ export default function PostCard({ post }) {
 
     const menu = (
         <Menu>
-          <Menu.Item onClick={() => {
-            setIsModalVisible(true)
-          }} key="1">Edit post</Menu.Item>
-          <Menu.Item key="2"><Popconfirm
+            <Menu.Item onClick={() => {
+                setIsModalVisible(true)
+            }} key="1">Edit post</Menu.Item>
+            <Menu.Item key="2"><Popconfirm
                 title="Are you sure to delete this post?"
                 onConfirm={confirmDelete}
                 okText="Yes"
                 cancelText="No"
             >
-                <a href="#">Delete post</a>
+                <a href="#" style={{color:'red'}}>Delete post</a>
             </Popconfirm></Menu.Item>
         </Menu>
-      );
+    );
 
     return (
         <div className="flex flex-col bg-white shadow-lg rounded-lg my-4 ">
@@ -109,10 +109,10 @@ export default function PostCard({ post }) {
                         </div>
                         {
                             user.username == post.user.username && <Dropdown.Button size='large' className='outline-none' overlay={menu}></Dropdown.Button>
-                        } 
+                        }
                     </div>
                     <p className=" text-gray-700 text-sm px-3">
-                        {dynamicPost ? dynamicPost.title: post.title}
+                        {dynamicPost ? dynamicPost.title : post.title}
                     </p>
                     <div className='flex justify-center items-center'>
                         {post.images && post.images.map((image) =>
@@ -140,7 +140,7 @@ export default function PostCard({ post }) {
                         }
                     </div>
                     <Modal visible={isModalVisible} title="Edit post" footer={null} onCancel={() => setIsModalVisible(false)} closable centered>
-                        <EditPost key={post.id} editPost={post} getPost={getPost} setIsShow={setIsModalVisible}/>
+                        <EditPost key={post.id} editPost={post} getPost={getPost} setIsShow={setIsModalVisible} />
                     </Modal>
                     <div className='flex gap-[10px] cursor-pointer items-center '>
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-chat" viewBox="0 0 16 16">
@@ -160,14 +160,14 @@ export default function PostCard({ post }) {
             <div class="antialiased mx-auto w-full p-[12px]">
                 {
                     dynamicPost ? (dynamicPost.comments.length > 0 && (showComment ? <div onClick={() => setShowComment(false)} class="text-sm text-gray-900 font-semibold hover:underline hover:cursor-pointer"> Hide comments</div>
-                    : <div onClick={() => setShowComment(true)} class="text-sm text-gray-900 font-semibold hover:underline hover:cursor-pointer"> Show comments</div>)):
-                    (post.comments.length > 0 && (showComment ? <div onClick={() => setShowComment(false)} class="text-sm text-gray-900 font-semibold hover:underline hover:cursor-pointer"> Hide comments</div>
-                    : <div onClick={() => setShowComment(true)} class="text-sm text-gray-900 font-semibold hover:underline hover:cursor-pointer"> Show comments</div>))
+                        : <div onClick={() => setShowComment(true)} class="text-sm text-gray-900 font-semibold hover:underline hover:cursor-pointer"> Show comments</div>)) :
+                        (post.comments.length > 0 && (showComment ? <div onClick={() => setShowComment(false)} class="text-sm text-gray-900 font-semibold hover:underline hover:cursor-pointer"> Hide comments</div>
+                            : <div onClick={() => setShowComment(true)} class="text-sm text-gray-900 font-semibold hover:underline hover:cursor-pointer"> Show comments</div>))
                 }
                 {/* <CommentBox/> */}
-                
-                {showComment && (dynamicPost ? dynamicPost.comments.map((comment) => <Comment key={comment.id} comment={comment} getPost={getPost} odd={true}/>) : 
-                    post.comments.map((comment) => <Comment key={comment.id} comment={comment} getPost={getPost} odd={true}/>))}
+
+                {showComment && (dynamicPost ? dynamicPost.comments.map((comment) => <Comment key={comment.id} comment={comment} getPost={getPost} odd={true} />) :
+                    post.comments.map((comment) => <Comment key={comment.id} comment={comment} getPost={getPost} odd={true} />))}
                 <form className='flex relative items-center justify-center mt-[12px]'>
                     <input
                         value={commentText}
