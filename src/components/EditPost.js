@@ -68,6 +68,7 @@ function EditPost({editPost, getPost, setIsShow}) {
     const onSubmit = async () => {
         await editPostById(post, editPost.id);
         await getPost();
+        dispatch(getLatestPostsAction())
         setIsShow(false);
     }
 
