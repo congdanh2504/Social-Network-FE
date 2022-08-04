@@ -86,9 +86,22 @@ export default function Profile() {
                                         } 
         
                                     </Avatar.Group>
+                                   
                                 </div>
-
+                                
                                 <div className='mr-[10px]'>
+                                { checkIsFriend() && <Button disabled type="primary" size={100}>
+                                            Friend
+                                        </Button>
+                                    }
+                                    {
+                                        checkFollowing() ? <Button onClick={unFollowUser} type="primary" size={100}>
+                                            Unfollow
+                                        </Button> : <Button onClick={followUser} type="primary" size={100}>
+                                            Follow
+                                        </Button>
+                                        
+                                    }
                                     <SearchItem />
                                 </div>
                             </div>
